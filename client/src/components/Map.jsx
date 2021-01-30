@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { Map, GoogleApiWrapper } from 'google-map-react'
+import { Map, GoogleApiWrapper, Marker } from 'google-maps-react'
 
-export class MapContainer extends Component {
+class MapContainer extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-
+      activeMarker: {}
     }
   }
  render() {
@@ -15,10 +15,21 @@ export class MapContainer extends Component {
      height: '85vh'
    }
 return (
-<MapContainer
- zoom={8}
+<Map
+ google={this.props.google}
+ initialCenter={{
+  lat: 29.9511,
+  lng: -90.081807
+}}
+ zoom={12}
  style={style}
- ></MapContainer>
+ >
+   <Marker
+    position={{
+      lat: 29.9533,
+      lng: -90.0711
+    }} />
+ </Map>
 )
  }
 }
