@@ -1,4 +1,5 @@
 const express = require('express');
+const db = require('./db/database.js')
 const app = express();
 const path = require('path');
 const axios   = require('axios');
