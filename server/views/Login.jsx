@@ -12,10 +12,6 @@ const Login = () => {
 </div>
 <form action='/login' method="POST">
 <div>
-  <label for='name'>Name</label>
-  <input type='text' id='name' name='name' required/>
-</div>
-<div>
   <label for='email'>Email</label>
   <input type='email' id='email' name='name' required/>
 </div>
@@ -25,7 +21,7 @@ const Login = () => {
 </div>
 <button type="submit">login</button>
 </form>
-<a href="/register">Register</a>
+<a href='/register'>Register</a>
 </div>
 
   )
