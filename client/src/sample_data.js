@@ -60,3 +60,5 @@ const data = [
   imageUrl: 'https://lh3.googleusercontent.com/proxy/duk4Ptkhcspw9y6f7hPdZCXjvTis_Mn09riow-TjQSPYy2Tppwn-kZFQ4eiTYiO_Z0-U2qy_Ks3sjuZr2JjlVc-AocKNt3i5SJK3RevqEDgcgO9zrmMydIiR21yDzzr7mscYk6GlR0W9okTVocbZFWTHncVZ0abotKxBBs9vRT-jN_dB6ki4dTxEvFgW0y6ByOJENwxg'
 }
 ]
+
+module.exports = data;
