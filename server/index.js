@@ -11,7 +11,7 @@ const bodyParser= require('body-parser');
 //changed extended to false to work with form data;
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, '..','client','dist')))
-app.set('view-engine', 'ejs')
+
 const bcrypt =  require('bcrypt')
 const passport = require('passport');
 const flash = require('express-flash')
@@ -43,17 +43,19 @@ initializePassport(passport, email => {
   //id => users.find(user => user.id === id)
 });
 app.get('/',checkAuthenticated, (req, res) => {
-  //render homepage?
+  //render homepage
   res.render('index.html')
 
 })
-
+//login route to display login page
 app.get('/login', notAuthenticated, (req, res) => {
-  res.render('login.ejs')
+  res.render('Login.jsx')
 })
+//registration route
 app.get('/register', (req, res) => {
-  res.render('register.ejs')
+  res.render('Register.jsx')
 })
+//signup route to submit registration
 app.post('/register',notAuthenticated, async (req, res) => {
 
 try {
@@ -64,13 +66,13 @@ const hashedPw = await bcrypt.hash(req.body.password, 10)
 res.redirect('/register')
 }
 })
-
+//login route to submit a login
 app.post('/login',notAuthenticated, passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/login',
   failureFlash: true
 }) )
-
+//logout route
 app.delete('/logout', (req, res) => {
   req.logOut()
   res.redirect('/login')
