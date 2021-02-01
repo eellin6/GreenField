@@ -8,9 +8,18 @@ class MapContainer extends Component {
     super(props);
 
     this.state = {
-      activeMarker: {}
-    }
+      locations: []
+    };
+    this.handleMapClick = this.handleMapClick.bind(this);
   }
+  handleMapClick(ref, map, ev) {
+    const location = ev.latLng;
+    this.setState(prevState => ({
+      locations: [...prevState.locations, location]
+    }));
+    map.panTo(location);
+  };
+
  render() {
    const style = {
      width: '96vw',
@@ -26,6 +35,7 @@ return (
 }}
  zoom={12}
  style={style}
+ onClick={this.handleMapClick}
  >
      <Marker
     position={{
