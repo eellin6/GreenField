@@ -27,6 +27,11 @@ return (
  zoom={12}
  style={style}
  >
+     <Marker
+    position={{
+      lat: 29.9533,
+      lng: -90.0711
+    }} />
  </Map>
 )
  }
