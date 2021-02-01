@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import GoogleApiWrapper from './Map';
 import MapContainer from './Map'
 import axios from 'axios'
+import Top10 from './Top10';
 
 class App extends Component {
   constructor(props) {
@@ -13,8 +14,11 @@ class App extends Component {
 render() {
   return (
 <div>
-  <GoogleApiWrapper />
+<div><GoogleApiWrapper /></div>
+
+<div><Top10/></div>
 </div>
+
   )
 }
 }
