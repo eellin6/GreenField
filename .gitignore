@@ -82,7 +82,7 @@ config.js
 
 # Nuxt.js build / generate output
 .nuxt
-client/dist
+client/dist/bundle.js
 # Gatsby files
 .cache/
 # Comment in the public line in if your project uses Gatsby and *not* Next.js

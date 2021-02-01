@@ -1,4 +1,4 @@
-const  Sequelize  = require('sequelize');
+const  {Sequelize}  = require('sequelize');
 const mysql = require('mysql2');
 
 const db = new Sequelize('maps', 'root', '', {
@@ -29,12 +29,14 @@ const Markers = db.define('Markers', {
   latitude: Sequelize.INTEGER,
   longitude: Sequelize.INTEGER,
   imageUrl: Sequelize.STRING,
+  description: Sequelize.STRING
 
 });
 const Favorites = db.define('Favorites', {
   latitude: Sequelize.INTEGER,
   longitude: Sequelize.INTEGER,
   imageUrl: Sequelize.STRING,
+  description: Sequelize.STRING
 
 });
 db.sync({ force: true })
