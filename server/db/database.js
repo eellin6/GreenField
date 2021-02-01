@@ -21,7 +21,8 @@ console.log('connected to the database')
 
 const User = db.define('User', {
   username: Sequelize.STRING,
-  password: Sequelize.STRING
+  password: Sequelize.STRING,
+  email: Sequelize.STRING
 });
 
 const Markers = db.define('Markers', {

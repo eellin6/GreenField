@@ -8,17 +8,31 @@ class MapContainer extends Component {
     super(props);
 
     this.state = {
-      locations: []
-    };
-    this.handleMapClick = this.handleMapClick.bind(this);
+      activeMarker: {},
+      markers: [
+        {
+          name: "Current position",
+          position: {
+            lat: 29.9533,
+            lng:-90.0711
+          }
+        }
+      ]
+
+
+    }
   }
-  handleMapClick(ref, map, ev) {
-    const location = ev.latLng;
-    this.setState(prevState => ({
-      locations: [...prevState.locations, location]
-    }));
-    map.panTo(location);
-  };
+   onMarkerDragEnd (coord, index) {
+     const { latLng } = coord;
+     const lat = latLng.lat();
+     const lng = latLng.lng();
+
+     this.setState(prevState => {
+       const markers = [...this.state.markers];
+       markers[index] = { ...markers[index], position: { lat, lng } };
+       return { markers };
+     });
+   };
 
  render() {
    const style = {
@@ -37,11 +51,18 @@ return (
  style={style}
  onClick={this.handleMapClick}
  >
-     <Marker
-    position={{
-      lat: 29.9533,
-      lng: -90.0711
-    }} />
+
+{this.state.markers.map((marker, index) => (
+          <Marker
+            position={marker.position,
+              console.log(marker.position)
+            }
+            draggable={true}
+            onDragend={(t, map, coord) => this.onMarkerDragEnd(coord, index)}
+            name={marker.name}
+
+          />
+        ))}
  </Map>
 )
  }
