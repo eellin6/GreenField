@@ -121,3 +121,27 @@ app.post('/api/markers/', (req, res) => {
       console.log(err);
     });
 });
+app.post('/favorites', (req, res) => {
+  console.log('APP POST REQ BODY', req.body);
+
+  const {latitude,
+    longitude,
+    imageUrl,
+    description} = req.body;
+
+  const newFavorite = new Favorites({
+    latitude,
+    longitude,
+    imageUrl,
+    description
+  });
+
+  newFavorite.save()
+    .then((data) => {
+      console.log(data);
+
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
