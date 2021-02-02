@@ -13,6 +13,10 @@ class Login extends React.Component{
     }
 this.handleChange = this.handleChange.bind(this)
 this.handleSubmit = this.handleSubmit.bind(this)
+this.handleClick = this.handleClick.bind(this)
+  }
+  handleClick(){
+    this.setState({member: true})
   }
   handleChange(event){
     const name = event.target.name;
@@ -21,7 +25,7 @@ this.handleSubmit = this.handleSubmit.bind(this)
     })
   }
   handleSubmit(){
-    const {name, email, password} = this.state
+    const {username, email, password} = this.state
     const data =
      { username: username,
       password: password,
@@ -60,10 +64,10 @@ const { member } = this.state;
     }else {
       return(
         <div>
-
+          <button onClick={this.handleClick}>Login</button>
         <h1>Register</h1>
 
-        <form action='/' method="POST">
+        <form action='/register' method="POST">
         <div>
           <label>Name</label>
           <input value={this.state.username}type='text' id='name' onChange={this.handleChange} name='username' required/>
