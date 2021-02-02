@@ -62,7 +62,7 @@ app.get('/login', (req, res) => {
   res.render('Login.jsx')
 })
 //signup route to submit registration
-app.post('/login', notAuthenticated, async (req, res) => {
+app.post('/register', notAuthenticated, async (req, res) => {
 //create new user with hashed password
 // try {
 const hashedPw = await bcrypt.hash(req.body.password, 10)
@@ -114,6 +114,25 @@ app.post('/api/markers/', (req, res) => {
   newMarker.save()
     .then((data) => {
       console.log(data);
+
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+app.post('/', async(req, res) => {
+  console.log('APP POST REQ', req);
+  const {username, email} = req.body;
+  const password = await bcrypt.hash(req.body.password, 10)
+
+  const newUser = new User({
+    username,
+    password,
+    email
+  })
+  newUser.save()
+    .then((data) => {
+      console.log('THIS IS DATA:', data);
 
     })
     .catch((err) => {

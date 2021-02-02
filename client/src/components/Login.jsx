@@ -6,17 +6,30 @@ class Login extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      member: false
-
+      member: false,
+    username: '',
+    email: '',
+    password: ''
     }
 this.handleChange = this.handleChange.bind(this)
-this.handleClick = this.handleClick.bind(this)
+this.handleSubmit = this.handleSubmit.bind(this)
   }
-  handleChange(){
-    this.setState({member: true})
+  handleChange(event){
+    const name = event.target.name;
+    this.setState({
+      [name]: event.target.value
+    })
   }
-  handleClick(){
-    console.log({email, password})
+  handleSubmit(){
+    const {name, email, password} = this.state
+    const data =
+     { username: username,
+      password: password,
+      email: email
+    }
+    axios.post('/', data)
+    .then(data => console.log('User Registered'))
+    .catch((err) => console.log('AXIOS POST ERROR', err))
   }
   render(){
 const { member } = this.state;
@@ -29,16 +42,16 @@ const { member } = this.state;
     <div>
 
     </div>
-    <form action='/login' onSubmit={this.handleClick} method="POST">
+    <form action='/login' onSubmit={this.handleSubmit} method="POST">
     <div>
       <label>Email</label>
-      <input type='email' id='email' name='name' required/>
+      <input type='email' onChange={this.handleChange} id='email' name='email' value={this.state.email} required/>
     </div>
     <div>
       <label>Password</label>
-      <input type='password' id='password' name='password' required/>
+      <input type='password' id='password' onChange={this.handleChange} name='password' value={this.state.password} required/>
     </div>
-    <button onClick="handleClick" type="submit">login</button>
+    <button onClick={this.handleSubmit} type="submit">login</button>
     </form>
 
     </div>
@@ -50,20 +63,20 @@ const { member } = this.state;
 
         <h1>Register</h1>
 
-        <form action='/login' method="POST">
+        <form action='/' method="POST">
         <div>
           <label>Name</label>
-          <input type='text' id='name' name='name' required/>
+          <input value={this.state.username}type='text' id='name' onChange={this.handleChange} name='username' required/>
         </div>
         <div>
           <label>Email</label>
-          <input type='email' id='email' name='name' required/>
+          <input type='email' id='email' name='email' onChange={this.handleChange} value={this.state.email}required/>
         </div>
         <div>
           <label>Password</label>
-          <input type='password' id='password' name='password' required/>
+          <input type='password' id='password' onChange={this.handleChange} name='password' value={this.state.password}required/>
         </div>
-        <button type="submit">Register</button>
+        <button type="submit" onClick={this.handleSubmit}>Register</button>
         </form>
 
         </div>
