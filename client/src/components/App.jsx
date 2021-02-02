@@ -27,7 +27,7 @@ render() {
   }
   return (
     <div>
-<button onClick={this.handleClick}>{status}</button>
+<button onClick={this.handleClick}>Logout</button>
 <div>
 {status === 'Login' ? <Login /> :
   <GoogleApiWrapper />}
