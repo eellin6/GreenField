@@ -2,6 +2,7 @@ if(process.env.NODE_ENV !== 'production'){
   require('dotenv').config()
   //this loads all the environment variables and sets them inside of process.env
 }
+
 const methodOverride = require('method-override')
 const express = require('express');
 const db = require('./db/database.js')
@@ -12,7 +13,7 @@ const path = require('path');
 const axios = require('axios');
 const bodyParser= require('body-parser');
 //changed extended to false to work with form data;allows data to be in req body
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, '..','client','dist')))
 
 const bcrypt =  require('bcrypt')
@@ -44,7 +45,7 @@ const notAuthenticated = (req, res, next) => {
   next();
 }
 initializePassport(passport,
-   email => db.find(user => user.email === email)
+   email => User.find(user => user.email === email)
   //return db query  find user => user.email === email
   //id => users.find(user => user.id === id)
 );
@@ -55,38 +56,14 @@ app.get('/',checkAuthenticated, (req, res) => {
 })
 //login route to display login page
 app.get('/login', notAuthenticated, (req, res) => {
-  res.render('Login.jsx')
+  res.render('/login')
 })
 //registration route
 app.get('/register', (req, res) => {
-  res.render('Register.jsx')
+  res.render('Login.jsx')
 })
 //signup route to submit registration
-app.post('/register', notAuthenticated, async (req, res) => {
-//create new user with hashed password
-try {
-const hashedPw = await bcrypt.hash(req.body.password, 10)
-//insert id name email and hasedPW into db
-//res.redirect('/login)
-} catch {
-res.redirect('/register')
-}
-})
-//login route to submit a login
-app.post('/login', notAuthenticated, passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/login',
-  failureFlash: true
-}) )
-//logout route
-app.delete('/logout', (req, res) => {
-  req.logOut()
-  res.redirect('/login')
-})
 
-app.listen(3000, function() {
-  console.log('listening on 3000')
-})
 app.get('/api/markers', (req, res) => {
 
   Markers.find({})
@@ -121,6 +98,7 @@ app.post('/api/markers/', (req, res) => {
       console.log(err);
     });
 });
+<<<<<<< HEAD
 app.post('/favorites', (req, res) => {
   console.log('APP POST REQ BODY', req.body);
 
@@ -139,9 +117,59 @@ app.post('/favorites', (req, res) => {
   newFavorite.save()
     .then((data) => {
       console.log(data);
+=======
+app.post('/register', notAuthenticated, async(req, res) => {
+  console.log('APP POST REQ', req.body);
+  const {username, email} = req.body;
+  const password = await bcrypt.hash(req.body.password, 10)
+
+  const newUser = new User({
+    username,
+    password,
+    email
+  })
+  newUser.save()
+    .then((data) => {
+      console.log('THIS IS DATA:', data);
+      res.redirect('/')
+>>>>>>> 4bba0d1b98e78516786ee1df2d98914287989816
 
     })
     .catch((err) => {
       console.log(err);
     });
+<<<<<<< HEAD
 });
+=======
+});
+
+app.post('/login', notAuthenticated, passport.authenticate('local', {
+
+  successRedirect: '/',
+  failureRedirect: '/login',
+  failureFlash: true
+})
+
+
+)
+
+
+
+
+
+//logout route
+app.delete('/logout', (req, res) => {
+  req.logOut()
+  res.redirect('/login')
+})
+
+
+
+
+
+
+
+app.listen(3000, function() {
+  console.log('listening on 3000')
+})
+>>>>>>> 4bba0d1b98e78516786ee1df2d98914287989816
