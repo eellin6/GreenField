@@ -2,6 +2,7 @@ if(process.env.NODE_ENV !== 'production'){
   require('dotenv').config()
   //this loads all the environment variables and sets them inside of process.env
 }
+
 const methodOverride = require('method-override')
 const express = require('express');
 const db = require('./db/database.js')
@@ -55,22 +56,14 @@ app.get('/',checkAuthenticated, (req, res) => {
 })
 //login route to display login page
 app.get('/login', notAuthenticated, (req, res) => {
-  res.render('Login.jsx')
+  res.render(Login)
 })
 //registration route
-app.get('/login', (req, res) => {
+app.get('/register', (req, res) => {
   res.render('Login.jsx')
 })
 //signup route to submit registration
-app.post('/register', notAuthenticated, async (req, res) => {
-//create new user with hashed password
-// try {
-const hashedPw = await bcrypt.hash(req.body.password, 10)
-//insert id name email and hasedPW into db
-// //res.redirect('/login)
-// } catch {
-// res.//}
-})
+
 //login route to submit a login
 app.post('/login', notAuthenticated, passport.authenticate('local', {
   successRedirect: '/',
@@ -120,7 +113,7 @@ app.post('/api/markers/', (req, res) => {
       console.log(err);
     });
 });
-app.post('/', async(req, res) => {
+app.post('/register', notAuthenticated, async(req, res) => {
   console.log('APP POST REQ', req);
   const {username, email} = req.body;
   const password = await bcrypt.hash(req.body.password, 10)
