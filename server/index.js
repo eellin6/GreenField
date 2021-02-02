@@ -13,7 +13,7 @@ const path = require('path');
 const axios = require('axios');
 const bodyParser= require('body-parser');
 //changed extended to false to work with form data;allows data to be in req body
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, '..','client','dist')))
 
 const bcrypt =  require('bcrypt')
@@ -45,7 +45,7 @@ const notAuthenticated = (req, res, next) => {
   next();
 }
 initializePassport(passport,
-   email => db.find(user => user.email === email)
+   email => User.find(user => user.email === email)
   //return db query  find user => user.email === email
   //id => users.find(user => user.id === id)
 );
@@ -56,7 +56,7 @@ app.get('/',checkAuthenticated, (req, res) => {
 })
 //login route to display login page
 app.get('/login', notAuthenticated, (req, res) => {
-  res.render(Login)
+  res.render('/login')
 })
 //registration route
 app.get('/register', (req, res) => {
@@ -64,21 +64,6 @@ app.get('/register', (req, res) => {
 })
 //signup route to submit registration
 
-//login route to submit a login
-app.post('/login', notAuthenticated, passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/login',
-  failureFlash: true
-}) )
-//logout route
-app.delete('/logout', (req, res) => {
-  req.logOut()
-  res.redirect('/login')
-})
-
-app.listen(3000, function() {
-  console.log('listening on 3000')
-})
 app.get('/api/markers', (req, res) => {
 
   Markers.find({})
@@ -114,7 +99,7 @@ app.post('/api/markers/', (req, res) => {
     });
 });
 app.post('/register', notAuthenticated, async(req, res) => {
-  console.log('APP POST REQ', req);
+  console.log('APP POST REQ', req.body);
   const {username, email} = req.body;
   const password = await bcrypt.hash(req.body.password, 10)
 
@@ -126,9 +111,40 @@ app.post('/register', notAuthenticated, async(req, res) => {
   newUser.save()
     .then((data) => {
       console.log('THIS IS DATA:', data);
+      res.redirect('/')
 
     })
     .catch((err) => {
       console.log(err);
     });
 });
+
+app.post('/login', notAuthenticated, passport.authenticate('local', {
+
+  successRedirect: '/',
+  failureRedirect: '/login',
+  failureFlash: true
+})
+
+
+)
+
+
+
+
+
+//logout route
+app.delete('/logout', (req, res) => {
+  req.logOut()
+  res.redirect('/login')
+})
+
+
+
+
+
+
+
+app.listen(3000, function() {
+  console.log('listening on 3000')
+})

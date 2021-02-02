@@ -9,7 +9,9 @@ class Login extends React.Component{
       member: false,
     username: '',
     email: '',
-    password: ''
+    password: '',
+    loginEmail: '',
+    loginPassword: ''
     }
 this.handleChange = this.handleChange.bind(this)
 this.handleSubmit = this.handleSubmit.bind(this)
@@ -31,13 +33,23 @@ this.handleClick = this.handleClick.bind(this)
       password: password,
       email: email
     }
-    axios.post('/', data)
+    axios.post('/register', data)
+    .then(data => console.log('User Registered'))
+    .catch((err) => console.log('AXIOS POST ERROR', err))
+  }
+  handleLogin(){
+    const { loginEmail, loginPassword} = this.state
+    const data =
+     {
+      password: loginPassword,
+      email: loginEmail
+    }
+    axios.post('/login', data)
     .then(data => console.log('User Registered'))
     .catch((err) => console.log('AXIOS POST ERROR', err))
   }
   render(){
-const { member } = this.state;
-    if(member){
+
 
       return(
     <div>
@@ -46,25 +58,21 @@ const { member } = this.state;
     <div>
 
     </div>
-    <form action='/login' onSubmit={this.handleSubmit} method="POST">
+    <form action='/login' onSubmit={this.handleLogin} method="POST">
     <div>
       <label>Email</label>
-      <input type='email' onChange={this.handleChange} id='email' name='email' value={this.state.email} required/>
+      <input type='email' onChange={this.handleChange} id='loginEmail' name='loginEmail' value={this.state.loginEmail} required/>
     </div>
     <div>
       <label>Password</label>
-      <input type='password' id='password' onChange={this.handleChange} name='password' value={this.state.password} required/>
+      <input type='password' id='loginPassword' onChange={this.handleChange} name='loginPassword' value={this.state.loginPassword} required/>
     </div>
-    <button onClick={this.handleSubmit} type="submit">login</button>
+    <button onClick={this.handleLogin} type="submit">Login</button>
     </form>
 
-    </div>
 
-      )
-    }else {
-      return(
         <div>
-          <button onClick={this.handleClick}>Login</button>
+
         <h1>Register</h1>
 
         <form action='/register' method="POST">
@@ -85,8 +93,9 @@ const { member } = this.state;
 
         </div>
 
+    </div>
         )
-    }
+
   }
 }
 
