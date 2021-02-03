@@ -26,7 +26,7 @@ class CreateMarker extends Component {
 
     this.setState(prevState => {
       const marker = [...this.state.marker];
-      marker[index] = { ...marker[index], position: { lat, lng } };
+      marker[0] = { ...marker[0], position: { lat, lng } };
       return { marker };
     });
   };
@@ -55,11 +55,10 @@ onClick={(e) => console.log(e)}
  style={style}
  containerStyle={containerStyle}
  ><Marker
- key={index}
  position={marker.position}
  name={marker.name}
  draggable={true}
- onDragend={(t, map, coord) => this.onMarkerDragEnd(coord, index)}
+ onDragend={(t, map, coord) => this.onMarkerDragEnd(coord)}
 />
 
 </Map>

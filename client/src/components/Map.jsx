@@ -94,16 +94,19 @@ changeView(option) {
     width: '100%',
     height: '100%'
   }
+  const { view } = this.state
   //  console.log(this.state.selectedPlace)
 return (
   <div>
   <h2><button
     type="button"
     position="relative"
-    style={{backgroundColor: this.state.drawMarker ? 'green' : null}}
-    onClick={() => {this.setState({drawMarker: !this.state.drawMarker})}}
+    style={{backgroundColor: view === 'addMarker' ? 'green' : null}}
+    onClick={() => this.changeView('addMarker')}
     >ADD & DRAG </button></h2>
-<Map
+<div className='main'>
+  {view === 'map'
+  ? <Map
 onClick={(e) => console.log(e)}
  google={this.props.google}
  initialCenter={{
@@ -140,10 +143,11 @@ onClick={(e) => console.log(e)}
 
 
         </InfoWindow>
- </Map>
- </div>
-)
+  </Map> : <CreateMarker />
  }
+ </div>
+ </div>
+  )}
 }
 
 export default GoogleApiWrapper({
