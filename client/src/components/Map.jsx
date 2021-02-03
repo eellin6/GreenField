@@ -79,6 +79,12 @@ changeView(option) {
           onClick={this.onHeartClick}
     ></FaHeart> : <FaRegHeart onClick={this.onHeartClick} ></FaRegHeart>
      }
+        <form >
+
+      <label>Comment</label>
+      <input type='text'  id='comment' name='comment'  />
+    <button  type="submit">Post</button>
+    </form>
     </div>
    );
    ReactDOM.render(React.Children.only(fav), document.getElementById('iwc'))

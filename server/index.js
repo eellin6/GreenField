@@ -22,6 +22,7 @@ const passport = require('passport');
 const flash = require('express-flash')
 const session = require('express-session')
 const initializePassport = require('../passport.config')
+
 app.use(flash())
 app.use(session({
   secret: process.env.SESSION_SECRET,
@@ -52,9 +53,9 @@ initializePassport(passport,
 );
 
 //login route to display login page
-app.get('/login',  (req, res) => {
-  res.render('/login')
-})
+// app.get('/login',  (req, res) => {
+//   res.render('/login')
+// })
 //registration route
 app.get('/register', (req, res) => {
   res.render('Login.jsx')
@@ -97,8 +98,8 @@ app.post('/api/markers/', (req, res) => {
 });
 app.post('/register', notAuthenticated, async(req, res) => {
   //console.log('APP POST REQ', req);
-  const {username, email} = req.body;
-  const password = await bcrypt.hash(req.body.password, 10)
+  const {username, email, password} = req.body;
+  //const password = await bcrypt.hash(req.body.password, 10)
 
   const newUser = new User({
     username,
@@ -158,13 +159,22 @@ app.post('/login', (req, res, next) => {
     if (data) {
       console.log('this is login server data', data)
 
-       bcrypt.compare(password, data.password)
-      .then((correct) => console.log('login successful'))
-      .catch((err) => console.log('WRONG PASSWORD', err))
+      if(password === data.password){
+        console.log('LOGIN CORRECT')
+        res.redirect('/')
+      } else {
+        console.log('INCORRECT PASSWORD')
+        res.status(401).send('INCORRECT PASSWORD');
+      }
+
+      //  bcrypt.compare(password, data.password)
+      // .then((correct) => console.log('login successful'))
+      // .catch((err) => console.log('WRONG PASSWORD', err))
 
     } else {
       console.log('DOES NOT WORK')
-      res.redirect('/');
+      res.status(401).send('USER NOT FOUND');
+
 
     }
   });
