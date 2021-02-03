@@ -38,37 +38,32 @@ this.handleClick = this.handleClick.bind(this)
 
     this.state.isLoggedIn = true
   }
-
+register(){
+  const {username, password} = this.state
+  axios({
+    method: "post",
+    data: {
+      username: username,
+      password: password
+    },
+    withCredentials: true,
+    url: "http://localhost:3000/register"
+  }).then((res) => console.log(res))
+}
   render(){
 
 
       return(
     <div>
-
-
-
-
-        <div>
-
         <h1>Register</h1>
+        <input placeholder='username'
+        onChange={this.handleChange}
+        />
+        <input placeholder='password'
+        onChange={this.handleChange}
+        />
+        <button>Submit</button>
 
-        <form  action='/register' method="POST">
-        <div>
-          <label>Name</label>
-          <input value={this.state.username}type='text' id='name' onChange={this.handleChange} name='username' required/>
-        </div>
-        <div>
-          <label>Email</label>
-          <input type='email' id='email' name='email' onChange={this.handleChange} value={this.state.email}required/>
-        </div>
-        <div>
-          <label>Password</label>
-          <input type='password' id='password' onChange={this.handleChange} name='password' value={this.state.password}required/>
-        </div>
-        <button type="submit" >Register</button>
-        </form>
-
-        </div>
 
     </div>
         )

@@ -51,16 +51,6 @@ initializePassport(passport,
   //return db query  find user => user.email === email
   //id => users.find(user => user.id === id)
 );
-<<<<<<< HEAD
-app.get('/', (req, res) => {
-  //render homepage
-  res.render('index.html')
-
-})
-
-
-
-=======
 
 //login route to display login page
 // app.get('/login',  (req, res) => {
@@ -71,7 +61,6 @@ app.get('/register', (req, res) => {
   res.render('Login.jsx')
 })
 //signup route to submit registration
->>>>>>> 776658171dbb87b9c893a98bb796d3e394cef989
 
 app.get('/api/markers', (req, res) => {
 
@@ -153,16 +142,8 @@ app.post('/api/favorites', (req, res) => {
       console.log(err);
     });
 });
-<<<<<<< HEAD
-//login route to display login page
-app.get('/login', notAuthenticated, (req, res) => {
-  res.render('/login')
-})
-app.post('/login', notAuthenticated, passport.authenticate('local', {
-=======
 
 //app.post('/login', notAuthenticated, passport.authenticate('local', {
->>>>>>> 776658171dbb87b9c893a98bb796d3e394cef989
 
 //   successRedirect: '/',
 //   failureRedirect: '/',

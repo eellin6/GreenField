@@ -17,18 +17,11 @@ class App extends Component {
     this.changeView = this.changeView.bind(this)
   }
 
-<<<<<<< HEAD
-handleClick(){
-axios.get('/login')
-.then(data => console.log('Success'))
-.catch(err => console.log('Error', err))
-=======
 
 changeView(option) {
   this.setState({
     view: option
   });
->>>>>>> 776658171dbb87b9c893a98bb796d3e394cef989
 }
 renderView() {
 
@@ -49,19 +42,14 @@ render() {
 
   return (
     <div>
-<<<<<<< HEAD
-<button onClick={this.handleClick}>{status}</button>
-<div>
-
-  <GoogleApiWrapper />
-=======
+      <h1>Welcome To Geo-Nov</h1>
         <div className='nav'>
-          <span className='logo'
+          <button className='logo'
             onClick={() => this.changeView('map')}>
-            Geonovo
-          </span>
+            Home
+          </button>
 
-          <span
+          <button
             className={
               view === 'map'
                 ? 'nav-selected'
@@ -70,22 +58,21 @@ render() {
             onClick={() => this.changeView('map')}
           >
             Map
-          </span>
+          </button>
 
 
-          <span className='nav-unselected' onClick={() => this.changeView('login')}>
+          <button className='nav-unselected' onClick={() => this.changeView('login')}>
             Login
-          </span>
-          <span className='nav-unselected' onClick={() => this.changeView('register')}>
+          </button>
+          <button className='nav-unselected' onClick={() => this.changeView('register')}>
             Register
-          </span>
+          </button>
 
         </div>
         <div className='main'>
           {this.renderView()}
         </div>
       </div>
->>>>>>> 776658171dbb87b9c893a98bb796d3e394cef989
 
   )
 }
