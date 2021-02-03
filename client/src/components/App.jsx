@@ -17,7 +17,9 @@ class App extends Component {
   }
 
 handleClick(){
-this.setState({member: true})
+axios.get('/login')
+.then(data => console.log('Success'))
+.catch(err => console.log('Error', err))
 }
 render() {
 
@@ -27,10 +29,10 @@ render() {
   }
   return (
     <div>
-<button onClick={this.handleClick}>Logout</button>
+<button onClick={this.handleClick}>{status}</button>
 <div>
-{status === 'Login' ? <Login /> :
-  <GoogleApiWrapper />}
+
+  <GoogleApiWrapper />
 
 </div>
     </div>

@@ -8,7 +8,7 @@ const express = require('express');
 const db = require('./db/database.js')
 const {User, Favorites, Markers} = require('./db/database.js')
 const app = express();
-
+app.set('view engine', 'ejs')
 const path = require('path');
 const axios = require('axios');
 const bodyParser= require('body-parser');
@@ -49,20 +49,14 @@ initializePassport(passport,
   //return db query  find user => user.email === email
   //id => users.find(user => user.id === id)
 );
-app.get('/',checkAuthenticated, (req, res) => {
+app.get('/', (req, res) => {
   //render homepage
   res.render('index.html')
 
 })
-//login route to display login page
-app.get('/login', notAuthenticated, (req, res) => {
-  res.render('/login')
-})
-//registration route
-app.get('/register', (req, res) => {
-  res.render('Login.jsx')
-})
-//signup route to submit registration
+
+
+
 
 app.get('/api/markers', (req, res) => {
 
@@ -98,6 +92,10 @@ app.post('/api/markers/', (req, res) => {
       console.log(err);
     });
 });
+//registration route
+app.get('/register', (req, res) => {
+  res.render('Login.jsx')
+})
 app.post('/register', notAuthenticated, async(req, res) => {
   console.log('APP POST REQ', req.body);
   const {username, email} = req.body;
@@ -118,7 +116,10 @@ app.post('/register', notAuthenticated, async(req, res) => {
       console.log(err);
     });
 });
-
+//login route to display login page
+app.get('/login', notAuthenticated, (req, res) => {
+  res.render('/login')
+})
 app.post('/login', notAuthenticated, passport.authenticate('local', {
 
   successRedirect: '/',
