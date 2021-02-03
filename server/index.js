@@ -15,7 +15,7 @@ const bodyParser= require('body-parser');
 //changed extended to false to work with form data;allows data to be in req body
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, '..','client','dist')))
-
+app.use(bodyParser.json())
 const bcrypt =  require('bcrypt')
 const passport = require('passport');
 const flash = require('express-flash')
@@ -28,7 +28,7 @@ app.use(session({
   saveUninitialized: false // do we want to save empty value
 }))
 app.use(methodOverride('_method'))
-
+// app.set('view engine', 'ejs')
 app.use(passport.initialize())
 //stores variables to be persisted across the session
 app.use(passport.session())
@@ -45,17 +45,13 @@ const notAuthenticated = (req, res, next) => {
   next();
 }
 initializePassport(passport,
-   email => User.find(user => user.email === email)
+   email => User.findOne({where: {}})
   //return db query  find user => user.email === email
   //id => users.find(user => user.id === id)
 );
-app.get('/',checkAuthenticated, (req, res) => {
-  //render homepage
-  res.render('index.html')
 
-})
 //login route to display login page
-app.get('/login', notAuthenticated, (req, res) => {
+app.get('/login',  (req, res) => {
   res.render('/login')
 })
 //registration route
@@ -99,7 +95,7 @@ app.post('/api/markers/', (req, res) => {
     });
 });
 app.post('/register', notAuthenticated, async(req, res) => {
-  console.log('APP POST REQ', req.body);
+  //console.log('APP POST REQ', req);
   const {username, email} = req.body;
   const password = await bcrypt.hash(req.body.password, 10)
 
@@ -110,7 +106,7 @@ app.post('/register', notAuthenticated, async(req, res) => {
   })
   newUser.save()
     .then((data) => {
-      console.log('THIS IS DATA:', data);
+      //console.log('THIS IS DATA:', data);
       res.redirect('/')
 
     })
@@ -119,15 +115,37 @@ app.post('/register', notAuthenticated, async(req, res) => {
     });
 });
 
-app.post('/login', notAuthenticated, passport.authenticate('local', {
+// app.post('/login', notAuthenticated, passport.authenticate('local', {
 
-  successRedirect: '/',
-  failureRedirect: '/login',
-  failureFlash: true
-})
+//   successRedirect: '/',
+//   failureRedirect: '/',
+//   failureFlash: true
+// })
 
 
-)
+// )
+
+app.post('/login', (req, res, next) => {
+  //console.log(Users);
+
+  const {email, password} = req.body;
+  console.log('login req.body', req.body)
+  return User.findOne({where: {email: req.body.email}}).then((data) => {
+    //console.log('THIS IS DATA', data);
+    if (data) {
+      console.log('this is login server data', data)
+
+       bcrypt.compare(password, data.password)
+      .then((correct) => console.log('login successful'))
+      .catch((err) => console.log('WRONG PASSWORD', err))
+
+    } else {
+      console.log('DOES NOT WORK')
+      res.redirect('/');
+
+    }
+  });
+});
 
 
 

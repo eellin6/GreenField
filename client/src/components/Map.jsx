@@ -50,7 +50,7 @@ class MapContainer extends Component {
      width: '96vw',
      height: '85vh'
    }
-   console.log(this.state.selectedPlace)
+
 return (
 <Map
  google={this.props.google}
