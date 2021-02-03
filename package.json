@@ -39,6 +39,7 @@
     "passport-local": "^1.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-icons": "^4.1.0",
     "sequelize": "^6.5.0",
     "sequelize-cli": "^6.2.0"
   },
