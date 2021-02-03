@@ -14,6 +14,7 @@ const axios = require('axios');
 const bodyParser= require('body-parser');
 //changed extended to false to work with form data;allows data to be in req body
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '..','client','dist')))
 
 const bcrypt =  require('bcrypt')
@@ -98,26 +99,6 @@ app.post('/api/markers/', (req, res) => {
       console.log(err);
     });
 });
-<<<<<<< HEAD
-app.post('/favorites', (req, res) => {
-  console.log('APP POST REQ BODY', req.body);
-
-  const {latitude,
-    longitude,
-    imageUrl,
-    description} = req.body;
-
-  const newFavorite = new Favorites({
-    latitude,
-    longitude,
-    imageUrl,
-    description
-  });
-
-  newFavorite.save()
-    .then((data) => {
-      console.log(data);
-=======
 app.post('/register', notAuthenticated, async(req, res) => {
   console.log('APP POST REQ', req.body);
   const {username, email} = req.body;
@@ -132,15 +113,33 @@ app.post('/register', notAuthenticated, async(req, res) => {
     .then((data) => {
       console.log('THIS IS DATA:', data);
       res.redirect('/')
->>>>>>> 4bba0d1b98e78516786ee1df2d98914287989816
 
     })
     .catch((err) => {
       console.log(err);
     });
-<<<<<<< HEAD
 });
-=======
+
+app.post('/api/favorites', (req, res) => {
+  console.log('APP POST REQ', req.body);
+  const {latitude, longitude, description, imageUrl} = req.body;
+
+
+  const newFavorite = new Favorites({
+    latitude,
+    longitude,
+    imageUrl,
+    description
+  })
+  newFavorite.save()
+    .then((data) => {
+      console.log('THIS IS DATA:', data);
+      res.redirect('/')
+
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 app.post('/login', notAuthenticated, passport.authenticate('local', {
@@ -172,4 +171,3 @@ app.delete('/logout', (req, res) => {
 app.listen(3000, function() {
   console.log('listening on 3000')
 })
->>>>>>> 4bba0d1b98e78516786ee1df2d98914287989816

@@ -31,9 +31,10 @@ class MapContainer extends Component {
     console.log(this.state.selectedPlace)
     const { position, name, picture } = this.state.selectedPlace
     const { lat, lng } = position
-    const data = {lat, lng, name, picture}
-    axios.post('/favorites', data)
-    .then(data => console.log('favorite added'))
+    const data = {latitude: lat, longitude: lng, description: name, imageUrl: picture}
+    axios.post('/api/favorites', data)
+    .then(data =>
+    console.log('favorite added--------->', data))
     .catch(err => console.log(err))
   }
   onMarkerClick (props, marker, e) {
@@ -86,7 +87,7 @@ class MapContainer extends Component {
     width: '100%',
     height: '100%'
   }
-   console.log(this.state.selectedPlace)
+  //  console.log(this.state.selectedPlace)
 return (
   <div>
   <h2><button
