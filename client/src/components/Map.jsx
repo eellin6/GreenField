@@ -7,6 +7,7 @@ import axios from 'axios'
 import Favorites from './Favorites'
 import { FaRegHeart, FaHeart, FaRegGrinStars, FaGhost } from 'react-icons/fa'
 import { RiAliensFill } from 'react-icons/ri'
+import CreateMarker from './CreateMarker'
 
 class MapContainer extends Component {
   constructor(props) {
@@ -19,11 +20,13 @@ class MapContainer extends Component {
       markers: data,
       favorites: [],
       isFavorite: false,
-      drawMarker: false
+      drawMarker: false,
+      view: 'map'
     }
     this.onMarkerClick = this.onMarkerClick.bind(this);
     this.onInfoWindowClose = this.onInfoWindowClose.bind(this);
     this.onHeartClick = this.onHeartClick.bind(this);
+    this.changeView = this.changeView.bind(this);
   }
 
   onHeartClick() {
@@ -62,7 +65,11 @@ class MapContainer extends Component {
       showingInfoWindow: false
     });
   }
-
+changeView(option) {
+  this.setState({
+    view: option
+  })
+}
  onInfoWindowOpen(props, e) {
    const fav = (
      <div>
