@@ -7,6 +7,7 @@ import axios from 'axios'
 import Favorites from './Favorites'
 import { FaRegHeart, FaHeart, FaRegGrinStars, FaGhost } from 'react-icons/fa'
 import { RiAliensFill } from 'react-icons/ri'
+import CreateMarker from './CreateMarker'
 
 class MapContainer extends Component {
   constructor(props) {
@@ -19,11 +20,13 @@ class MapContainer extends Component {
       markers: data,
       favorites: [],
       isFavorite: false,
-      drawMarker: false
+      drawMarker: false,
+      view: 'map'
     }
     this.onMarkerClick = this.onMarkerClick.bind(this);
     this.onInfoWindowClose = this.onInfoWindowClose.bind(this);
     this.onHeartClick = this.onHeartClick.bind(this);
+    this.changeView = this.changeView.bind(this);
   }
 
   onHeartClick() {
@@ -62,7 +65,11 @@ class MapContainer extends Component {
       showingInfoWindow: false
     });
   }
-
+changeView(option) {
+  this.setState({
+    view: option
+  })
+}
  onInfoWindowOpen(props, e) {
    const fav = (
      <div>
@@ -72,6 +79,12 @@ class MapContainer extends Component {
           onClick={this.onHeartClick}
     ></FaHeart> : <FaRegHeart onClick={this.onHeartClick} ></FaRegHeart>
      }
+        <form >
+
+      <label>Comment</label>
+      <input type='text'  id='comment' name='comment'  />
+    <button  type="submit">Post</button>
+    </form>
     </div>
    );
    ReactDOM.render(React.Children.only(fav), document.getElementById('iwc'))
@@ -87,16 +100,19 @@ class MapContainer extends Component {
     width: '100%',
     height: '100%'
   }
+  const { view } = this.state
   //  console.log(this.state.selectedPlace)
 return (
   <div>
   <h2><button
     type="button"
     position="relative"
-    style={{backgroundColor: this.state.drawMarker ? 'green' : null}}
-    onClick={() => {this.setState({drawMarker: !this.state.drawMarker})}}
+    style={{backgroundColor: view === 'addMarker' ? 'green' : null}}
+    onClick={() => this.changeView('addMarker')}
     >ADD & DRAG </button></h2>
-<Map
+<div className='main'>
+  {view === 'map'
+  ? <Map
 onClick={(e) => console.log(e)}
  google={this.props.google}
  initialCenter={{
@@ -133,10 +149,11 @@ onClick={(e) => console.log(e)}
 
 
         </InfoWindow>
- </Map>
- </div>
-)
+  </Map> : <CreateMarker />
  }
+ </div>
+ </div>
+  )}
 }
 
 export default GoogleApiWrapper({

@@ -4,18 +4,7 @@ import MapContainer from './Map'
 import axios from 'axios'
 import Login from './Login'
 import Register from './Register'
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-  useHistory,
-  useLocation
-} from "react-router-dom";
 
-
-import Top10 from './Register'
 class App extends Component {
   constructor(props) {
     super(props)
