@@ -14,6 +14,7 @@ const axios = require('axios');
 const bodyParser= require('body-parser');
 //changed extended to false to work with form data;allows data to be in req body
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '..','client','dist')))
 app.use(bodyParser.json())
 const bcrypt =  require('bcrypt')
@@ -115,7 +116,29 @@ app.post('/register', notAuthenticated, async(req, res) => {
     });
 });
 
-// app.post('/login', notAuthenticated, passport.authenticate('local', {
+app.post('/api/favorites', (req, res) => {
+  console.log('APP POST REQ', req.body);
+  const {latitude, longitude, description, imageUrl} = req.body;
+
+
+  const newFavorite = new Favorites({
+    latitude,
+    longitude,
+    imageUrl,
+    description
+  })
+  newFavorite.save()
+    .then((data) => {
+      console.log('THIS IS DATA:', data);
+      res.redirect('/')
+
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+//app.post('/login', notAuthenticated, passport.authenticate('local', {
 
 //   successRedirect: '/',
 //   failureRedirect: '/',
