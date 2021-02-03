@@ -27,7 +27,44 @@ class MapContainer extends Component {
     this.onInfoWindowClose = this.onInfoWindowClose.bind(this);
     this.onHeartClick = this.onHeartClick.bind(this);
     this.changeView = this.changeView.bind(this);
+    this.addMarkers = this.addMarkers.bind(this);
+    this.markerFetcher = this.markerFetcher.bind(this)
   }
+  addMarkers(){
+    axios.post('/markers', data )
+    .then((data) => {console.log('data sent to server')})
+    .catch((err) => {console.log(err)})
+  }
+  addData(){
+    axios.post('/markers', this.state.markers )
+    .then((data) => {console.log('data sent to server')})
+    .catch((err) => {console.log(err)})
+  }
+  markerFetcher() {
+    //make a get request
+    axios.get('/markers')
+    .then((marker) =>{
+      console.log('THIS IS AXIOS REQUEST DATA', marker.data);
+
+      this.setState({
+        markers: marker.data
+      });
+
+    } )
+    .catch((err) => {
+
+    });
+  }
+  componentDidMount(){
+    this.addMarkers();
+    this.markerFetcher();
+    console.log(data)
+
+
+
+  }
+
+
 
   onHeartClick() {
     console.log('click')
@@ -103,6 +140,7 @@ changeView(option) {
   const { view } = this.state
   //  console.log(this.state.selectedPlace)
 return (
+
   <div>
   <h2><button
     type="button"
@@ -125,7 +163,9 @@ onClick={(e) => console.log(e)}
  >
 
 {this.state.markers.map((marker, index) => (
+
           <Marker
+
             key={index}
             position={{lat: marker.latitude,
                      lng: marker.longitude
