@@ -44,7 +44,7 @@ this.handleLogin = this.handleLogin.bind(this)
 
 
       return(
-    <div>
+    <div style={{position: 'centered'}}>
 
     <h1>Login</h1>
     <div>

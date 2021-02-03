@@ -168,7 +168,7 @@ app.post('/login', (req, res, next) => {
         res.redirect('/')
       } else {
         console.log('INCORRECT PASSWORD')
-        res.status(401).send('INCORRECT PASSWORD');
+        res.redirect('/');
       }
 
       //  bcrypt.compare(password, data.password)
