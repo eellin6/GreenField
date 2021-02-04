@@ -8,7 +8,7 @@ const express = require('express');
 const db = require('./db/database.js')
 const {User, Favorites, Markers} = require('./db/database.js')
 const app = express();
-
+app.set('view engine', 'ejs')
 const path = require('path');
 const axios = require('axios');
 const bodyParser= require('body-parser');
@@ -35,21 +35,27 @@ app.use(passport.initialize())
 //stores variables to be persisted across the session
 app.use(passport.session())
 const checkAuthenticated = (req, res, next) => {
+  //this function checks if the user is logged in
   if(req.isAuthenticated()){
     return next();
   }
   res.redirect('/login')
 }
 const notAuthenticated = (req, res, next) => {
+  //this function checks if the user is not logged in
+  //not working
+  //if the user is logged in
   if(req.isAuthenticated()){
+    //redirect to the home page
    return res.redirect('/');
   }
+  //if they are not authenticated keep going
   next();
 }
 initializePassport(passport,
-   email => User.findOne({where: {}})
+   email => User.findOne({where: {}}),
   //return db query  find user => user.email === email
-  //id => users.find(user => user.id === id)
+  id => User.findOne(user => user.id === id)
 );
 
 //login route to display login page
@@ -57,9 +63,9 @@ initializePassport(passport,
 //   res.render('/login')
 // })
 //registration route
-app.get('/register', (req, res) => {
-  res.render('Login.jsx')
-})
+// app.get('/register', (req, res) => {
+//   res.render('Login.jsx')
+// })
 //signup route to submit registration
 
 app.get('/markers', (req, res) => {
@@ -123,7 +129,8 @@ app.post('/markers', (req, res) => {
   //     console.log(err);
   //   });
 });
-app.post('/register', notAuthenticated, async(req, res) => {
+
+app.post('/register', (req, res) => {
   //console.log('APP POST REQ', req);
   const {username, email, password} = req.body;
   //const password = await bcrypt.hash(req.body.password, 10)
@@ -135,7 +142,7 @@ app.post('/register', notAuthenticated, async(req, res) => {
   })
   newUser.save()
     .then((data) => {
-      //console.log('THIS IS DATA:', data);
+      console.log('THIS IS DATA:', data);
       res.redirect('/')
 
     })
@@ -191,7 +198,7 @@ app.post('/login', (req, res, next) => {
         res.redirect('/')
       } else {
         console.log('INCORRECT PASSWORD')
-        res.status(401).send('INCORRECT PASSWORD');
+        res.redirect('/');
       }
 
       //  bcrypt.compare(password, data.password)

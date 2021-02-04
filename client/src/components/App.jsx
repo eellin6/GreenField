@@ -12,7 +12,6 @@ class App extends Component {
       seen: false,
       isLoggedIn: false,
       member: false,
-
       view: 'map'
     }
     this.changeView = this.changeView.bind(this)
@@ -38,18 +37,30 @@ renderView() {
 }
 
 render() {
-  const { view } = this.state;
-
-
+  const { view, isLoggedIn  } = this.state;
+  //if the status of a user is not logged in, display a login button
+  const status = 'Login'
+if(isLoggedIn){
+  //if the status of a user is logged in, display logout button
+  status = 'Logout'
+}
   return (
-    <div>
-        <div className='nav'>
-          <span className='logo'
-            onClick={() => this.changeView('map')}>
-            Geonovo
-          </span>
+    <div style={{color: 'black'}}>
+      <header>
 
-          <span
+      <h1 style={{
+        alignSelf: 'normal',
+        color: 'blue'
+        }}>Welcome To Geo-Nov</h1>
+      </header>
+
+        <div className='nav'>
+          <button className='logo'
+            onClick={() => this.changeView('map')}>
+            Home
+          </button>
+
+          {/* <button
             className={
               view === 'map'
                 ? 'nav-selected'
@@ -58,15 +69,15 @@ render() {
             onClick={() => this.changeView('map')}
           >
             Map
-          </span>
+          </button> */}
 
 
-          <span className='nav-unselected' onClick={() => this.changeView('login')}>
-            Login
-          </span>
-          <span className='nav-unselected' onClick={() => this.changeView('register')}>
+          <button className='nav-unselected' onClick={() => this.changeView('login')}>
+            {status}
+          </button>
+          <button className='nav-unselected' onClick={() => this.changeView('register')}>
             Register
-          </span>
+          </button>
 
         </div>
         <div className='main'>

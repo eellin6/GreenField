@@ -43,10 +43,10 @@ const Favorites = db.define('Favorites', {
   description: Sequelize.STRING
 
 });
-// db.sync({ force: true })
-//   .then(() => {
-//     console.log(`Database & tables created!`);
-//   }).catch((err) => {console.log(err)})
+db.sync({ force: true })
+  .then(() => {
+    console.log(`Database & tables created!`);
+  }).catch((err) => {console.log(err)})
 module.exports = {
   db,
   User,
