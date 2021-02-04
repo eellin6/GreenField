@@ -44,24 +44,33 @@ this.handleLogin = this.handleLogin.bind(this)
 
 
       return(
-    <div style={{position: 'centered'}}>
+        // if you color this div it changes the words in login padding moves it from the left wall
+    <div style={{alignSelf: 'center',
+
+    }}>
 
     <h1>Login</h1>
-    <div>
+    <div className='login'>
 
-    </div>
+
     <form action='/login'  method="POST">
-    <div>
-      <label>Email</label>
-      <input type='email' onChange={this.handleChange} id='email' name='email' value={this.state.email} required/>
+    <div c >
+      <label style={{
+        padding: 10,
+          }} >Email</label>
+      <input style={{margin: 10}}type='email' onChange={this.handleChange} placeholder='Enter Email' id='email' name='email' value={this.state.email} required/>
     </div>
     <div>
-      <label>Password</label>
-      <input type='password' id='password' onChange={this.handleChange} name='password' value={this.state.password} required/>
+      <label className='login' style={{padding: 10}}>Password</label>
+      <input type='password' id='password' placeholder='Enter Password' onChange={this.handleChange} name='password' value={this.state.password} required/>
     </div>
-    <button  type="submit">Login</button>
-    </form>
+    <button className='register' style={{
 
+      marginTop: 10,
+      marginLeft: 3
+    }} type="submit">Login</button>
+    </form>
+</div>
 
 
 

@@ -38,20 +38,29 @@ renderView() {
 
 render() {
   const { view, isLoggedIn  } = this.state;
+  //if the status of a user is not logged in, display a login button
   const status = 'Login'
 if(isLoggedIn){
+  //if the status of a user is logged in, display logout button
   status = 'Logout'
 }
   return (
-    <div>
-      <h1>Welcome To Geo-Nov</h1>
+    <div style={{color: 'black'}}>
+      <header>
+
+      <h1 style={{
+        alignSelf: 'normal',
+        color: 'blue'
+        }}>Welcome To Geo-Nov</h1>
+      </header>
+
         <div className='nav'>
           <button className='logo'
             onClick={() => this.changeView('map')}>
             Home
           </button>
 
-          <button
+          {/* <button
             className={
               view === 'map'
                 ? 'nav-selected'
@@ -60,7 +69,7 @@ if(isLoggedIn){
             onClick={() => this.changeView('map')}
           >
             Map
-          </button>
+          </button> */}
 
 
           <button className='nav-unselected' onClick={() => this.changeView('login')}>

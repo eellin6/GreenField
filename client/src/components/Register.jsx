@@ -36,22 +36,38 @@ this.handleClick = this.handleClick.bind(this)
   render(){
       return(
     <div>
-        <div>
-        <h1>Register</h1>
+        <div className='register'>
+        <h1 className='register'>Register</h1>
         <form  action="/register" method='POST'>
         <div>
-          <label>Name</label>
-          <input value={this.state.username}type='text' id='name' onChange={this.handleChange} name='username' required/>
+          <label style={{padding: 10}}>Username</label>
+          <input value={this.state.username}type='text' placeholder='Enter Username' id='name' onChange={this.handleChange} name='username' required/>
         </div>
         <div>
-          <label>Email</label>
-          <input type='email' id='email' name='email' onChange={this.handleChange} value={this.state.email}required/>
+          <label style={
+            {
+              padding: 10,
+
+            }}>Email</label>
+          {/* padding the input makes it bigger from top to bottom
+            flex makes the input box go below the label
+            margin seperates the input boxes from top to bottom
+          */}
+          <input style={{
+              margin: 10,
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginRight: 10
+            }}type='email' placeholder='Enter Email' id='email' name='email' onChange={this.handleChange} value={this.state.email}required/>
         </div>
         <div>
-          <label>Password</label>
-          <input type='password' id='password' onChange={this.handleChange} name='password' value={this.state.password}required/>
+          <label style={{padding: 10}}>Password</label>
+          <input type='password' id='password' placeholder='Enter Password' onChange={this.handleChange} name='password' value={this.state.password}required/>
         </div>
-        <button type='submit' >Register</button>
+        <button style={{
+          margin: 10,
+          justifyContent: 'center'
+        }}type='submit' >Register</button>
         </form>
         </div>
     </div>
