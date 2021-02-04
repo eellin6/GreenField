@@ -206,6 +206,35 @@ app.post('/login', (req, res, next) => {
     }
   });
 });
+app.post('/comments', (req, res, next) => {
+  //console.log(Users);
+
+  const { comments} = req.body;
+  console.log('comment req.body', req.body)
+  return Markers.findOne({where: {description: req.body.description}}).then((data) => {
+    //console.log('THIS IS DATA', data);
+    if (data) {
+      console.log('this is comment server data', data)
+
+      data.update({
+        comments: req.body.comments
+      })
+      .then((data) => {})
+      .catch((err) => {console.log(err)
+      })
+
+      //  bcrypt.compare(password, data.password)
+      // .then((correct) => console.log('login successful'))
+      // .catch((err) => console.log('WRONG PASSWORD', err))
+
+    } else {
+
+      res.redirect('/')
+
+
+    }
+  });
+});
 
 
 

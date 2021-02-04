@@ -21,6 +21,7 @@ class MapContainer extends Component {
       favorites: [],
       isFavorite: false,
       drawMarker: false,
+      comments: '',
       view: 'map'
     }
     this.onMarkerClick = this.onMarkerClick.bind(this);
@@ -28,7 +29,10 @@ class MapContainer extends Component {
     this.onHeartClick = this.onHeartClick.bind(this);
     this.changeView = this.changeView.bind(this);
     this.addMarkers = this.addMarkers.bind(this);
-    this.markerFetcher = this.markerFetcher.bind(this)
+    this.markerFetcher = this.markerFetcher.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.commentFetcher = this.commentFetcher.bind(this);
   }
   addMarkers(){
     axios.post('/markers', data )
@@ -55,12 +59,44 @@ class MapContainer extends Component {
 
     });
   }
+  commentFetcher() {
+    //make a get request
+    axios.get('/markers')
+    .then((marker) =>{
+     return marker.data.comments
+
+    } )
+    .catch((err) => {
+
+    });
+  }
   componentDidMount(){
     this.addMarkers();
     this.markerFetcher();
     console.log(data)
 
 
+
+  }
+  handleChange(event){
+    event.preventDefault(event)
+    const name = event.target.name;
+    this.setState({
+      [name]: event.target.value
+    })
+  }
+  handleSubmit(){
+    const {comments} = this.state
+
+    const data =
+     { description: this.state.selectedPlace.name,
+      comments: comments
+
+    }
+    axios.post('/comments', data)
+    .then(data => console.log('User Registered'))
+    .then(this.commentFetcher)
+    .catch((err) => console.log('AXIOS POST ERROR', err))
 
   }
 
@@ -83,6 +119,8 @@ class MapContainer extends Component {
       activeMarker: marker,
       showingInfoWindow: true
     });
+
+
   }
    onMarkerDragEnd (coord, index) {
      const { latLng } = coord;
@@ -116,12 +154,14 @@ changeView(option) {
           onClick={this.onHeartClick}
     ></FaHeart> : <FaRegHeart onClick={this.onHeartClick} ></FaRegHeart>
      }
-        <form >
+     <a href={this.state.selectedPlace.picture}>LINK</a>
+        <form   >
 
       <label>Comment</label>
-      <input type='text'  id='comment' name='comment'  />
-    <button  type="submit">Post</button>
+      <input type='text'  id='comments' name='comments' onChange={this.handleChange}  value={this.state.comments} />
+    <button onClick={this.handleSubmit}  type="submit">Post</button>
     </form>
+    <div>{this.state.selectedPlace.comments}</div>
     </div>
    );
    ReactDOM.render(React.Children.only(fav), document.getElementById('iwc'))
