@@ -51,7 +51,8 @@ class MapContainer extends Component {
       console.log('THIS IS AXIOS REQUEST DATA', marker.data);
 
       this.setState({
-        markers: marker.data
+        markers: marker.data,
+
       });
 
     } )
@@ -73,7 +74,7 @@ class MapContainer extends Component {
   componentDidMount(){
     this.addMarkers();
     this.markerFetcher();
-    console.log(data)
+    console.log('This is data', data[8].comments)
 
 
 
@@ -114,6 +115,7 @@ class MapContainer extends Component {
     .catch(err => console.log(err))
   }
   onMarkerClick (props, marker, e) {
+
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
@@ -161,7 +163,8 @@ changeView(option) {
       <input type='text'  id='comments' name='comments' onChange={this.handleChange}  value={this.state.comments} />
     <button onClick={this.handleSubmit}  type="submit">Post</button>
     </form>
-    <div>{this.state.selectedPlace.comments}</div>
+<div>{this.state.selectedPlace.comments}</div>
+
     </div>
    );
    ReactDOM.render(React.Children.only(fav), document.getElementById('iwc'))
@@ -222,9 +225,11 @@ onClick={(e) => console.log(e)}
             name={marker.description}
             onClick={this.onMarkerClick}
             picture={marker.imageUrl}
+            comments={marker.comments}
           />
         ))}
         <InfoWindow
+
           marker={this.state.activeMarker}
           visible={this.state.showingInfoWindow}
           onClose={this.onInfoWindowClose}
