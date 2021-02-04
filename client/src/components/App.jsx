@@ -12,6 +12,7 @@ class App extends Component {
       seen: false,
       isLoggedIn: false,
       member: false,
+
       view: 'map'
     }
     this.changeView = this.changeView.bind(this)

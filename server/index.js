@@ -62,9 +62,9 @@ app.get('/register', (req, res) => {
 })
 //signup route to submit registration
 
-app.get('/api/markers', (req, res) => {
+app.get('/markers', (req, res) => {
 
-  Markers.find({})
+  Markers.findAll({})
     .then((data) => {
       res.send(data);
     })
@@ -72,29 +72,56 @@ app.get('/api/markers', (req, res) => {
       console.log(err);
     });
 });
-app.post('/api/markers/', (req, res) => {
-  console.log('APP POST REQ BODY', req.body);
+app.post('/markers', (req, res) => {
+  //console.log('APP POST REQ BODY', req.body);
 
   const {latitude,
     longitude,
     imageUrl,
     description} = req.body;
+    req.body.map((marker) => {
 
-  const newMarker = new Markers({
-    latitude,
-    longitude,
-    imageUrl,
-    description
-  });
+      const {latitude,
+        longitude,
+        imageUrl,
+        description} = marker;
 
-  newMarker.save()
-    .then((data) => {
-      console.log(data);
+
+        const newMarker = new Markers({
+          latitude,
+          longitude,
+          imageUrl,
+          description
+        });
+
+        newMarker.save()
+          .then((data) => {
+            console.log('MARKERS ADDED');
+
+          })
+          .catch((err) => {
+
+          });
+
+
 
     })
-    .catch((err) => {
-      console.log(err);
-    });
+
+  // const newMarker = new Markers({
+  //   latitude,
+  //   longitude,
+  //   imageUrl,
+  //   description
+  // });
+
+  // newMarker.save()
+  //   .then((data) => {
+  //     console.log(data);
+
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
 });
 app.post('/register', notAuthenticated, async(req, res) => {
   //console.log('APP POST REQ', req);
@@ -174,6 +201,35 @@ app.post('/login', (req, res, next) => {
     } else {
       console.log('DOES NOT WORK')
       res.status(401).send('USER NOT FOUND');
+
+
+    }
+  });
+});
+app.post('/comments', (req, res, next) => {
+  //console.log(Users);
+
+  const { comments} = req.body;
+  console.log('comment req.body', req.body)
+  return Markers.findOne({where: {description: req.body.description}}).then((data) => {
+    //console.log('THIS IS DATA', data);
+    if (data) {
+      console.log('this is comment server data', data)
+
+      data.update({
+        comments: req.body.comments
+      })
+      .then((data) => {})
+      .catch((err) => {console.log(err)
+      })
+
+      //  bcrypt.compare(password, data.password)
+      // .then((correct) => console.log('login successful'))
+      // .catch((err) => console.log('WRONG PASSWORD', err))
+
+    } else {
+
+      res.redirect('/')
 
 
     }

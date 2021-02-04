@@ -26,23 +26,27 @@ const User = db.define('User', {
 });
 
 const Markers = db.define('Markers', {
-  latitude: Sequelize.INTEGER,
-  longitude: Sequelize.INTEGER,
-  imageUrl: Sequelize.STRING,
-  description: Sequelize.STRING
+  latitude: Sequelize.DECIMAL(10, 4)  ,
+  longitude: Sequelize.DECIMAL(10, 4)  ,
+  imageUrl: Sequelize.STRING(1000),
+  description: {
+    type: Sequelize.STRING,
+    unique:true
+  },
+  comments: Sequelize.STRING
 
 });
 const Favorites = db.define('Favorites', {
-  latitude: Sequelize.INTEGER,
-  longitude: Sequelize.INTEGER,
+  latitude: Sequelize.DECIMAL(10, 4),
+  longitude: Sequelize.DECIMAL(10, 4),
   imageUrl: Sequelize.STRING,
   description: Sequelize.STRING
 
 });
-db.sync({ force: true })
-  .then(() => {
-    console.log(`Database & tables created!`);
-  }).catch((err) => {console.log(err)})
+// db.sync({ force: true })
+//   .then(() => {
+//     console.log(`Database & tables created!`);
+//   }).catch((err) => {console.log(err)})
 module.exports = {
   db,
   User,
