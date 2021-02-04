@@ -45,9 +45,7 @@ this.handleLogin = this.handleLogin.bind(this)
 
       return(
         // if you color this div it changes the words in login padding moves it from the left wall
-    <div style={{alignSelf: 'center',
-
-    }}>
+    <div style={{alignSelf: 'center'}}>
 
     <h1>Login</h1>
     <div className='login'>

@@ -142,7 +142,7 @@ app.post('/register', (req, res) => {
   })
   newUser.save()
     .then((data) => {
-      //console.log('THIS IS DATA:', data);
+      console.log('THIS IS DATA:', data);
       res.redirect('/')
 
     })

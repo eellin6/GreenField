@@ -184,9 +184,10 @@ changeView(option) {
 return (
 
   <div>
-  <h2><button
+  <h2 className='login'><button
     type="button"
     position="relative"
+
     style={
       {
         textAlign: 'center',
