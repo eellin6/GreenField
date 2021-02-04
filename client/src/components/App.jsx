@@ -12,7 +12,7 @@ class App extends Component {
       seen: false,
       isLoggedIn: false,
       member: false,
-      view: 'map'
+      view: 'register'
     }
     this.changeView = this.changeView.bind(this)
   }
@@ -37,9 +37,11 @@ renderView() {
 }
 
 render() {
-  const { view } = this.state;
-
-
+  const { view, isLoggedIn  } = this.state;
+  const status = 'Login'
+if(isLoggedIn){
+  status = 'Logout'
+}
   return (
     <div>
       <h1>Welcome To Geo-Nov</h1>
@@ -62,7 +64,7 @@ render() {
 
 
           <button className='nav-unselected' onClick={() => this.changeView('login')}>
-            Login
+            {status}
           </button>
           <button className='nav-unselected' onClick={() => this.changeView('register')}>
             Register
