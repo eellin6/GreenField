@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Map, GoogleApiWrapper, Marker, InfoWindow, useLoadScript } from 'google-maps-react'
-import { key } from '../../../config'
+import { key } from '../../../../config'
+import Modal from './Modal'
 
 class CreateMarker extends Component {
   constructor(props) {
@@ -12,11 +13,22 @@ class CreateMarker extends Component {
           position: {
             lat: 29.9533,
             lng: -90.0711
-          }
+          },
         }
-      ]
+      ],
+      isOpen: false
     }
     this.onMarkerDragEnd = this.onMarkerDragEnd.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.handleOpenModal = this.handleOpenModal.bind(this);
+
+  }
+  handleOpenModal(){
+   this.setState({ isOpen: true });
+  }
+
+  handleCloseModal() {
+    this.setState({ isOpen: false });
   }
 
   onMarkerDragEnd (coord, index) {
@@ -44,6 +56,9 @@ class CreateMarker extends Component {
      height: '100%'
    }
     return(
+<div>
+
+  <h3><button type="button" onClick={this.handleOpenModal}>Add Pin</button></h3>
       <Map
 onClick={(e) => console.log(e)}
  google={this.props.google}
@@ -62,10 +77,10 @@ onClick={(e) => console.log(e)}
 />
 
 </Map>
-
-
-
-
+<Modal isOpen={this.state.isOpen} handleClose={this.handleCloseModal}>
+          <p>Add Pin</p>
+        </Modal>
+      </div>
     )
   }
 }
