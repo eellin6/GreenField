@@ -169,8 +169,10 @@ changeView(option) {
 
  render() {
    const style = {
-     width: '96vw',
-     height: '85vh'
+    justifyContent: 'center',
+    alignItems: 'center',
+     width: '67vw',
+     height: '55vh'
    }
    const containerStyle = {
     position: 'relative',
@@ -182,10 +184,15 @@ changeView(option) {
 return (
 
   <div>
-  <h2><button
+  <h2 className='login'><button
     type="button"
     position="relative"
-    style={{backgroundColor: view === 'addMarker' ? 'green' : null}}
+
+    style={
+      {
+        textAlign: 'center',
+        backgroundColor: view === 'addMarker' ? 'green' : null,
+      }}
     onClick={() => this.changeView('addMarker')}
     >ADD & DRAG </button></h2>
 <div className='main'>

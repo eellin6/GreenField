@@ -1,0 +1,16 @@
+body {
+  background-color: peru;
+}
+header, h1, label{
+  text-align: center;
+}
+.nav{
+  text-align: center;
+}
+.register{
+  text-align: center;
+
+}
+.login {
+  text-align: center;
+}
