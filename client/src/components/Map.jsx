@@ -7,7 +7,7 @@ import axios from 'axios'
 import Favorites from './Favorites'
 import { FaRegHeart, FaHeart, FaRegGrinStars, FaGhost } from 'react-icons/fa'
 import { RiAliensFill } from 'react-icons/ri'
-import CreateMarker from './CreateMarker'
+import CreateMarker from './AddMarker/CreateMarker'
 
 class MapContainer extends Component {
   constructor(props) {
