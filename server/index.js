@@ -79,11 +79,11 @@ app.get('/markers', (req, res) => {
     });
 });
 app.post('/markers', (req, res) => {
-  console.log('APP POST REQ BODY', req.body);
+  //console.log('APP POST REQ BODY', req.body);
 
 
     req.body.map((marker) => {
-console.log('THIS IS MARKER', marker)
+//console.log('THIS IS MARKER', marker)
       const {latitude,
         longitude,
         imageUrl,
@@ -115,7 +115,7 @@ console.log('THIS IS MARKER', marker)
 
 
     app.post('/markers/create', (req, res) => {
-      console.log('APP POST REQ BODY!!!!!!', req.body);
+     // console.log('APP POST REQ BODY!!!!!!', req.body);
 
 
       const {latitude,
@@ -189,7 +189,7 @@ app.post('/register', (req, res) => {
 });
 
 app.post('/api/favorites', (req, res) => {
-  console.log('APP POST REQ', req.body);
+  //console.log('APP POST REQ', req.body);
   const {latitude, longitude, description, imageUrl} = req.body;
 
 
