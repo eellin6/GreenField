@@ -1,17 +1,18 @@
 
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import axios from 'axios'
 
-const Modal = ({ handleClose, isOpen, children }) => {
+const Modal = ({ handleClose, isOpen, children, handleAddMarker, marker, markers }) => {
   const {register, handleSubmit} = useForm();
   const showHideClassName = isOpen ? "modal display-block" : "modal display-none";
-  const onSubmit = data => console.log(data)
 
+console.log(marker.position)
   return (
     <div className={showHideClassName}>
       <section className="modal-main">
         {children}
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(handleAddMarker(marker.position))}>
           <label>Description</label>
           <input ref={register} name="description" />
 

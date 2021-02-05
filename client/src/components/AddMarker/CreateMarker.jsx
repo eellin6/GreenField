@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Map, GoogleApiWrapper, Marker, InfoWindow, useLoadScript } from 'google-maps-react'
 import { key } from '../../../../config'
 import Modal from './Modal'
+import axios from 'axios'
+import AddPin from './AddPin'
 
 class CreateMarker extends Component {
   constructor(props) {
@@ -16,13 +18,24 @@ class CreateMarker extends Component {
           },
         }
       ],
-      isOpen: false
+      view: 'map'
     }
     this.onMarkerDragEnd = this.onMarkerDragEnd.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.handleOpenModal = this.handleOpenModal.bind(this);
+    this.handleAddMarker = this.handleAddMarker.bind(this);
+    this.handleChangeView = this.handleChangeView.bind(this);
 
   }
+
+  handleAddMarker() {
+data[position] = position;
+    axios.post('/markers/create', data )
+    .then((data) => {console.log('data sent to server')})
+    .then(() => {this.setState({view: 'map'})})
+    .catch((err) => {console.log(err)})
+  }
+
   handleOpenModal(){
    this.setState({ isOpen: true });
   }
@@ -42,7 +55,9 @@ class CreateMarker extends Component {
       return { marker };
     });
   };
-
+handleChangeView() {
+  this.setState({view: 'addPin'})
+}
 
   render() {
     const { marker } = this.state
@@ -58,7 +73,8 @@ class CreateMarker extends Component {
     return(
 <div>
 
-  <h3><button type="button" onClick={this.handleOpenModal}>Add Pin</button></h3>
+  <h3><button type="button" onClick={this.handleChangeView}>Add Pin</button></h3>
+  {this.state.view === 'map' ?
       <Map
 onClick={(e) => console.log(e)}
  google={this.props.google}
@@ -77,9 +93,8 @@ onClick={(e) => console.log(e)}
 />
 
 </Map>
-<Modal isOpen={this.state.isOpen} handleClose={this.handleCloseModal}>
-          <p>Add Pin</p>
-        </Modal>
+: <AddPin marker={this.state.marker[0]}/>
+  }
       </div>
     )
   }

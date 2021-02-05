@@ -4,6 +4,7 @@ import MapContainer from './Map'
 import axios from 'axios'
 import Login from './Login'
 import Register from './Register'
+import AddPin from '../components/AddMarker/AddPin'
 
 class App extends Component {
   constructor(props) {
@@ -34,6 +35,8 @@ renderView() {
     return <Login handleClick={() => this.changeView('anypostview')}/>;
   } else if (view === 'register') {
     return <Register handleClick={() => this.changeView('anypostview')}/>;
+  } else if (view === 'addPin') {
+    return <AddPin handleClick={() => this.changeView('anypostview')}/>;
   }
 }
 
