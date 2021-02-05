@@ -162,7 +162,7 @@ changeView(option) {
           onClick={this.onHeartClick}
     ></FaHeart> : <FaRegHeart onClick={this.onHeartClick} ></FaRegHeart>
      }
-     <a href={this.state.selectedPlace.picture}>LINK</a>
+     <a href={this.state.selectedPlace.picture}>ENLARGE PHOTO</a>
         <form   >
 
       <label>Comment</label>
