@@ -22,7 +22,9 @@ class MapContainer extends Component {
       isFavorite: false,
       drawMarker: false,
       comments: '',
-      view: 'map'
+      view: 'map',
+      newArea: false,
+      reload: false
     }
     this.onMarkerClick = this.onMarkerClick.bind(this);
     this.onInfoWindowClose = this.onInfoWindowClose.bind(this);
@@ -33,6 +35,7 @@ class MapContainer extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.commentFetcher = this.commentFetcher.bind(this);
+    this.refreshPage = this.refreshPage.bind(this)
   }
   addMarkers(){
     axios.post('/markers', data )
@@ -79,6 +82,14 @@ class MapContainer extends Component {
 
 
   }
+
+  refreshPage  ()  {
+const {lat, lng} = this.state;
+    this.setState((prevState) => {
+      console.log('THIS IS PREV STATE', prevState)
+    })
+
+}
   handleChange(event){
     event.preventDefault(event)
     const name = event.target.name;
@@ -174,6 +185,7 @@ changeView(option) {
  }
 
  render() {
+
    const style = {
     justifyContent: 'center',
     alignItems: 'center',
@@ -187,28 +199,29 @@ changeView(option) {
   }
   const { view } = this.state
   //  console.log(this.state.selectedPlace)
+  const location = this.props.location
 return (
-
   <div>
   <h2 className='login'><button
     type="button"
     position="relative"
-
     style={
       {
         textAlign: 'center',
         backgroundColor: view === 'addMarker' ? 'green' : null,
       }}
-    onClick={() => this.changeView('addMarker')}
-    >ADD & DRAG </button></h2>
+    onClick={() => this.changeView('addMarker')}>ADD & DRAG </button>
+
+
+    </h2>
 <div className='main'>
   {view === 'map'
   ? <Map
 onClick={(e) => console.log(e)}
  google={this.props.google}
- initialCenter={{
-  lat: 29.9511,
-  lng: -90.081807
+ center={{
+  lat: location.lat,
+  lng: location.lng
 }}
  zoom={12}
  style={style}

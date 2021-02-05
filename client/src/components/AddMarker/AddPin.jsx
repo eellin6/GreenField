@@ -30,7 +30,7 @@ class AddPin extends Component {
          : this.value} name='latitude'/>
         <input type="text" readOnly value={lng} onBlur={this.value=this.value=='' ? 'default'
          : this.value} name='longitude'/>
-         <input type="file" placeholder="insert picture" value='' name='picture'/>
+         <input type="file" placeholder="insert picture"  name='picture'/>
         <button type='submit'>Add Pin</button>
         </form>
       </div>
