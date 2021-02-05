@@ -60,7 +60,8 @@ const data = [
   longitude: -90.0217,
   description: 'Doullut Steamboat Houses',
   imageUrl: 'https://bloximages.newyork1.vip.townnews.com/nola.com/content/tncms/assets/v3/editorial/e/af/eaf41d90-2cb9-5d3a-b46e-f3d75b82ae14/5d13c4a530ad3.image.jpg',
-  tag: 'odd'
+  tag: 'odd',
+  comments: ['Hello', 'Hi there', 'Superbowl']
 },
 {id: 9,
   latitude: 29.9800,
