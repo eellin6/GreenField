@@ -88,7 +88,10 @@ class MapContainer extends Component {
   }
   handleSubmit(){
     const {comments} = this.state
-
+    this.state.selectedPlace.comments = comments;
+    console.log("LOOK HERE",
+    comments
+    )
     const data =
      { description: this.state.selectedPlace.name,
       comments: comments
