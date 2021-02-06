@@ -64,7 +64,9 @@ class MapContainer extends Component {
     //make a get request
     axios.get('/markers')
     .then((marker) =>{
-     return marker.data.comments
+     if(marker.data.name === this.state.selectedPlace.name){
+       this.state.selectedPlace.comments = marker.data.comments
+     }
 
     } )
     .catch((err) => {
@@ -74,6 +76,7 @@ class MapContainer extends Component {
   componentDidMount(){
     this.addMarkers();
     this.markerFetcher();
+
     console.log('This is data', data[8].comments)
 
 
@@ -88,7 +91,7 @@ class MapContainer extends Component {
   }
   handleSubmit(){
     const {comments} = this.state
-    this.state.selectedPlace.comments = comments;
+
     console.log("LOOK HERE",
     comments
     )
@@ -99,7 +102,7 @@ class MapContainer extends Component {
     }
     axios.post('/comments', data)
     .then(data => console.log('User Registered'))
-    .then(this.commentFetcher)
+
     .catch((err) => console.log('AXIOS POST ERROR', err))
 
   }
@@ -159,7 +162,7 @@ changeView(option) {
           onClick={this.onHeartClick}
     ></FaHeart> : <FaRegHeart onClick={this.onHeartClick} ></FaRegHeart>
      }
-     <a href={this.state.selectedPlace.picture}>LINK</a>
+     <a href={this.state.selectedPlace.picture}>ENLARGE PHOTO</a>
         <form   >
 
       <label>Comment</label>
