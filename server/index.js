@@ -131,6 +131,7 @@ app.post('/markers', (req, res) => {
       Promise
       .all(promises)
       .then(res =>  {
+        console.log(res)
         const newMarker = new Markers({
           latitude,
           imageUrl: res[0].url,
@@ -138,6 +139,13 @@ app.post('/markers', (req, res) => {
           description
         })
         newMarker.save()
+        .then((data) => {
+          console.log('MARKERS ADDED');
+
+        })
+        .catch((err) => {
+
+        });
     })
     .catch(err => console.error('Error creating marker', err))
 })
