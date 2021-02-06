@@ -129,16 +129,20 @@ app.post('/markers', (req, res) => {
   const {latitude,
       longitude,
       description} = req.body;
-  const newMarker = new Markers({
-    latitude,
-    imageUrl: values[0].path,
-    longitude,
-    description
-  });
-newMarker.save()
 
-  Promise
-    .all(promises)
+
+      Promise
+      .all(promises)
+      .then(res =>  {
+        const newMarker = new Markers({
+          latitude,
+          imageUrl: res[0].url,
+          longitude,
+          description
+        })
+        newMarker.save()
+    })
+    .catch(err => console.error('Error creating marker', err))
 })
 
     //   // req.body.map((marker) => {

@@ -18,6 +18,10 @@ class MapContainer extends Component {
       selectedPlace: {},
       markers: [],
       favorites: [],
+      currentLatLng: {
+        lat: 0,
+        lng: 0
+      },
       isFavorite: false,
       drawMarker: false,
       comments: '',
@@ -95,7 +99,7 @@ class MapContainer extends Component {
     console.log(this.state.selectedPlace)
     const { position, name, picture } = this.state.selectedPlace
     const { lat, lng } = position
-    const data = {latitude: lat, longitude: lng, description: name, imageUrlzzz: picture}
+    const data = {latitude: lat, longitude: lng, description: name, imageUrl: picture}
     axios.post('/api/favorites', data)
     .then(data =>
     console.log('favorite added--------->', data))
@@ -209,7 +213,7 @@ onClick={(e) => console.log(e)}
             onDragend={(t, map, coord) => this.onMarkerDragEnd(coord, index)}
             name={marker.description}
             onClick={this.onMarkerClick}
-            picture={marker.imageUrlttttt}
+            picture={marker.imageUrl}
           />
         ))}
         <InfoWindow
