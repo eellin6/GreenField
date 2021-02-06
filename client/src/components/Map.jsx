@@ -118,7 +118,7 @@ class MapContainer extends Component {
       showingInfoWindow: true
     });
 
-
+//test
   }
    onMarkerDragEnd (coord, index) {
      const { latLng } = coord;
