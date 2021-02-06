@@ -153,11 +153,13 @@ changeView(option) {
     ></FaHeart> : <FaRegHeart onClick={this.onHeartClick} ></FaRegHeart>
      }
      <a href={this.state.selectedPlace.picture}>ENLARGE PHOTO</a>
-        <form   >
+      <form  action="/comments" method='POST'   >
+      <input type="text" readOnly value={this.state.selectedPlace.name} onBlur={this.value=this.value=='' ? 'default'
+         : this.value} name='description'/>
 
       <label>Comment</label>
-      <input type='text'  id='comments' name='comments' onChange={this.handleChange}  value={this.state.comments} />
-    <button onClick={this.handleSubmit}  type="submit">Post</button>
+      <input type='text'  id='comments' name='comments'   />
+    <button  type="submit">Post</button>
     </form>
 <div>{this.state.selectedPlace.comments}</div>
 
