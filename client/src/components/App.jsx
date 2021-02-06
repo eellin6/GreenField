@@ -13,7 +13,6 @@ class App extends Component {
     this.state = {
       seen: false,
       isLoggedIn: false,
-      member: false,
       view: 'map',
     }
     this.changeView = this.changeView.bind(this)

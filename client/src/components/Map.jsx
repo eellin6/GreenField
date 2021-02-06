@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Map, GoogleApiWrapper, Marker, InfoWindow, useLoadScript } from 'google-maps-react'
 import { key } from '../../../config'
-import { data } from '../sample_data.js'
 import axios from 'axios'
 import Favorites from './Favorites'
 import { FaRegHeart, FaHeart, FaRegGrinStars, FaGhost } from 'react-icons/fa'
@@ -17,8 +16,12 @@ class MapContainer extends Component {
       showingInfoWindow: false,
       activeMarker: {},
       selectedPlace: {},
-      markers: data,
+      markers: [],
       favorites: [],
+      currentLatLng: {
+        lat: 0,
+        lng: 0
+      },
       isFavorite: false,
       drawMarker: false,
       comments: '',
@@ -30,23 +33,13 @@ class MapContainer extends Component {
     this.onInfoWindowClose = this.onInfoWindowClose.bind(this);
     this.onHeartClick = this.onHeartClick.bind(this);
     this.changeView = this.changeView.bind(this);
-    this.addMarkers = this.addMarkers.bind(this);
     this.markerFetcher = this.markerFetcher.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.commentFetcher = this.commentFetcher.bind(this);
     this.refreshPage = this.refreshPage.bind(this)
   }
-  addMarkers(){
-    axios.post('/markers', data )
-    .then((data) => {console.log('data sent to server')})
-    .catch((err) => {console.log(err)})
-  }
-  addData(){
-    axios.post('/markers', this.state.markers )
-    .then((data) => {console.log('data sent to server')})
-    .catch((err) => {console.log(err)})
-  }
+
   markerFetcher() {
     //make a get request
     axios.get('/markers')
@@ -67,7 +60,9 @@ class MapContainer extends Component {
     //make a get request
     axios.get('/markers')
     .then((marker) =>{
-     return marker.data.comments
+     if(marker.data.name === this.state.selectedPlace.name){
+       this.state.selectedPlace.comments = marker.data.comments
+     }
 
     } )
     .catch((err) => {
@@ -75,9 +70,8 @@ class MapContainer extends Component {
     });
   }
   componentDidMount(){
-    this.addMarkers();
     this.markerFetcher();
-    console.log('This is data', data[8].comments)
+
 
 
 
@@ -99,7 +93,7 @@ const {lat, lng} = this.state;
   }
   handleSubmit(){
     const {comments} = this.state
-    this.state.selectedPlace.comments = comments;
+
     console.log("LOOK HERE",
     comments
     )
@@ -110,7 +104,7 @@ const {lat, lng} = this.state;
     }
     axios.post('/comments', data)
     .then(data => console.log('User Registered'))
-    .then(this.commentFetcher)
+
     .catch((err) => console.log('AXIOS POST ERROR', err))
 
   }
@@ -170,7 +164,7 @@ changeView(option) {
           onClick={this.onHeartClick}
     ></FaHeart> : <FaRegHeart onClick={this.onHeartClick} ></FaRegHeart>
      }
-     <a href={this.state.selectedPlace.picture}>LINK</a>
+     <a href={this.state.selectedPlace.picture}>ENLARGE PHOTO</a>
         <form   >
 
       <label>Comment</label>
