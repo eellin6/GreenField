@@ -77,13 +77,13 @@ class MapContainer extends Component {
     this.addMarkers();
     this.markerFetcher();
 
-    console.log('This is data', data[8].comments)
+
 
 
 
   }
   handleChange(event){
-    event.preventDefault(event)
+
     const name = event.target.name;
     this.setState({
       [name]: event.target.value
