@@ -18,7 +18,7 @@ class CreateMarker extends Component {
           },
         }
       ],
-      view: 'map'
+      view: 'createMap'
     }
     this.onMarkerDragEnd = this.onMarkerDragEnd.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -30,7 +30,7 @@ class CreateMarker extends Component {
 
   handleAddMarker() {
 data[position] = position;
-    axios.post('/markers/create', data )
+    axios.post('/create', data )
     .then((data) => {console.log('data sent to server')})
     .then(() => {this.setState({view: 'map'})})
     .catch((err) => {console.log(err)})
@@ -74,7 +74,7 @@ handleChangeView() {
 <div>
 
   <h3><button type="button" onClick={this.handleChangeView}>Add Pin</button></h3>
-  {this.state.view === 'map' ?
+  {this.state.view === 'createMap' ?
       <Map
 onClick={(e) => console.log(e)}
  google={this.props.google}

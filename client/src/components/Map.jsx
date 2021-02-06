@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Map, GoogleApiWrapper, Marker, InfoWindow, useLoadScript } from 'google-maps-react'
 import { key } from '../../../config'
-import { data } from '../sample_data.js'
 import axios from 'axios'
 import Favorites from './Favorites'
 import { FaRegHeart, FaHeart, FaRegGrinStars, FaGhost } from 'react-icons/fa'
@@ -17,8 +16,12 @@ class MapContainer extends Component {
       showingInfoWindow: false,
       activeMarker: {},
       selectedPlace: {},
-      markers: data,
+      markers: [],
       favorites: [],
+      currentLatLng: {
+        lat: 0,
+        lng: 0
+      },
       isFavorite: false,
       drawMarker: false,
       comments: '',
@@ -28,22 +31,12 @@ class MapContainer extends Component {
     this.onInfoWindowClose = this.onInfoWindowClose.bind(this);
     this.onHeartClick = this.onHeartClick.bind(this);
     this.changeView = this.changeView.bind(this);
-    this.addMarkers = this.addMarkers.bind(this);
     this.markerFetcher = this.markerFetcher.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.commentFetcher = this.commentFetcher.bind(this);
   }
-  addMarkers(){
-    axios.post('/markers', data )
-    .then((data) => {console.log('data sent to server')})
-    .catch((err) => {console.log(err)})
-  }
-  addData(){
-    axios.post('/markers', this.state.markers )
-    .then((data) => {console.log('data sent to server')})
-    .catch((err) => {console.log(err)})
-  }
+
   markerFetcher() {
     //make a get request
     axios.get('/markers')
@@ -74,9 +67,7 @@ class MapContainer extends Component {
     });
   }
   componentDidMount(){
-    this.addMarkers();
     this.markerFetcher();
-
 
 
 
