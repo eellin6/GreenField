@@ -4,7 +4,6 @@ import { key } from '../../../../config'
 import Modal from './Modal'
 import ReactDOM from 'react-dom'
 import axios from 'axios'
-import AddPin from './AddPin'
 
 class CreateMarker extends Component {
   constructor(props) {
@@ -90,7 +89,6 @@ onClick={(e) => console.log(e)}
 }
 const container = document.createElement("div");
 document.body.appendChild(container);
-// ReactDOM.render(<CreateMarker />, container);
 export default GoogleApiWrapper({
   apiKey: key
 })(CreateMarker);

@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import { Map, GoogleApiWrapper, Marker, InfoWindow, useLoadScript } from 'google-maps-react'
+import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react'
 import { key } from '../../../config'
 import axios from 'axios'
-import Favorites from './Favorites'
-import { FaRegHeart, FaHeart, FaRegGrinStars, FaGhost } from 'react-icons/fa'
-import { RiAliensFill } from 'react-icons/ri'
+
+import { FaRegHeart, FaHeart } from 'react-icons/fa'
+
 
 
 class MapContainer extends Component {
@@ -25,6 +25,9 @@ class MapContainer extends Component {
       isFavorite: false,
       drawMarker: false,
       comments: '',
+      view: 'map',
+      newArea: false,
+      reload: false
 
     }
     this.onMarkerClick = this.onMarkerClick.bind(this);
@@ -34,13 +37,12 @@ class MapContainer extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.commentFetcher = this.commentFetcher.bind(this);
+
   }
 
   markerFetcher() {
-    //make a get request
     axios.get('/markers')
     .then((marker) =>{
-      console.log('THIS IS AXIOS REQUEST DATA', marker.data);
 
       this.setState({
         markers: marker.data,
@@ -53,7 +55,6 @@ class MapContainer extends Component {
     });
   }
   commentFetcher() {
-    //make a get request
     axios.get('/markers')
     .then((marker) =>{
      if(marker.data.name === this.state.selectedPlace.name){
@@ -67,11 +68,9 @@ class MapContainer extends Component {
   }
   componentDidMount(){
     this.markerFetcher();
-
-
-
-
   }
+
+
   handleChange(event){
 
     const name = event.target.name;
@@ -82,9 +81,7 @@ class MapContainer extends Component {
   handleSubmit(){
     const {comments} = this.state
 
-    console.log("LOOK HERE",
-    comments
-    )
+
     const data =
      { description: this.state.selectedPlace.name,
       comments: comments
@@ -100,14 +97,12 @@ class MapContainer extends Component {
 
 
   onHeartClick() {
-    console.log('click')
-    console.log(this.state.selectedPlace)
+
     const { position, name, picture } = this.state.selectedPlace
     const { lat, lng } = position
     const data = {latitude: lat, longitude: lng, description: name, imageUrl: picture}
     axios.post('/api/favorites', data)
-    .then(data =>
-    console.log('favorite added--------->', data))
+    .then(data => console.log('success'))
     .catch(err => console.log(err))
   }
   onMarkerClick (props, marker, e) {
@@ -118,7 +113,6 @@ class MapContainer extends Component {
       showingInfoWindow: true
     });
 
-//test
   }
    onMarkerDragEnd (coord, index) {
      const { latLng } = coord;
@@ -169,6 +163,7 @@ changeView(option) {
  }
 
  render() {
+
    const style = {
     justifyContent: 'center',
     alignItems: 'center',
@@ -181,17 +176,16 @@ changeView(option) {
     height: '100%'
   }
   const { view } = this.state
-  //  console.log(this.state.selectedPlace)
+  const location = this.props.location
 return (
-
   <div>
 <div className='main'>
 <Map
 onClick={(e) => console.log(e)}
  google={this.props.google}
- initialCenter={{
-  lat: 29.9511,
-  lng: -90.081807
+ center={{
+  lat: location.lat,
+  lng: location.lng
 }}
  zoom={12}
  style={style}

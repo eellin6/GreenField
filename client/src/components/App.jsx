@@ -4,7 +4,6 @@ import MapContainer from './Map'
 import axios from 'axios'
 import Login from './Login'
 import Register from './Register'
-import AddPin from '../components/AddMarker/AddPin'
 import CreateMarker from '../components/AddMarker/CreateMarker'
 
 class App extends Component {
@@ -13,8 +12,9 @@ class App extends Component {
     this.state = {
       seen: false,
       isLoggedIn: false,
-      member: false,
-      view: 'map'
+      view: 'map',
+      lat: 29.9,
+      lng: -91.6
     }
     this.changeView = this.changeView.bind(this)
   }
@@ -25,21 +25,23 @@ changeView(option) {
     view: option
   });
 }
+
 renderView() {
 
-  const { view } = this.state;
+  const { view, lat, lng } = this.state;
   // This will render different views when navigation is clicked
   if (view === 'map') {
-    return <GoogleApiWrapper  handleClick={() => this.changeView('anypostview')}/>;
+    return <GoogleApiWrapper location={{lat: 29.9511, lng: -90.081807}} handleClick={() => this.changeView('anypostview')}/>;
   } else if (view === 'login') {
     return <Login handleClick={() => this.changeView('anypostview')}/>;
   } else if (view === 'register') {
     return <Register handleClick={() => this.changeView('anypostview')}/>;
-  } else if (view === 'addMarker') {
+  } else if (view === 'addPin') {
+    return <AddPin handleClick={() => this.changeView('anypostview')}/>;
+} else if (view === 'addMarker') {
     return <CreateMarker handleClick={() => this.changeView('anypostview')}/>;
   }
 }
-
 render() {
   const { view, isLoggedIn  } = this.state;
   //if the status of a user is not logged in, display a login button
@@ -64,24 +66,18 @@ if(isLoggedIn){
             Home
           </button>
 
-          {/* <button
-            className={
-              view === 'map'
-                ? 'nav-selected'
-                : 'nav-unselected'
-            }
-            onClick={() => this.changeView('map')}
-          >
-            Map
-          </button> */}
-
-
           <button className='nav-unselected' onClick={() => this.changeView('login')}>
             {status}
           </button>
           <button className='nav-unselected' onClick={() => this.changeView('register')}>
             Register
           </button>
+
+
+
+
+
+
           <button
     type="button"
     position="relative"
@@ -94,9 +90,9 @@ if(isLoggedIn){
     onClick={() => this.changeView('addMarker')}
     >ADD & DRAG </button>
         </div>
-        <div className='main'>
+
           {this.renderView()}
-        </div>
+
       </div>
 
   )

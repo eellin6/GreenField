@@ -39,16 +39,13 @@ class Modal extends Component {
    console.log('line 37, ', data)
    axios.post('http://localhost:3000/create', data)
    .then(res => console.log(res))
-    //  .then(() => this.props.handleChangeView('map'))
      .catch(err => console.log('Error', err))
   }
 
   uploadFormWithData() {
     const formData = new FormData();
    const { description, picture } = this.state
-  //  const formData = { description, picture };
-  //  formData.longitude = this.props.marker.position.lng;
-  //  formData.latitude = this.props.marker.position.lat;
+
    formData.append('description', description);
    formData.append('picture', picture);
    formData.append('latitude', this.props.marker.position.lat);
