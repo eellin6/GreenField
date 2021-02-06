@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import { Map, GoogleApiWrapper, Marker, InfoWindow, useLoadScript } from 'google-maps-react'
+import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react'
 import { key } from '../../../config'
 import axios from 'axios'
-import Favorites from './Favorites'
-import { FaRegHeart, FaHeart, FaRegGrinStars, FaGhost } from 'react-icons/fa'
-import { RiAliensFill } from 'react-icons/ri'
-import CreateMarker from './AddMarker/CreateMarker'
+
+import { FaRegHeart, FaHeart } from 'react-icons/fa'
+
+
 
 class MapContainer extends Component {
   constructor(props) {
@@ -28,23 +28,21 @@ class MapContainer extends Component {
       view: 'map',
       newArea: false,
       reload: false
+
     }
     this.onMarkerClick = this.onMarkerClick.bind(this);
     this.onInfoWindowClose = this.onInfoWindowClose.bind(this);
     this.onHeartClick = this.onHeartClick.bind(this);
-    this.changeView = this.changeView.bind(this);
     this.markerFetcher = this.markerFetcher.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.commentFetcher = this.commentFetcher.bind(this);
-    this.refreshPage = this.refreshPage.bind(this)
+
   }
 
   markerFetcher() {
-    //make a get request
     axios.get('/markers')
     .then((marker) =>{
-      console.log('THIS IS AXIOS REQUEST DATA', marker.data);
 
       this.setState({
         markers: marker.data,
@@ -57,7 +55,6 @@ class MapContainer extends Component {
     });
   }
   commentFetcher() {
-    //make a get request
     axios.get('/markers')
     .then((marker) =>{
      if(marker.data.name === this.state.selectedPlace.name){
@@ -71,21 +68,11 @@ class MapContainer extends Component {
   }
   componentDidMount(){
     this.markerFetcher();
-
-
-
-
   }
 
-  refreshPage  ()  {
-const {lat, lng} = this.state;
-    this.setState((prevState) => {
-      console.log('THIS IS PREV STATE', prevState)
-    })
 
-}
   handleChange(event){
-    event.preventDefault(event)
+
     const name = event.target.name;
     this.setState({
       [name]: event.target.value
@@ -94,9 +81,7 @@ const {lat, lng} = this.state;
   handleSubmit(){
     const {comments} = this.state
 
-    console.log("LOOK HERE",
-    comments
-    )
+
     const data =
      { description: this.state.selectedPlace.name,
       comments: comments
@@ -112,14 +97,12 @@ const {lat, lng} = this.state;
 
 
   onHeartClick() {
-    console.log('click')
-    console.log(this.state.selectedPlace)
+
     const { position, name, picture } = this.state.selectedPlace
     const { lat, lng } = position
     const data = {latitude: lat, longitude: lng, description: name, imageUrl: picture}
     axios.post('/api/favorites', data)
-    .then(data =>
-    console.log('favorite added--------->', data))
+    .then(data => console.log('success'))
     .catch(err => console.log(err))
   }
   onMarkerClick (props, marker, e) {
@@ -129,7 +112,6 @@ const {lat, lng} = this.state;
       activeMarker: marker,
       showingInfoWindow: true
     });
-
 
   }
    onMarkerDragEnd (coord, index) {
@@ -165,11 +147,13 @@ changeView(option) {
     ></FaHeart> : <FaRegHeart onClick={this.onHeartClick} ></FaRegHeart>
      }
      <a href={this.state.selectedPlace.picture}>ENLARGE PHOTO</a>
-        <form   >
+      <form  action="/comments" method='POST'   >
+      <input type="text" readOnly value={this.state.selectedPlace.name} onBlur={this.value=this.value=='' ? 'default'
+         : this.value} name='description'/>
 
       <label>Comment</label>
-      <input type='text'  id='comments' name='comments' onChange={this.handleChange}  value={this.state.comments} />
-    <button onClick={this.handleSubmit}  type="submit">Post</button>
+      <input type='text'  id='comments' name='comments'   />
+    <button  type="submit">Post</button>
     </form>
 <div>{this.state.selectedPlace.comments}</div>
 
@@ -192,25 +176,11 @@ changeView(option) {
     height: '100%'
   }
   const { view } = this.state
-  //  console.log(this.state.selectedPlace)
   const location = this.props.location
 return (
   <div>
-  <h2 className='login'><button
-    type="button"
-    position="relative"
-    style={
-      {
-        textAlign: 'center',
-        backgroundColor: view === 'addMarker' ? 'green' : null,
-      }}
-    onClick={() => this.changeView('addMarker')}>ADD & DRAG </button>
-
-
-    </h2>
 <div className='main'>
-  {view === 'map'
-  ? <Map
+<Map
 onClick={(e) => console.log(e)}
  google={this.props.google}
  center={{
@@ -251,8 +221,7 @@ onClick={(e) => console.log(e)}
 
 
         </InfoWindow>
-  </Map> : <CreateMarker />
- }
+  </Map>
  </div>
  </div>
   )}

@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { Map, GoogleApiWrapper, Marker, InfoWindow, useLoadScript } from 'google-maps-react'
 import { key } from '../../../../config'
 import Modal from './Modal'
+import ReactDOM from 'react-dom'
 import axios from 'axios'
-import AddPin from './AddPin'
 
 class CreateMarker extends Component {
   constructor(props) {
@@ -18,30 +18,20 @@ class CreateMarker extends Component {
           },
         }
       ],
-      view: 'createMap'
+      isOpen: false,
+      description: '',
+      picture: null
+
     }
     this.onMarkerDragEnd = this.onMarkerDragEnd.bind(this);
-    this.handleCloseModal = this.handleCloseModal.bind(this);
     this.handleOpenModal = this.handleOpenModal.bind(this);
-    this.handleAddMarker = this.handleAddMarker.bind(this);
-    this.handleChangeView = this.handleChangeView.bind(this);
 
   }
 
-  handleAddMarker() {
-data[position] = position;
-    axios.post('/create', data )
-    .then((data) => {console.log('data sent to server')})
-    .then(() => {this.setState({view: 'map'})})
-    .catch((err) => {console.log(err)})
-  }
+
 
   handleOpenModal(){
    this.setState({ isOpen: true });
-  }
-
-  handleCloseModal() {
-    this.setState({ isOpen: false });
   }
 
   onMarkerDragEnd (coord, index) {
@@ -55,9 +45,6 @@ data[position] = position;
       return { marker };
     });
   };
-handleChangeView() {
-  this.setState({view: 'addPin'})
-}
 
   render() {
     const { marker } = this.state
@@ -73,8 +60,7 @@ handleChangeView() {
     return(
 <div>
 
-  <h3><button type="button" onClick={this.handleChangeView}>Add Pin</button></h3>
-  {this.state.view === 'createMap' ?
+  <h3><button type="button" onClick={this.handleOpenModal}>Add Pin</button></h3>
       <Map
 onClick={(e) => console.log(e)}
  google={this.props.google}
@@ -91,15 +77,18 @@ onClick={(e) => console.log(e)}
  draggable={true}
  onDragend={(t, map, coord) => this.onMarkerDragEnd(coord)}
 />
+<Modal style={{position: 'auto'}} show={this.state.isOpen} marker={this.state.marker[0]}>
+  <p>Add Pin</p>
 
+</Modal>
 </Map>
-: <AddPin marker={this.state.marker[0]}/>
-  }
       </div>
+
     )
   }
 }
-
+const container = document.createElement("div");
+document.body.appendChild(container);
 export default GoogleApiWrapper({
   apiKey: key
 })(CreateMarker);

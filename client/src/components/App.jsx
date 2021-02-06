@@ -4,8 +4,7 @@ import MapContainer from './Map'
 import axios from 'axios'
 import Login from './Login'
 import Register from './Register'
-import AddPin from '../components/AddMarker/AddPin'
-import NewCenter from './NewCenter'
+import CreateMarker from '../components/AddMarker/CreateMarker'
 
 class App extends Component {
   constructor(props) {
@@ -14,6 +13,8 @@ class App extends Component {
       seen: false,
       isLoggedIn: false,
       view: 'map',
+      lat: 29.9,
+      lng: -91.6
     }
     this.changeView = this.changeView.bind(this)
   }
@@ -24,6 +25,7 @@ changeView(option) {
     view: option
   });
 }
+
 renderView() {
 
   const { view, lat, lng } = this.state;
@@ -36,9 +38,9 @@ renderView() {
     return <Register handleClick={() => this.changeView('anypostview')}/>;
   } else if (view === 'addPin') {
     return <AddPin handleClick={() => this.changeView('anypostview')}/>;
-  } else if (view === 'NewCenter') {
-    return <NewCenter handleClick={() => this.changeView('anypostview')}/>;
-}
+} else if (view === 'addMarker') {
+    return <CreateMarker handleClick={() => this.changeView('anypostview')}/>;
+  }
 }
 render() {
   const { view, isLoggedIn  } = this.state;
@@ -70,23 +72,23 @@ if(isLoggedIn){
           <button className='nav-unselected' onClick={() => this.changeView('register')}>
             Register
           </button>
-          <button className='nav-unselected' onClick={() => this.changeView('NewCenter')}>
-          Change Area
-          </button>
-          {/* <button
-            className={
-              view === 'map'
-                ? 'nav-selected'
-                : 'nav-unselected'
-            }
-            onClick={() => this.changeView('map')}
-          >
-            Map
-          </button> */}
 
 
 
 
+
+
+          <button
+    type="button"
+    position="relative"
+
+    style={
+      {
+        textAlign: 'center',
+        backgroundColor: view === 'addMarker' ? 'green' : null,
+      }}
+    onClick={() => this.changeView('addMarker')}
+    >ADD & DRAG </button>
         </div>
 
           {this.renderView()}

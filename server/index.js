@@ -1,3 +1,10 @@
+const bcrypt =  require('bcrypt')
+const passport = require('passport');
+const cloudinary = require('cloudinary')
+const flash = require('express-flash')
+const session = require('express-session')
+const cors = require('cors');
+const formData = require('express-form-data')
 
 require('dotenv').config()
   //this loads all the environment variables and sets them inside of process.env
@@ -16,19 +23,6 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '..','client','dist')))
 app.use(bodyParser.json())
-const bcrypt =  require('bcrypt')
-const passport = require('passport');
-const cloudinary = require('cloudinary')
-const flash = require('express-flash')
-const session = require('express-session')
-const cors = require('cors');
-const formData = require('express-form-data')
-const initializePassport = require('../passport.config')
-cloudinary.config({
-cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.API_KEY,
-  api_secret: process.env.API_SECRET
-})
 app.use(cors())
 app.use(flash())
 app.use(formData.parse())
@@ -38,43 +32,41 @@ app.use(session({
   saveUninitialized: false // do we want to save empty value
 }))
 app.use(methodOverride('_method'))
+// app.use(passport.session())
+// app.use(passport.initialize())
+// const initializePassport = require('../passport.config')
+cloudinary.config({
+cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET
+})
 // app.set('view engine', 'ejs')
-app.use(passport.initialize())
 //stores variables to be persisted across the session
-app.use(passport.session())
-const checkAuthenticated = (req, res, next) => {
-  //this function checks if the user is logged in
-  if(req.isAuthenticated()){
-    return next();
-  }
-  res.redirect('/login')
-}
-const notAuthenticated = (req, res, next) => {
-  //this function checks if the user is not logged in
-  //not working
-  //if the user is logged in
-  if(req.isAuthenticated()){
-    //redirect to the home page
-   return res.redirect('/');
-  }
-  //if they are not authenticated keep going
-  next();
-}
-initializePassport(passport,
-   email => User.findOne({where: {}}),
-  //return db query  find user => user.email === email
-  id => User.findOne(user => user.id === id)
-);
+// const checkAuthenticated = (req, res, next) => {
+//   //this function checks if the user is logged in
+//   if(req.isAuthenticated()){
+//     return next();
+//   }
+//   res.redirect('/login')
+// }
+// const notAuthenticated = (req, res, next) => {
+//   //this function checks if the user is not logged in
+//   //not working
+//   //if the user is logged in
+//   if(req.isAuthenticated()){
+//     //redirect to the home page
+//    return res.redirect('/');
+//   }
+//   //if they are not authenticated keep going
+//   next();
+// }
+// initializePassport(passport,
+//    email => User.findOne({where: {}}),
+//   //return db query  find user => user.email === email
+//   id => User.findOne(user => user.id === id)
+// );
 
-//login route to display login page
-// app.get('/login',  (req, res) => {
-//   res.render('/login')
-// })
-//registration route
-// app.get('/register', (req, res) => {
-//   res.render('Login.jsx')
-// })
-//signup route to submit registration
+
 
 app.get('/markers', (req, res) => {
 
@@ -87,11 +79,9 @@ app.get('/markers', (req, res) => {
     });
 });
 app.post('/markers', (req, res) => {
-  //console.log('APP POST REQ BODY', req.body);
 
 
     req.body.map((marker) => {
-//console.log('THIS IS MARKER', marker)
       const {latitude,
         longitude,
         description} = marker;
@@ -121,7 +111,7 @@ app.post('/markers', (req, res) => {
   app.post('/create', (req, res) => {
     const values = Object.values(req.files)
   const promises = values.map(image => cloudinary.uploader.upload(image.path))
-  console.log('VALUES', values[0].path)
+
 
   const {latitude,
       longitude,
@@ -131,6 +121,7 @@ app.post('/markers', (req, res) => {
       Promise
       .all(promises)
       .then(res =>  {
+        console.log(res)
         const newMarker = new Markers({
           latitude,
           imageUrl: res[0].url,
@@ -138,45 +129,22 @@ app.post('/markers', (req, res) => {
           description
         })
         newMarker.save()
-        .then(data => res.redirect('/'))
-        .catch(err =>  console.log('err', err))
+        .then((data) => {
+          console.log('MARKERS ADDED');
+
+        })
+        .catch((err) => {
+
+        });
     })
     .catch(err => console.error('Error creating marker', err))
 })
 
-    //   // req.body.map((marker) => {
 
-    //   //   const {latitude,
-    //   //     longitude,
-    //   //     imageUrl,
-    //   //     description} = marker;
-
-      // .then((data) => {
-      //   console.log('MARKERS ADDED', data);
-      //   res.redirect('/')
-      // })
-      // .catch((err) => {
-      //   console.error('error line 144', err)
-      // });
-  // const newMarker = new Markers({
-  //   latitude,
-  //   longitude,
-  //   imageUrl,
-  //   description
-  // });
-
-  // newMarker.save()
-  //   .then((data) => {
-  //     console.log(data);
-
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
 
 
 app.post('/register', (req, res) => {
-  //console.log('APP POST REQ', req);
+
   const {username, email, password} = req.body;
   //const password = await bcrypt.hash(req.body.password, 10)
 
@@ -229,12 +197,12 @@ app.post('/api/favorites', (req, res) => {
 // )
 
 app.post('/login', (req, res, next) => {
-  //console.log(Users);
+
 
   const {email, password} = req.body;
   console.log('login req.body', req.body)
   return User.findOne({where: {email: req.body.email}}).then((data) => {
-    //console.log('THIS IS DATA', data);
+
     if (data) {
       console.log('this is login server data', data)
 
@@ -259,19 +227,17 @@ app.post('/login', (req, res, next) => {
   });
 });
 app.post('/comments', (req, res, next) => {
-  //console.log(Users);
 
-  const { comments} = req.body;
   console.log('comment req.body', req.body)
   return Markers.findOne({where: {description: req.body.description}}).then((data) => {
-    //console.log('THIS IS DATA', data);
+
     if (data) {
       console.log('this is comment server data', data)
 
       data.update({
         comments: req.body.comments
       })
-      .then((data) => {})
+      .then((data) => { res.redirect('/')})
       .catch((err) => {console.log(err)
       })
 
