@@ -73,7 +73,7 @@ class MapContainer extends Component {
 
   }
   handleChange(event){
-    event.preventDefault(event)
+
     const name = event.target.name;
     this.setState({
       [name]: event.target.value
