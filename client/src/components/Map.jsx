@@ -44,7 +44,8 @@ class MapContainer extends Component {
       console.log('THIS IS AXIOS REQUEST DATA', marker.data);
 
       this.setState({
-        markers: marker.data
+        markers: marker.data,
+
       });
 
     } )
@@ -56,7 +57,9 @@ class MapContainer extends Component {
     //make a get request
     axios.get('/markers')
     .then((marker) =>{
-     return marker.data.comments
+     if(marker.data.name === this.state.selectedPlace.name){
+       this.state.selectedPlace.comments = marker.data.comments
+     }
 
     } )
     .catch((err) => {
@@ -80,6 +83,9 @@ class MapContainer extends Component {
   handleSubmit(){
     const {comments} = this.state
 
+    console.log("LOOK HERE",
+    comments
+    )
     const data =
      { description: this.state.selectedPlace.name,
       comments: comments
@@ -87,7 +93,7 @@ class MapContainer extends Component {
     }
     axios.post('/comments', data)
     .then(data => console.log('User Registered'))
-    .then(this.commentFetcher)
+
     .catch((err) => console.log('AXIOS POST ERROR', err))
 
   }
@@ -106,6 +112,7 @@ class MapContainer extends Component {
     .catch(err => console.log(err))
   }
   onMarkerClick (props, marker, e) {
+
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
@@ -146,14 +153,15 @@ changeView(option) {
           onClick={this.onHeartClick}
     ></FaHeart> : <FaRegHeart onClick={this.onHeartClick} ></FaRegHeart>
      }
-     <a href={this.state.selectedPlace.picture}>LINK</a>
+     <a href={this.state.selectedPlace.picture}>ENLARGE PHOTO</a>
         <form   >
 
       <label>Comment</label>
       <input type='text'  id='comments' name='comments' onChange={this.handleChange}  value={this.state.comments} />
     <button onClick={this.handleSubmit}  type="submit">Post</button>
     </form>
-    <div>{this.state.selectedPlace.comments}</div>
+<div>{this.state.selectedPlace.comments}</div>
+
     </div>
    );
    ReactDOM.render(React.Children.only(fav), document.getElementById('iwc'))
@@ -214,9 +222,11 @@ onClick={(e) => console.log(e)}
             name={marker.description}
             onClick={this.onMarkerClick}
             picture={marker.imageUrl}
+            comments={marker.comments}
           />
         ))}
         <InfoWindow
+
           marker={this.state.activeMarker}
           visible={this.state.showingInfoWindow}
           onClose={this.onInfoWindowClose}
