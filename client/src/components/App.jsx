@@ -5,6 +5,7 @@ import axios from 'axios'
 import Login from './Login'
 import Register from './Register'
 import AddPin from '../components/AddMarker/AddPin'
+import CreateMarker from '../components/AddMarker/CreateMarker'
 
 class App extends Component {
   constructor(props) {
@@ -34,8 +35,8 @@ renderView() {
     return <Login handleClick={() => this.changeView('anypostview')}/>;
   } else if (view === 'register') {
     return <Register handleClick={() => this.changeView('anypostview')}/>;
-  } else if (view === 'addPin') {
-    return <AddPin handleClick={() => this.changeView('anypostview')}/>;
+  } else if (view === 'addMarker') {
+    return <CreateMarker handleClick={() => this.changeView('anypostview')}/>;
   }
 }
 
@@ -81,7 +82,17 @@ if(isLoggedIn){
           <button className='nav-unselected' onClick={() => this.changeView('register')}>
             Register
           </button>
+          <button
+    type="button"
+    position="relative"
 
+    style={
+      {
+        textAlign: 'center',
+        backgroundColor: view === 'addMarker' ? 'green' : null,
+      }}
+    onClick={() => this.changeView('addMarker')}
+    >ADD & DRAG </button>
         </div>
         <div className='main'>
           {this.renderView()}

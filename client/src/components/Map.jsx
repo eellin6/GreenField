@@ -6,7 +6,7 @@ import axios from 'axios'
 import Favorites from './Favorites'
 import { FaRegHeart, FaHeart, FaRegGrinStars, FaGhost } from 'react-icons/fa'
 import { RiAliensFill } from 'react-icons/ri'
-import CreateMarker from './AddMarker/CreateMarker'
+
 
 class MapContainer extends Component {
   constructor(props) {
@@ -25,12 +25,11 @@ class MapContainer extends Component {
       isFavorite: false,
       drawMarker: false,
       comments: '',
-      view: 'map'
+
     }
     this.onMarkerClick = this.onMarkerClick.bind(this);
     this.onInfoWindowClose = this.onInfoWindowClose.bind(this);
     this.onHeartClick = this.onHeartClick.bind(this);
-    this.changeView = this.changeView.bind(this);
     this.markerFetcher = this.markerFetcher.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -184,20 +183,8 @@ changeView(option) {
 return (
 
   <div>
-  <h2 className='login'><button
-    type="button"
-    position="relative"
-
-    style={
-      {
-        textAlign: 'center',
-        backgroundColor: view === 'addMarker' ? 'green' : null,
-      }}
-    onClick={() => this.changeView('addMarker')}
-    >ADD & DRAG </button></h2>
 <div className='main'>
-  {view === 'map'
-  ? <Map
+<Map
 onClick={(e) => console.log(e)}
  google={this.props.google}
  initialCenter={{
@@ -238,8 +225,7 @@ onClick={(e) => console.log(e)}
 
 
         </InfoWindow>
-  </Map> : <CreateMarker />
- }
+  </Map>
  </div>
  </div>
   )}
