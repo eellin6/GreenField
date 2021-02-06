@@ -267,7 +267,7 @@ app.post('/login', (req, res, next) => {
 app.post('/comments', (req, res, next) => {
   //console.log(Users);
 
-  const { comments} = req.body;
+  //const { comments} = req.body;
   console.log('comment req.body', req.body)
   return Markers.findOne({where: {description: req.body.description}}).then((data) => {
     //console.log('THIS IS DATA', data);
@@ -277,7 +277,7 @@ app.post('/comments', (req, res, next) => {
       data.update({
         comments: req.body.comments
       })
-      .then((data) => {})
+      .then((data) => { res.redirect('/')})
       .catch((err) => {console.log(err)
       })
 
