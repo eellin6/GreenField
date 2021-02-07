@@ -1,3 +1,10 @@
+const bcrypt =  require('bcrypt')
+const passport = require('passport');
+const cloudinary = require('cloudinary')
+const flash = require('express-flash')
+const session = require('express-session')
+const cors = require('cors');
+const formData = require('express-form-data')
 
 require('dotenv').config()
   //this loads all the environment variables and sets them inside of process.env
@@ -5,7 +12,7 @@ require('dotenv').config()
 const methodOverride = require('method-override')
 const express = require('express');
 // const db = require('./db/database.js')
-const {User, Favorites, Markers} = require('./db/database.js')
+const {User, Favorites, Markers, Comments} = require('./db/database.js')
 const app = express();
 app.set('view engine', 'ejs')
 const path = require('path');
@@ -16,8 +23,6 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '..','client','dist')))
 app.use(bodyParser.json())
-const bcrypt =  require('bcrypt')
-const passport = require('passport');
 require('../passport.config');
 const cookieSession = require('cookie-session')
 app.use(cookieSession({
@@ -25,19 +30,6 @@ app.use(cookieSession({
   keys: ['key1', 'key2']
 }))
 
-
-
-const cloudinary = require('cloudinary')
-const flash = require('express-flash')
-const session = require('express-session')
-const cors = require('cors');
-const formData = require('express-form-data')
-const initializePassport = require('../passport.config')
-cloudinary.config({
-cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.API_KEY,
-  api_secret: process.env.API_SECRET
-})
 app.use(cors())
 app.use(flash())
 app.use(formData.parse())
@@ -47,8 +39,15 @@ app.use(session({
   saveUninitialized: false // do we want to save empty value
 }))
 app.use(methodOverride('_method'))
+// app.use(passport.session())
+// app.use(passport.initialize())
+// const initializePassport = require('../passport.config')
+cloudinary.config({
+cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET
+})
 // app.set('view engine', 'ejs')
-app.use(passport.initialize())
 //stores variables to be persisted across the session
 app.use(passport.session())
 const checkAuthenticated = (req, res, next) => {
@@ -96,11 +95,9 @@ app.get('/markers', (req, res) => {
     });
 });
 app.post('/markers', (req, res) => {
-  //console.log('APP POST REQ BODY', req.body);
 
 
     req.body.map((marker) => {
-//console.log('THIS IS MARKER', marker)
       const {latitude,
         longitude,
         description} = marker;
@@ -125,12 +122,40 @@ app.post('/markers', (req, res) => {
 
     })
   });
+  app.post('/comments', (req, res) => {
+
+    console.log(req.body)
+
+
+  const{comments, description} = req.body
+
+
+
+        const newComment = new Comments({
+          comments,
+          description
+        });
+
+        newComment.save()
+          .then((data) => {
+            console.log('COMMENTS ADDED');
+            res.redirect('/');
+
+          })
+          .catch((err) => {
+
+            console.log(err)
+
+          });
+
+
+  });
 
 
   app.post('/create', (req, res) => {
     const values = Object.values(req.files)
   const promises = values.map(image => cloudinary.uploader.upload(image.path))
-  console.log('VALUES', values[0].path)
+
 
   const {latitude,
       longitude,
@@ -151,47 +176,21 @@ app.post('/markers', (req, res) => {
         .then((data) => {
           console.log('MARKERS ADDED');
 
+
         })
         .catch((err) => {
+          console.log('this is the err we are looking for', err)
 
         });
     })
     .catch(err => console.error('Error creating marker', err))
 })
 
-    //   // req.body.map((marker) => {
 
-    //   //   const {latitude,
-    //   //     longitude,
-    //   //     imageUrl,
-    //   //     description} = marker;
-
-      // .then((data) => {
-      //   console.log('MARKERS ADDED', data);
-      //   res.redirect('/')
-      // })
-      // .catch((err) => {
-      //   console.error('error line 144', err)
-      // });
-  // const newMarker = new Markers({
-  //   latitude,
-  //   longitude,
-  //   imageUrl,
-  //   description
-  // });
-
-  // newMarker.save()
-  //   .then((data) => {
-  //     console.log(data);
-
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
 
 
 app.post('/register', (req, res) => {
-  //console.log('APP POST REQ', req);
+
   const {username, email, password} = req.body;
   //const password = await bcrypt.hash(req.body.password, 10)
 
@@ -244,12 +243,12 @@ app.post('/api/favorites', (req, res) => {
 // )
 
 app.post('/login', (req, res, next) => {
-  //console.log(Users);
+
 
   const {email, password} = req.body;
   console.log('login req.body', req.body)
   return User.findOne({where: {email: req.body.email}}).then((data) => {
-    //console.log('THIS IS DATA', data);
+
     if (data) {
       console.log('this is login server data', data)
 
@@ -273,20 +272,11 @@ app.post('/login', (req, res, next) => {
     }
   });
 });
-app.post('/comments', (req, res, next) => {
-  //console.log(Users);
+app.get('/comments', (req, res) => {
 
-  const { comments} = req.body;
   console.log('comment req.body', req.body)
-  return Markers.findOne({where: {description: req.body.description}}).then((data) => {
-    //console.log('THIS IS DATA', data);
-    if (data) {
-      console.log('this is comment server data', data)
-
-      data.update({
-        comments: req.body.comments
-      })
-      .then((data) => {})
+  return Comments.findAll({})
+      .then((data) => { res.send(data)})
       .catch((err) => {console.log(err)
       })
 
@@ -294,13 +284,6 @@ app.post('/comments', (req, res, next) => {
       // .then((correct) => console.log('login successful'))
       // .catch((err) => console.log('WRONG PASSWORD', err))
 
-    } else {
-
-      res.redirect('/')
-
-
-    }
-  });
 });
 
 

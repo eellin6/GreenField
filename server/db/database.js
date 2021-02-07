@@ -33,6 +33,15 @@ const Markers = db.define('Markers', {
     type: Sequelize.STRING,
     unique:true
   },
+  comments: Sequelize.STRING,
+
+
+
+
+});
+const Comments = db.define('Comments', {
+  description: Sequelize.STRING,
+
   comments: Sequelize.STRING
 
 });
@@ -51,5 +60,6 @@ module.exports = {
   db,
   User,
   Markers,
-  Favorites
+  Favorites,
+  Comments
 };

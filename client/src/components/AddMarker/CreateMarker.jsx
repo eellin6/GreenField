@@ -84,7 +84,6 @@ onClick={(e) => console.log(e)}
 }
 const container = document.createElement("div");
 document.body.appendChild(container);
-// ReactDOM.render(<CreateMarker />, container);
 export default GoogleApiWrapper({
   apiKey: key
 })(CreateMarker);

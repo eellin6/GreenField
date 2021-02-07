@@ -12,8 +12,9 @@ class App extends Component {
     this.state = {
       seen: false,
       isLoggedIn: false,
-      member: false,
-      view: 'map'
+      view: 'map',
+      lat: 29.9,
+      lng: -91.6
     }
     this.changeView = this.changeView.bind(this)
     this.handleLogout = this.handleLogout.bind(this);
@@ -29,9 +30,10 @@ changeView(option) {
     view: option
   });
 }
+
 renderView() {
 
-  const { view } = this.state;
+  const { view, lat, lng } = this.state;
   // This will render different views when navigation is clicked
   if (view === 'map') {
     return <GoogleApiWrapper  handleClick={() => this.changeView('anypostview')}/>;
@@ -39,7 +41,6 @@ renderView() {
     return <CreateMarker handleClick={() => this.changeView('anypostview')}/>;
   }
 }
-
 render() {
   const { view, isLoggedIn  } = this.state;
   //if the status of a user is not logged in, display a login button
@@ -95,9 +96,9 @@ render() {
     onClick={() => this.changeView('addMarker')}
     >ADD & DRAG </button>
         </div>
-        <div className='main'>
+
           {this.renderView()}
-        </div>
+
       </div>
 
   )
