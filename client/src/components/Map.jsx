@@ -24,7 +24,7 @@ class MapContainer extends Component {
       },
       isFavorite: false,
       drawMarker: false,
-      comments: '',
+      comments: null,
       view: 'map',
       newArea: false,
       reload: false
@@ -55,11 +55,18 @@ class MapContainer extends Component {
     });
   }
   commentFetcher() {
-    axios.get('/markers')
-    .then((marker) =>{
-     if(marker.data.name === this.state.selectedPlace.name){
-       this.state.selectedPlace.comments = marker.data.comments
-     }
+
+    axios.get('/comments')
+    .then((comment) =>{
+      console.log('this is comments axios get req', comment.data)
+
+      this.setState({
+         comments: comment.data
+       })
+
+
+
+
 
     } )
     .catch((err) => {
@@ -68,6 +75,9 @@ class MapContainer extends Component {
   }
   componentDidMount(){
     this.markerFetcher();
+    this.commentFetcher();
+
+
   }
 
 
@@ -97,6 +107,8 @@ class MapContainer extends Component {
 
 
   onHeartClick() {
+    console.log(this.state.selectedPlace)
+    console.log('this.state.comments', this.state.comments)
 
     const { position, name, picture } = this.state.selectedPlace
     const { lat, lng } = position
@@ -155,7 +167,11 @@ changeView(option) {
       <input type='text'  id='comments' name='comments'   />
     <button  type="submit">Post</button>
     </form>
-<div>{this.state.selectedPlace.comments}</div>
+{this.state.comments.map((data, index) => {
+  if(data.description === this.state.selectedPlace.name){
+  return <div key={index}>{data.comments}</div>
+  }
+})}
 
     </div>
    );
@@ -183,9 +199,9 @@ return (
 <Map
 onClick={(e) => console.log(e)}
  google={this.props.google}
- center={{
-  lat: location.lat,
-  lng: location.lng
+ initialCenter={{
+  lat: 29.95,
+  lng: -90.07
 }}
  zoom={12}
  style={style}
@@ -205,7 +221,7 @@ onClick={(e) => console.log(e)}
             name={marker.description}
             onClick={this.onMarkerClick}
             picture={marker.imageUrl}
-            comments={marker.comments}
+            comments={[]}
           />
         ))}
         <InfoWindow
