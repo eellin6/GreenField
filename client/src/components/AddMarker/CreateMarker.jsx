@@ -2,9 +2,6 @@ import React, { Component } from 'react'
 import { Map, GoogleApiWrapper, Marker, InfoWindow, useLoadScript } from 'google-maps-react'
 import { key } from '../../../../config'
 import Modal from './Modal'
-import ReactDOM from 'react-dom'
-import axios from 'axios'
-
 class CreateMarker extends Component {
   constructor(props) {
     super(props)
@@ -27,8 +24,6 @@ class CreateMarker extends Component {
     this.handleOpenModal = this.handleOpenModal.bind(this);
 
   }
-
-
 
   handleOpenModal(){
    this.setState({ isOpen: true });

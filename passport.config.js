@@ -1,28 +1,18 @@
-const LocalStrategy = require('passport-local').Strategy
-const bcrypt = require('bcrypt');
-function initialize(passport, getUserByEmail, getUserById){
-  //done function called when done authenticating user
-  const authenticateUser = async(email, password, done) => {
-    const user = getUserByEmail(email)
-    if(user === null){
-      return done(null, false, {message: "Email not found!"})
-    }
-    try {
-      //check the password
-        if(await bcrypt.compare(password, user.password)){
-          return done(null, user)
-        }else {
-          return done(null, false, {message: "Password incorrect"})
-        }
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
-      } catch(e) {
-        return done(e)
-      }
-
+passport.use(new GoogleStrategy({
+    clientID: "722057395339-g7v9oabfk4mlpo5b1lbf337fo4qoo0ma.apps.googleusercontent.com",
+    clientSecret: "WDQtpHSGODE12fue8u5nBGu8",
+    callbackURL: "http://localhost:3000/api/account/google"
+  },
+  passport.serializeUser(function(user, done) {
+    done(null, user);
+  }),
+  passport.deserializeUser(function(user, done) {
+    done(null, user);
+  }),
+  function(accessToken, refreshToken, profile, done) {
+    return done(null, profile);
   }
-  passport.use(new LocalStrategy({ usernameField: 'email'}, authenticateUser)) //authenticateUser is called to confirm the user
-  passport.serializeUser((user, done) => done(null, user.id))
-  passport.deserializeUser((id, done) => done(null, getUserById(id)))
-
-}
-module.exports = initialize
+));

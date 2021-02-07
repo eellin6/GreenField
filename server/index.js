@@ -23,6 +23,13 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '..','client','dist')))
 app.use(bodyParser.json())
+require('../passport.config');
+const cookieSession = require('cookie-session')
+app.use(cookieSession({
+  name: 'google-auth-session',
+  keys: ['key1', 'key2']
+}))
+
 app.use(cors())
 app.use(flash())
 app.use(formData.parse())
@@ -42,31 +49,40 @@ cloud_name: process.env.CLOUD_NAME,
 })
 // app.set('view engine', 'ejs')
 //stores variables to be persisted across the session
-// const checkAuthenticated = (req, res, next) => {
-//   //this function checks if the user is logged in
-//   if(req.isAuthenticated()){
-//     return next();
-//   }
-//   res.redirect('/login')
-// }
-// const notAuthenticated = (req, res, next) => {
-//   //this function checks if the user is not logged in
-//   //not working
-//   //if the user is logged in
-//   if(req.isAuthenticated()){
-//     //redirect to the home page
-//    return res.redirect('/');
-//   }
-//   //if they are not authenticated keep going
-//   next();
-// }
+app.use(passport.session())
+const checkAuthenticated = (req, res, next) => {
+  //this function checks if the user is logged in
+  if(req.isAuthenticated()){
+    return next();
+  }
+  res.redirect('/login')
+}
+const notAuthenticated = (req, res, next) => {
+  //this function checks if the user is not logged in
+  //not working
+  //if the user is logged in
+  if(req.isAuthenticated()){
+    //redirect to the home page
+   return res.redirect('/');
+  }
+  //if they are not authenticated keep going
+  next();
+}
 // initializePassport(passport,
 //    email => User.findOne({where: {}}),
 //   //return db query  find user => user.email === email
 //   id => User.findOne(user => user.id === id)
 // );
 
-
+//login route to display login page
+// app.get('/login',  (req, res) => {
+//   res.render('/login')
+// })
+//registration route
+// app.get('/register', (req, res) => {
+//   res.render('Login.jsx')
+// })
+//signup route to submit registration
 
 app.get('/markers', (req, res) => {
 
@@ -275,15 +291,23 @@ app.get('/comments', (req, res) => {
 
 
 //logout route
-app.delete('/logout', (req, res) => {
-  req.logOut()
-  res.redirect('/login')
+app.get('/logout', (req, res) => {
+  req.session = null;
+  req.logout()
+  res.redirect('/')
 })
 
 
 
 
-
+app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+app.get('/auth/error', (req, res) => res.send('Unknown Error'))
+app.get('/api/account/google', passport.authenticate('google', { failureRedirect: '/auth/error' }),
+  function(req, res) {
+    res.redirect('/');
+  }
+);
+app.get('/', (req, res) => res.send(`Welcome ${req.user.displayName}!`))
 
 
 app.listen(3000, function() {
