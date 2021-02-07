@@ -12,7 +12,7 @@ require('dotenv').config()
 const methodOverride = require('method-override')
 const express = require('express');
 // const db = require('./db/database.js')
-const {User, Favorites, Markers} = require('./db/database.js')
+const {User, Favorites, Markers, Comments} = require('./db/database.js')
 const app = express();
 app.set('view engine', 'ejs')
 const path = require('path');
@@ -106,6 +106,34 @@ app.post('/markers', (req, res) => {
 
     })
   });
+  app.post('/comments', (req, res) => {
+
+    console.log(req.body)
+
+
+  const{comments, description} = req.body
+
+
+
+        const newComment = new Comments({
+          comments,
+          description
+        });
+
+        newComment.save()
+          .then((data) => {
+            console.log('COMMENTS ADDED');
+            res.redirect('/');
+
+          })
+          .catch((err) => {
+
+            console.log(err)
+
+          });
+
+
+  });
 
 
   app.post('/create', (req, res) => {
@@ -132,8 +160,10 @@ app.post('/markers', (req, res) => {
         .then((data) => {
           console.log('MARKERS ADDED');
 
+
         })
         .catch((err) => {
+          console.log('this is the err we are looking for', err)
 
         });
     })
@@ -226,18 +256,11 @@ app.post('/login', (req, res, next) => {
     }
   });
 });
-app.post('/comments', (req, res, next) => {
+app.get('/comments', (req, res) => {
 
   console.log('comment req.body', req.body)
-  return Markers.findOne({where: {description: req.body.description}}).then((data) => {
-
-    if (data) {
-      console.log('this is comment server data', data)
-
-      data.update({
-        comments: req.body.comments
-      })
-      .then((data) => { res.redirect('/')})
+  return Comments.findAll({})
+      .then((data) => { res.send(data)})
       .catch((err) => {console.log(err)
       })
 
@@ -245,13 +268,6 @@ app.post('/comments', (req, res, next) => {
       // .then((correct) => console.log('login successful'))
       // .catch((err) => console.log('WRONG PASSWORD', err))
 
-    } else {
-
-      res.redirect('/')
-
-
-    }
-  });
 });
 
 

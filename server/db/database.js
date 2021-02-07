@@ -33,6 +33,15 @@ const Markers = db.define('Markers', {
     type: Sequelize.STRING,
     unique:true
   },
+  comments: Sequelize.STRING,
+
+
+
+
+});
+const Comments = db.define('Comments', {
+  description: Sequelize.STRING,
+
   comments: Sequelize.STRING
 
 });
@@ -43,13 +52,14 @@ const Favorites = db.define('Favorites', {
   description: Sequelize.STRING
 
 });
-db.sync({ force: true })
-  .then(() => {
-    console.log(`Database & tables created!`);
-  }).catch((err) => {console.log(err)})
+// db.sync({ force: true })
+//   .then(() => {
+//     console.log(`Database & tables created!`);
+//   }).catch((err) => {console.log(err)})
 module.exports = {
   db,
   User,
   Markers,
-  Favorites
+  Favorites,
+  Comments
 };
