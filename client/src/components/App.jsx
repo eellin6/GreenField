@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import GoogleApiWrapper from './Map';
 import MapContainer from './Map'
 import axios from 'axios'
-import Login from './Login'
-import Register from './Register'
+
 import AddPin from '../components/AddMarker/AddPin'
 import CreateMarker from '../components/AddMarker/CreateMarker'
 
@@ -17,9 +16,14 @@ class App extends Component {
       view: 'map'
     }
     this.changeView = this.changeView.bind(this)
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
-
+handleLogout() {
+  axios.get('/logout')
+  .then(console.log("You successfully logged out"))
+  .catch(err => console.error('error logging out', err))
+}
 changeView(option) {
   this.setState({
     view: option
@@ -31,10 +35,6 @@ renderView() {
   // This will render different views when navigation is clicked
   if (view === 'map') {
     return <GoogleApiWrapper  handleClick={() => this.changeView('anypostview')}/>;
-  } else if (view === 'login') {
-    return <Login handleClick={() => this.changeView('anypostview')}/>;
-  } else if (view === 'register') {
-    return <Register handleClick={() => this.changeView('anypostview')}/>;
   } else if (view === 'addMarker') {
     return <CreateMarker handleClick={() => this.changeView('anypostview')}/>;
   }
@@ -44,10 +44,10 @@ render() {
   const { view, isLoggedIn  } = this.state;
   //if the status of a user is not logged in, display a login button
   const status = 'Login'
-if(isLoggedIn){
-  //if the status of a user is logged in, display logout button
-  status = 'Logout'
-}
+// if(isLoggedIn){
+//   //if the status of a user is logged in, display logout button
+//   status = 'Logout'
+// }
   return (
     <div style={{color: 'black'}}>
       <header>
@@ -55,7 +55,8 @@ if(isLoggedIn){
       <h1 style={{
         alignSelf: 'normal',
         color: 'blue'
-        }}>Welcome To Geo-Nov</h1>
+        }}>Welcome To Nola Bound</h1>
+        <div className="g-signin2" data-onsuccess="onSignIn"></div>
       </header>
 
         <div className='nav'>
@@ -76,12 +77,12 @@ if(isLoggedIn){
           </button> */}
 
 
-          <button className='nav-unselected' onClick={() => this.changeView('login')}>
-            {status}
-          </button>
-          <button className='nav-unselected' onClick={() => this.changeView('register')}>
-            Register
-          </button>
+<button className="g-logout2" href="#" onClick={function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+  }}>Sign out</button>
           <button
     type="button"
     position="relative"

@@ -18,6 +18,15 @@ app.use(express.static(path.join(__dirname, '..','client','dist')))
 app.use(bodyParser.json())
 const bcrypt =  require('bcrypt')
 const passport = require('passport');
+require('../passport.config');
+const cookieSession = require('cookie-session')
+app.use(cookieSession({
+  name: 'google-auth-session',
+  keys: ['key1', 'key2']
+}))
+
+
+
 const cloudinary = require('cloudinary')
 const flash = require('express-flash')
 const session = require('express-session')
@@ -60,11 +69,11 @@ const notAuthenticated = (req, res, next) => {
   //if they are not authenticated keep going
   next();
 }
-initializePassport(passport,
-   email => User.findOne({where: {}}),
-  //return db query  find user => user.email === email
-  id => User.findOne(user => user.id === id)
-);
+// initializePassport(passport,
+//    email => User.findOne({where: {}}),
+//   //return db query  find user => user.email === email
+//   id => User.findOne(user => user.id === id)
+// );
 
 //login route to display login page
 // app.get('/login',  (req, res) => {
@@ -299,15 +308,23 @@ app.post('/comments', (req, res, next) => {
 
 
 //logout route
-app.delete('/logout', (req, res) => {
-  req.logOut()
-  res.redirect('/login')
+app.get('/logout', (req, res) => {
+  req.session = null;
+  req.logout()
+  res.redirect('/')
 })
 
 
 
 
-
+app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+app.get('/auth/error', (req, res) => res.send('Unknown Error'))
+app.get('/api/account/google', passport.authenticate('google', { failureRedirect: '/auth/error' }),
+  function(req, res) {
+    res.redirect('/');
+  }
+);
+app.get('/', (req, res) => res.send(`Welcome ${req.user.displayName}!`))
 
 
 app.listen(3000, function() {
