@@ -9,7 +9,6 @@ const formData = require('express-form-data')
 require('dotenv').config()
   //this loads all the environment variables and sets them inside of process.env
 
-const methodOverride = require('method-override')
 const express = require('express');
 // const db = require('./db/database.js')
 const {User, Favorites, Markers, Comments} = require('./db/database.js')
@@ -29,7 +28,8 @@ app.use(cookieSession({
   name: 'google-auth-session',
   keys: ['key1', 'key2']
 }))
-
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(cors())
 app.use(flash())
 app.use(formData.parse())
@@ -38,10 +38,7 @@ app.use(session({
   resave: false,//should we resave if nothing changes
   saveUninitialized: false // do we want to save empty value
 }))
-app.use(methodOverride('_method'))
-// app.use(passport.session())
-// app.use(passport.initialize())
-// const initializePassport = require('../passport.config')
+
 cloudinary.config({
 cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.API_KEY,
