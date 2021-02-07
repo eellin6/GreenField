@@ -53,7 +53,7 @@ render() {
 
       <h1 style={{
         alignSelf: 'normal',
-        color: 'blue'
+        color: 'black'
         }}>Welcome To Nola Bound</h1>
         <div className="g-signin2" data-onsuccess="onSignIn"></div>
       </header>
@@ -89,7 +89,7 @@ render() {
     style={
       {
         textAlign: 'center',
-        backgroundColor: view === 'addMarker' ? 'green' : null,
+        backgroundColor: view === 'addMarker' ? 'purple' : null,
       }}
     onClick={() => this.changeView('addMarker')}
     >ADD & DRAG </button>

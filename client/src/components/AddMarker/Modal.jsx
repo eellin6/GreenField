@@ -33,6 +33,9 @@ class Modal extends Component {
   handleClick(e) {
     e.preventDefault()
     this.uploadFormWithData()
+    this.setState({
+      isOpen: false
+    })
   }
 
   submitForm(data) {
@@ -60,9 +63,13 @@ class Modal extends Component {
       <div className={showHideClassName}>
         <section className="modal-main">
           <form>
+            <div>
           <input placeholder="Description" onChange={this.handleChange} name='description' />
+            </div>
+            <div>
           <input type="file" placeholder="insert picture" name='picture' id="imagepath" onChange={this.handleFileChange}/>
-          <button type='submit' onClick={this.handleClick}>Add Pin</button>
+            </div>
+          <button type='submit' onClick={this.handleClick}>Add Comment</button>
           </form>
         </section>
       </div>

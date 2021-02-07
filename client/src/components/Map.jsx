@@ -167,9 +167,17 @@ changeView(option) {
       <input type='text'  id='comments' name='comments'   />
     <button  type="submit">Post</button>
     </form>
+    <div>
+      <h1>Comments Section</h1>
+    </div>
 {this.state.comments.map((data, index) => {
   if(data.description === this.state.selectedPlace.name){
-  return <div key={index}>{data.comments}</div>
+  return (
+    <div>
+<hr className='rounded'></hr>
+  <div key={index}>{data.comments}</div>
+  </div>
+  )
   }
 })}
 
@@ -179,6 +187,77 @@ changeView(option) {
  }
 
  render() {
+   const mapStyles = [
+    {
+        "featureType": "landscape.natural",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "visibility": "on"
+            },
+            {
+                "color": "#E0EFEF"
+            }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "visibility": "on"
+            },
+            {
+                "hue": "#1900FF"
+            },
+            {
+                "color": "#C0E8E8"
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "lightness": 100
+            },
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "transit.line",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "visibility": "on"
+            },
+            {
+                "lightness": 700
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#7DCDCD"
+            }
+        ]
+    }
+]
 
    const style = {
     justifyContent: 'center',
@@ -206,6 +285,8 @@ onClick={(e) => console.log(e)}
  zoom={12}
  style={style}
  containerStyle={containerStyle}
+ styles={mapStyles}
+ zoomControl={true}
  >
 
 {this.state.markers.map((marker, index) => (

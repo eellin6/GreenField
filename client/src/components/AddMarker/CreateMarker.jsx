@@ -26,7 +26,14 @@ class CreateMarker extends Component {
   }
 
   handleOpenModal(){
-   this.setState({ isOpen: true });
+    if(this.state.isOpen){
+      this.setState({
+        isOpen: false
+      })
+    }else {
+
+      this.setState({ isOpen: true });
+    }
   }
 
   onMarkerDragEnd (coord, index) {
@@ -55,7 +62,7 @@ class CreateMarker extends Component {
     return(
 <div>
 
-  <h3><button type="button" onClick={this.handleOpenModal}>Add Pin</button></h3>
+  <h3><button type="button" onClick={this.handleOpenModal}>{this.state.isOpen ? 'Close Comment' : 'Add Pin'}</button></h3>
       <Map
 onClick={(e) => console.log(e)}
  google={this.props.google}

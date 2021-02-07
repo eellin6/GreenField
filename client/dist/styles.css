@@ -1,5 +1,5 @@
 body {
-  background-color: peru;
+  background-color: rgb(196, 120, 21);
 }
 header, h1, label{
   text-align: center;
@@ -40,4 +40,8 @@ modal {
 
 .display-none {
   display: none;
+}
+hr.rounded {
+  border-top: 8px solid rgb(31, 90, 201);
+  border-radius: 5px;
 }
