@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import GoogleApiWrapper from './Map';
-import MapContainer from './Map'
 import axios from 'axios'
 
-import AddPin from '../components/AddMarker/AddPin'
 import CreateMarker from '../components/AddMarker/CreateMarker'
 
 class App extends Component {
