@@ -34,7 +34,7 @@ app.use(cors())
 app.use(flash())
 app.use(formData.parse())
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  secret: process.env.clientSecret,
   resave: false,//should we resave if nothing changes
   saveUninitialized: false // do we want to save empty value
 }))
@@ -307,6 +307,6 @@ app.get('/api/account/google', passport.authenticate('google', { failureRedirect
 app.get('/', (req, res) => res.send(`Welcome ${req.user.displayName}!`))
 
 
-app.listen(3000, function() {
-  console.log('listening on 3000')
+app.listen(3000, () => {
+  console.log('Server is on http://localhost:3000')
 })
