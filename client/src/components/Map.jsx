@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react'
-import { key } from '../../../config'
+import { GOOGLEMAPS_TOKEN } from '../../../config'
 import axios from 'axios'
 import { FaRegHeart, FaHeart } from 'react-icons/fa'
 class MapContainer extends Component {
@@ -277,5 +277,5 @@ onClick={(e) => console.log(e)}
   )}
 }
 export default GoogleApiWrapper({
-  apiKey: key
+  apiKey: GOOGLEMAPS_TOKEN
 })(MapContainer);
