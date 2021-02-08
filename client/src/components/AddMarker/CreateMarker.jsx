@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react'
 import { Map, GoogleApiWrapper, Marker, InfoWindow, useLoadScript } from 'google-maps-react'
-import { key } from '../../../../config'
+import { GOOGLEMAPS_TOKEN } from '../../../../config'
 import Modal from './Modal'
 class CreateMarker extends Component {
   constructor(props) {
@@ -157,5 +157,5 @@ onClick={(e) => console.log(e)}
 const container = document.createElement("div");
 document.body.appendChild(container);
 export default GoogleApiWrapper({
-  apiKey: key
+  apiKey: GOOGLEMAPS_TOKEN
 })(CreateMarker);
