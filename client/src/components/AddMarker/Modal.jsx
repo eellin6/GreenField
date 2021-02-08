@@ -1,10 +1,6 @@
-
 import React, { Component } from 'react'
 import axios from 'axios'
-
-
 class Modal extends Component {
-
   constructor(props) {
     super(props)
   console.log('PROPS', props)
@@ -18,7 +14,6 @@ class Modal extends Component {
     this.uploadFormWithData = this.uploadFormWithData.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
-
   handleFileChange(event) {
     this.setState({picture: event.target.files[0]})
   }
@@ -28,27 +23,20 @@ class Modal extends Component {
       [name]: event.target.value
     })
   }
-
-
   handleClick(e) {
     e.preventDefault()
     this.uploadFormWithData()
-    this.setState({
-      isOpen: false
-    })
   }
-
   submitForm(data) {
    console.log('line 37, ', data)
    axios.post('http://localhost:3000/create', data)
-   .then(res => console.log(res))
+   .then(this.props.handleCloseModal())
+   .then(this.props.changeView('map'))
      .catch(err => console.log('Error', err))
   }
-
   uploadFormWithData() {
     const formData = new FormData();
    const { description, picture } = this.state
-
    formData.append('description', description);
    formData.append('picture', picture);
    formData.append('latitude', this.props.marker.position.lat);
@@ -56,31 +44,25 @@ class Modal extends Component {
    console.log(formData, 'line 42')
    this.submitForm(formData)
   }
-
   render() {
     const showHideClassName = this.props.show ? "modal display-block" : "modal display-none";
     return (
       <div className={showHideClassName}>
         <section className="modal-main">
           <form>
-            <div>
+            <label className="instructions">Add Description
           <input placeholder="Description" onChange={this.handleChange} name='description' />
-            </div>
-            <div>
+          </label>
+              <label className="instructions">Add Picture
           <input type="file" placeholder="insert picture" name='picture' id="imagepath" onChange={this.handleFileChange}/>
-            </div>
-          <button type='submit' onClick={this.handleClick}>Add Comment</button>
+          </label>
+          <div>
+          <span><button className="modal-btn" type='submit' onClick={this.handleClick}>Add Pin</button></span>
+          </div>
           </form>
         </section>
       </div>
     );
   };
-
   }
-
-
-
-
-
-
 export default Modal;
