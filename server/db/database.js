@@ -1,20 +1,20 @@
-const  {Sequelize}  = require('sequelize');
+const {Sequelize} = require('sequelize');
 const mysql = require('mysql2');
 
 const db = new Sequelize('maps', 'root', '', {
   host: 'localhost',
-  dialect:  'mysql',
+  dialect: 'mysql',
   logging: false
 });
 
 //const db = new Sequelize('mysql://localhost:3000/maps')
 db.authenticate()
-.then(() => {
-console.log('connected to the database')
-})
-.catch((err) => {
-  console.log('could not connect to database', err)
-})
+  .then(() => {
+    console.log('connected to the database');
+  })
+  .catch((err) => {
+    console.log('could not connect to database', err);
+  });
 
 
 
@@ -26,12 +26,12 @@ const User = db.define('User', {
 });
 
 const Markers = db.define('Markers', {
-  latitude: Sequelize.DECIMAL(10, 4)  ,
-  longitude: Sequelize.DECIMAL(10, 4)  ,
+  latitude: Sequelize.DECIMAL(10, 4),
+  longitude: Sequelize.DECIMAL(10, 4),
   imageUrl: Sequelize.STRING(1000),
   description: {
     type: Sequelize.STRING,
-    unique:true
+    unique: true
   },
   comments: Sequelize.STRING,
 
@@ -56,8 +56,8 @@ const Favorites = db.define('Favorites', {
 
 db.sync({ force: true })
   .then(() => {
-    console.log(`Database & tables created!`);
-  }).catch((err) => {console.log(err)})
+    console.log('Database & tables created!');
+  }).catch((err) => { console.log(err); });
 
 
 module.exports = {
