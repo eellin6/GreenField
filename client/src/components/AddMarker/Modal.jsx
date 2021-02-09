@@ -29,7 +29,7 @@ class Modal extends Component {
   }
   submitForm(data) {
    console.log('line 37, ', data)
-   axios.post('http://localhost:3000/create', data)
+   axios.post('http://localhost:3000/markers/create', data)
    .then(this.props.handleCloseModal())
    .then(this.props.changeView('map'))
      .catch(err => console.log('Error', err))
