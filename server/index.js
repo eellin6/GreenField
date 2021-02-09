@@ -309,5 +309,5 @@ app.get('/', (req, res) => res.send(`Welcome ${req.user.displayName}!`))
 
 
 app.listen(3000, () => {
-  console.log(`Server is on http://127.0.0.1:3000`)
+  console.log(`Server is on http://localhost:3000`)
 })
