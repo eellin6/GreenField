@@ -45,8 +45,9 @@ render() {
   return (
     <div style={{color: 'black'}}>
       <header>
-      <h1 className="logo"
-        >Welcome To Nola Bound</h1>
+        <img src="https://i.ibb.co/ry3RrBM/NOLA-bound-logo.png"
+            alt="NOLA-bound-logo"
+            height="200px" width="auto"/>
         <div className="g-signin2" data-onsuccess="onSignIn"></div>
       </header>
         <div className='nav'>
