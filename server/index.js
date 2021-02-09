@@ -5,9 +5,12 @@ const flash = require('express-flash')
 const session = require('express-session')
 const cors = require('cors');
 const formData = require('express-form-data')
+const { GoogleStrategy } = require('../passport.config.js');
 
 require('dotenv').config()
   //this loads all the environment variables and sets them inside of process.env
+
+  const port = 3000;
 
 const express = require('express');
 // const db = require('./db/database.js')
@@ -33,7 +36,8 @@ app.use(passport.session());
 app.use(cors())
 app.use(flash())
 app.use(formData.parse())
-app.use(session({
+app.use(
+  session({
   secret: process.env.clientSecret,
   resave: false,//should we resave if nothing changes
   saveUninitialized: false // do we want to save empty value
@@ -46,7 +50,7 @@ cloud_name: process.env.CLOUD_NAME,
 })
 // app.set('view engine', 'ejs')
 //stores variables to be persisted across the session
-app.use(passport.session())
+
 const checkAuthenticated = (req, res, next) => {
   //this function checks if the user is logged in
   if(req.isAuthenticated()){
@@ -271,7 +275,7 @@ app.post('/login', (req, res, next) => {
 });
 app.get('/comments', (req, res) => {
 
-  console.log('comment req.body', req.body)
+  // console.log('comment req.body', req.body)
   return Comments.findAll({})
       .then((data) => { res.send(data)})
       .catch((err) => {console.log(err)
@@ -283,10 +287,6 @@ app.get('/comments', (req, res) => {
 
 });
 
-
-
-
-
 //logout route
 app.get('/logout', (req, res) => {
   req.session = null;
@@ -295,18 +295,19 @@ app.get('/logout', (req, res) => {
 })
 
 
-
-
-app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+app.get('/auth/google', passport.authenticate('google', { scope:  ['https://www.googleapis.com/auth/plus.login'] }));
 app.get('/auth/error', (req, res) => res.send('Unknown Error'))
-app.get('/api/account/google', passport.authenticate('google', { failureRedirect: '/auth/error' }),
+app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/auth/error' }),
   function(req, res) {
     res.redirect('/');
   }
 );
+
+
+
 app.get('/', (req, res) => res.send(`Welcome ${req.user.displayName}!`))
 
 
 app.listen(3000, () => {
-  console.log('Server is on http://localhost:3000')
+  console.log(`Server is on http://127.0.0.1:3000`)
 })
