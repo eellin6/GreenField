@@ -6,6 +6,7 @@ import { GOOGLEMAPS_TOKEN } from '../../../config';
 import axios from 'axios';
 import { FaRegHeart, FaHeart } from 'react-icons/fa';
 class MapContainer extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -25,6 +26,7 @@ class MapContainer extends Component {
       newArea: false,
       reload: false
     };
+
     this.onMarkerClick = this.onMarkerClick.bind(this);
     this.onInfoWindowClose = this.onInfoWindowClose.bind(this);
     this.onHeartClick = this.onHeartClick.bind(this);
@@ -32,7 +34,9 @@ class MapContainer extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.commentFetcher = this.commentFetcher.bind(this);
+
   }
+
   markerFetcher() {
     axios.get('/markers')
       .then((marker) =>{
@@ -43,6 +47,7 @@ class MapContainer extends Component {
       .catch((err) => {
       });
   }
+
   commentFetcher() {
     axios.get('/comments')
       .then((comment) =>{
@@ -54,16 +59,21 @@ class MapContainer extends Component {
       .catch((err) => {
       });
   }
+
   componentDidMount() {
     this.markerFetcher();
     this.commentFetcher();
   }
+
+
   handleChange(event) {
     const name = event.target.name;
     this.setState({
       [name]: event.target.value
     });
   }
+
+
   handleSubmit() {
     const {comments} = this.state;
     const data =
@@ -74,6 +84,8 @@ class MapContainer extends Component {
       .then(data => console.log('User Registered'))
       .catch((err) => console.log('AXIOS POST ERROR', err));
   }
+
+
   onHeartClick() {
     console.log(this.state.selectedPlace);
     console.log('this.state.comments', this.state.comments);
@@ -84,6 +96,8 @@ class MapContainer extends Component {
       .then(this.setState({isFavorite: !this.state.isFavorite}))
       .catch(err => console.log(err));
   }
+
+
   onMarkerClick (props, marker, e) {
     this.setState({
       selectedPlace: props,
@@ -91,6 +105,8 @@ class MapContainer extends Component {
       showingInfoWindow: true
     });
   }
+
+
   onMarkerDragEnd (coord, index) {
     const { latLng } = coord;
     const lat = latLng.lat();
@@ -101,17 +117,23 @@ class MapContainer extends Component {
       return { markers };
     });
   }
+
+
   onInfoWindowClose() {
     this.setState({
       activeMarker: null,
       showingInfoWindow: false
     });
   }
+
+
   changeView(option) {
     this.setState({
       view: option
     });
   }
+
+
   onInfoWindowOpen(props, e) {
     const fav = (
       <div>
@@ -148,6 +170,8 @@ class MapContainer extends Component {
     );
     ReactDOM.render(React.Children.only(fav), document.getElementById('iwc'));
   }
+
+
   render() {
     const mapStyles = [
       {
@@ -220,19 +244,24 @@ class MapContainer extends Component {
         ]
       }
     ];
+
     const style = {
       justifyContent: 'center',
       alignItems: 'center',
       width: '96vw',
       height: '85vh'
     };
+
     const containerStyle = {
       position: 'relative',
       width: '100%',
       height: '100%'
     };
+
     const { view } = this.state;
     const location = this.props.location;
+
+
     return (
       <div>
         <div className='main'>

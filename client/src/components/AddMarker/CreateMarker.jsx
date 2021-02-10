@@ -4,6 +4,7 @@ import { Map, GoogleApiWrapper, Marker, InfoWindow, useLoadScript } from 'google
 import { GOOGLEMAPS_TOKEN } from '../../../../config';
 import Modal from './Modal';
 class CreateMarker extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -20,16 +21,24 @@ class CreateMarker extends Component {
       description: '',
       picture: null
     };
+
     this.onMarkerDragEnd = this.onMarkerDragEnd.bind(this);
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
+
   }
+
+
   handleCloseModal() {
     this.setState({ isOpen: false });
   }
+
+
   handleOpenModal() {
     this.setState({ isOpen: true });
   }
+
+
   onMarkerDragEnd (coord, index) {
     const { latLng } = coord;
     const lat = latLng.lat();
@@ -41,6 +50,8 @@ class CreateMarker extends Component {
     });
     this.handleOpenModal();
   }
+
+
   render() {
     const { marker } = this.state;
     const style = {
@@ -49,11 +60,15 @@ class CreateMarker extends Component {
       width: '96vw',
       height: '85vh'
     };
+
+
     const containerStyle = {
       position: 'relative',
       width: '100%',
       height: '100%'
     };
+
+
     const mapStyles = [
       {
         'featureType': 'landscape.natural',
@@ -125,6 +140,8 @@ class CreateMarker extends Component {
         ]
       }
     ];
+
+
     return (
       <div>
         <h3><span className="instructions-drag">Drag Pin to Location</span></h3>
