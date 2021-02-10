@@ -6,7 +6,7 @@ module.exports = {
   mode: 'development',
   devtool: 'inline-source-map',
   watch: true,
-  entry: path.resolve(srcPath, 'index.jsx'),
+  entry: path.resolve(srcPath, 'Index.jsx'),
   output: {
     path: distPath,
     filename: 'bundle.js',
