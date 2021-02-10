@@ -6,6 +6,7 @@ import { AppBar, Toolbar, Button, Typography} from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Search from '../components/Search';
 class App extends Component {
 
   constructor(props) {
@@ -92,7 +93,7 @@ class App extends Component {
 
     return (
 
-      <div className={useStyles}>
+      <div >
         <header>
           <img src="https://i.ibb.co/ry3RrBM/NOLA-bound-logo.png"
             alt="NOLA-bound-logo"
@@ -102,7 +103,7 @@ class App extends Component {
         <div className='nav'>
           <AppBar position="static">
             <Toolbar>
-              <Grid container direction="row" alignItems="center">
+              <Grid container direction="row" alignItems="center" spacing={5}>
                 <Grid item>
 
                   <Button className={styles.menuButton} color="inherit" aria-label="Menu"
@@ -133,9 +134,14 @@ class App extends Component {
 
                 </div>
                 <div>
+                  <Grid item>
+                    <Search />
+                  </Grid>
+                </div>
+                <div>
 
                   <Grid item>
-                    <Button className="btn" href="#"
+                    <Button className="btn"
                       color="inherit"
                       onClick={function signOut() {
                         const auth2 = gapi.auth2.getAuthInstance();
@@ -145,7 +151,6 @@ class App extends Component {
                       }}>Sign out
                     </Button>
                   </Grid>
-
                 </div>
               </Grid>
             </Toolbar>
