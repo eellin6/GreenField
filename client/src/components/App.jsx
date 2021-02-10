@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import GoogleApiWrapper from './Map';
 import axios from 'axios';
 import CreateMarker from '../components/AddMarker/CreateMarker';
+import { AppBar, Toolbar, Button, Typography} from '@material-ui/core';
+import HomeIcon from '@material-ui/icons/Home';
+import { fade, makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 class App extends Component {
 
   constructor(props) {
@@ -11,7 +15,8 @@ class App extends Component {
       isLoggedIn: false,
       view: 'map',
       lat: 29.9,
-      lng: -91.6
+      lng: -91.6,
+      inputValue: ''
     };
 
     this.changeView = this.changeView.bind(this);
@@ -53,9 +58,41 @@ class App extends Component {
     //   //if the status of a user is logged in, display logout button
     //   status = 'Logout'
     // }
+
+    // styles for NavBar
+    const styles = {
+      root: {
+        flexGrow: 1,
+      },
+      grow: {
+        flexGrow: 1,
+      },
+      menuButton: {
+        marginLeft: -12,
+        marginRight: 20,
+      },
+    };
+
+    //styling for AppBar
+    const useStyles = makeStyles((theme) => ({
+      root: {
+        flexGrow: 1,
+      },
+      menuButton: {
+        marginRight: theme.spacing(2),
+      },
+      title: {flexGrow: 1,
+        display: 'none',
+        [theme.breakpoints.up('sm')]: {
+          display: 'block',
+        },
+      },
+    }));
+
+
     return (
 
-      <div style={{color: 'black'}}>
+      <div className={useStyles}>
         <header>
           <img src="https://i.ibb.co/ry3RrBM/NOLA-bound-logo.png"
             alt="NOLA-bound-logo"
@@ -63,24 +100,59 @@ class App extends Component {
           <div className="g-signin2" data-onsuccess="onSignIn"></div>
         </header>
         <div className='nav'>
-          <button className='btn'
-            onClick={() => this.changeView('map')}>
-            Home
-          </button>
-          <button
-            className="btn"
-            type="button"
-            position="relative"
-            onClick={() => this.changeView('addMarker')}
-          >Add a Pin </button>
-          <button className="btn" href="#" onClick={function signOut() {
-            const auth2 = gapi.auth2.getAuthInstance();
-            auth2.signOut().then(function () {
-              console.log('User signed out.');
-            });
-          }}>Sign out</button>
+          <AppBar position="static">
+            <Toolbar>
+              <Grid container direction="row" alignItems="center">
+                <Grid item>
+
+                  <Button className={styles.menuButton} color="inherit" aria-label="Menu"
+                    onClick={() => this.changeView('map')}>
+                    <HomeIcon />
+                    <Typography variant="h6" className={useStyles.title}>
+                Home
+                    </Typography>
+                  </Button>
+                </Grid>
+
+
+                <div>
+
+                  <Grid item>
+                    <Button
+                      className="btn"
+                      type="button"
+                      position="relative"
+                      color="inherit"
+                      onClick={() => this.changeView('addMarker')}
+                    >
+                      <Typography variant="h6">
+                Add a Pin
+                      </Typography>
+                    </Button>
+                  </Grid>
+
+                </div>
+                <div>
+
+                  <Grid item>
+                    <Button className="btn" href="#"
+                      color="inherit"
+                      onClick={function signOut() {
+                        const auth2 = gapi.auth2.getAuthInstance();
+                        auth2.signOut().then(function () {
+                          console.log('User signed out.');
+                        });
+                      }}>Sign out
+                    </Button>
+                  </Grid>
+
+                </div>
+              </Grid>
+            </Toolbar>
+          </AppBar>
         </div>
         {this.renderView()}
+
       </div>
     );
   }
