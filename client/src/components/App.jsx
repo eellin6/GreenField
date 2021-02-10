@@ -3,6 +3,7 @@ import GoogleApiWrapper from './Map';
 import axios from 'axios';
 import CreateMarker from '../components/AddMarker/CreateMarker';
 class App extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -12,19 +13,27 @@ class App extends Component {
       lat: 29.9,
       lng: -91.6
     };
+
     this.changeView = this.changeView.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+
   }
+
+
   handleLogout() {
     axios.get('/logout')
       .then(console.log('You successfully logged out'))
       .catch(err => console.error('error logging out', err));
   }
+
+
   changeView(option) {
     this.setState({
       view: option
     });
   }
+
+
   renderView() {
     const { view, lat, lng } = this.state;
     // This will render different views when navigation is clicked
@@ -34,6 +43,8 @@ class App extends Component {
       return <CreateMarker changeView={this.changeView} handleClick={() => this.changeView('anypostview')}/>;
     }
   }
+
+
   render() {
     const { view, isLoggedIn } = this.state;
     //if the status of a user is not logged in, display a login button
@@ -43,6 +54,7 @@ class App extends Component {
     //   status = 'Logout'
     // }
     return (
+
       <div style={{color: 'black'}}>
         <header>
           <img src="https://i.ibb.co/ry3RrBM/NOLA-bound-logo.png"

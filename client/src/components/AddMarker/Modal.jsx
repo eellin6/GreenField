@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 class Modal extends Component {
   constructor(props) {
+
     super(props);
     console.log('PROPS', props);
     this.state = {
@@ -14,19 +15,27 @@ class Modal extends Component {
     this.uploadFormWithData = this.uploadFormWithData.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
+
+
   handleFileChange(event) {
     this.setState({picture: event.target.files[0]});
   }
+
+
   handleChange(event) {
     const name = event.target.name;
     this.setState({
       [name]: event.target.value
     });
   }
+
+
   handleClick(e) {
     e.preventDefault();
     this.uploadFormWithData();
   }
+
+
   submitForm(data) {
     console.log('line 37, ', data);
     axios.post('http://localhost:3000/markers/create', data)
@@ -34,6 +43,8 @@ class Modal extends Component {
       .then(this.props.changeView('map'))
       .catch(err => console.log('Error', err));
   }
+
+
   uploadFormWithData() {
     const formData = new FormData();
     const { description, picture } = this.state;
@@ -44,6 +55,8 @@ class Modal extends Component {
     console.log(formData, 'line 42');
     this.submitForm(formData);
   }
+
+
   render() {
     const showHideClassName = this.props.show ? 'modal display-block' : 'modal display-none';
     return (
