@@ -12,6 +12,8 @@ const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
+const axios = require('axios');
+const Documenu = require('documenu');
 
 require('dotenv').config();
 require('../passport.config');
@@ -112,5 +114,30 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
 
 app.get('/', (req, res) => res.send(`Welcome ${req.user.displayName}!`));
 
+Documenu.configure('cbc4ba8f37ca50c83b77150de8f14c43');
+
+const params = {'lat': '30.0086171', 'lon': '-90.1775958', 'distance': 10};
+
+app.get('/restaurant', async (req, res) => {
+  // const result = await Documenu.MenuItems.searchGeo(params);
+  const result = await Documenu.Restaurants.getByState('LA');
+  const obj = {};
+  const result1 = [];
+
+  result.data.map((name) => {
+    if (obj[name.restaurant_name]) {
+
+    } else {
+      obj[name.restaurant_name] = true;
+      result1.push(name);
+    }
+
+  });
+  res.json(result1);
+
+
+});
+
+
+
 app.listen(3000, () => console.log('Server is on http://localhost:3000'));
-// went from 313 to 155 lines using routes
