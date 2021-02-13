@@ -14,6 +14,7 @@ const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
 const axios = require('axios');
 const Documenu = require('documenu');
+const { Flights } = require('./api/flights');
 
 require('dotenv').config();
 require('../passport.config');
@@ -46,11 +47,13 @@ const markers = require('./routes/markers');
 const photos = require('./routes/photos');
 const search = require('./routes/search');
 const user = require('./routes/user');
+// const flights = require('./routes/flights');
 
 app.use('/comments', comments);
 app.use('/register', user);
 app.use('/markers', markers);
 app.use('/api/favorites', favorites);
+app.use('/api/flights', Flights);
 
 
 const checkAuthenticated = (req, res, next) => {
@@ -139,5 +142,18 @@ app.get('/restaurant', async (req, res) => {
 });
 
 
+
+
+//Flights
+
+
+app.get('/flights', (req, res) => {
+
+  axios.get('http://api.aviationstack.com/v1/flights?access_key=9fc225919793eaac770cb4bde93384e5&dep_iata=MSY').then(function (response) {
+    res.json(response.data.data);
+  }).catch(function (error) {
+    res.json(error);
+  });
+});
 
 app.listen(3000, () => console.log('Server is on http://localhost:3000'));
