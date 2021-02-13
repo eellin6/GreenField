@@ -7,6 +7,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Search from '../components/Search';
+import Flights from './Flights.jsx';
 class App extends Component {
 
   constructor(props) {
@@ -47,6 +48,8 @@ class App extends Component {
       return <GoogleApiWrapper handleClick={() => this.changeView('anypostview')}/>;
     } else if (view === 'addMarker') {
       return <CreateMarker changeView={this.changeView} handleClick={() => this.changeView('anypostview')}/>;
+    } else if (view === 'flights') {
+      return <Flights changeView={this.changeView} handleClick={() => this.changeView('flights')}/>;
     }
   }
 
@@ -139,7 +142,19 @@ class App extends Component {
                   </Grid>
                 </div>
                 <div>
-
+                  <Grid item>
+                    <Button
+                      className="btn"
+                      type="button"
+                      position="relative"
+                      color="inherit"
+                      onClick={() => this.changeView('flights')}
+                    >
+                      <Typography variant="h6">
+                Flights
+                      </Typography>
+                    </Button>
+                  </Grid>
                   <Grid item>
                     <Button className="btn"
                       color="inherit"
