@@ -21,7 +21,8 @@ const getFlights = () => {
               <div>Status: { post.flight_status }</div>
               <div>Destination: { post.arrival.airport }</div>
               <div>Landing Time: { post.arrival.scheduled }</div>
-              <div>Airline: { post.airline.name }</div>
+              <div>Flight Number: { post.flight.number }</div>
+              <br></br>
             </div>
           );
         })
