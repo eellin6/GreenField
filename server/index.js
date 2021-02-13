@@ -124,16 +124,16 @@ app.get('/restaurant', async (req, res) => {
   const obj = {};
   const result1 = [];
 
-  result.data.map((name) => {
-    if (obj[name.restaurant_name]) {
+  // result.data.map((name) => {
+  //   if (obj[name.restaurant_name]) {
 
-    } else {
-      obj[name.restaurant_name] = true;
-      result1.push(name);
-    }
+  //   } else {
+  //     obj[name.restaurant_name] = true;
+  //     result1.push(name);
+  //   }
 
-  });
-  res.json(result1);
+  // });
+  res.json(result.data.map((name) => name.restaurant_name));
 
 
 });
