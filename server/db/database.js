@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const {Sequelize} = require('sequelize');
 const mysql = require('mysql2');
 
@@ -52,6 +53,7 @@ const Favorites = db.define('Favorites', {
   description: Sequelize.STRING
 
 });
+
 
 
 db.sync({ force: true })
