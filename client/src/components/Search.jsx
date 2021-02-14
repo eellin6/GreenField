@@ -1,12 +1,49 @@
-import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import axios from 'axios';
+import React, {useState, useEffect } from 'react';
 
-const Search = () => {
+// class Search extends Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       inputValue: '',
+//     };
+//   }
+
+//   componentDidMount() {
+
+//   }
+
+//   handleSubmit () {
+
+//   }
+//   render() {
+//     return (
+//       <div>
+//         <SearchBar/>;
+//       </div>
+//     );
+
+//   }
+
+// }
+
+const Search = (term, location) => {
+
+  const [ items, setItems ] = useState([]);
+  const [ amountResults, setAmountResults ] = useState();
+  const [ searchParams, setSearchParams ] = useState({term, location});
+
+
+  useEffect(() => {
+    axios.get('/search')
+      .then(({data}) => setItems(data))
+      .catch((err) => console.warn(err));
+  });
 
   // search bar styles
   const useStyles = makeStyles((theme) => ({
@@ -66,25 +103,43 @@ const Search = () => {
 
   const classes = useStyles();
 
+
+
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
+    <div>
+
+      <div className={classes.root}>
+        <AppBar position="static">
+          <Toolbar>
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Search Business, location"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ 'aria-label': 'search' }}
+              />
             </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
-        </Toolbar>
-      </AppBar>
+          </Toolbar>
+        </AppBar>
+      </div>
+      <div>
+        {/* {
+          items.map((item, i) => {
+            return (
+              <div key={ String(i)}>
+                <div>{item.name}</div>
+                <div>{item.rating}</div>
+                <div>{item.location}</div>
+              </div>
+            );
+          })
+        } */}
+      </div>
     </div>
   );
 
@@ -92,28 +147,4 @@ const Search = () => {
 
 export default Search;
 
-// class Search extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       inputValue: '',
-//     };
-//   }
 
-//   componentDidMount() {
-
-//   }
-
-//   handleSubmit () {
-
-//   }
-//   render() {
-//     return (
-//       <div>
-//         <SearchBar/>;
-//       </div>
-//     );
-
-//   }
-
-// }

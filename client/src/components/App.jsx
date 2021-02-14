@@ -50,6 +50,8 @@ class App extends Component {
       return <CreateMarker changeView={this.changeView} handleClick={() => this.changeView('anypostview')}/>;
     } else if (view === 'flights') {
       return <Flights changeView={this.changeView} handleClick={() => this.changeView('flights')}/>;
+    } else if (view === 'search') {
+      return <Search changeView={this.changeView} handleClick={() => this.changeView('search')}/>;
     }
   }
 
@@ -138,7 +140,17 @@ class App extends Component {
                 </div>
                 <div>
                   <Grid item>
-                    <Search />
+                    <Button
+                      className="btn"
+                      type="button"
+                      position="relative"
+                      color="inherit"
+                      onClick={() => this.changeView('search')}
+                    >
+                      <Typography variant="h6">
+                Search
+                      </Typography>
+                    </Button>
                   </Grid>
                 </div>
                 <div>
@@ -155,6 +167,8 @@ class App extends Component {
                       </Typography>
                     </Button>
                   </Grid>
+                </div>
+                <div>
                   <Grid item>
                     <Button className="btn"
                       color="inherit"

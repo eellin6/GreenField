@@ -14,6 +14,7 @@ const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
 const axios = require('axios');
 const { Flights } = require('./api/flights');
+const { Search } = require('./api/search');
 
 require('dotenv').config();
 require('../passport.config');
@@ -44,7 +45,6 @@ const comments = require('./routes/comments');
 const favorites = require('./routes/favorites');
 const markers = require('./routes/markers');
 const photos = require('./routes/photos');
-const search = require('./routes/search');
 const user = require('./routes/user');
 // const flights = require('./routes/flights');
 
@@ -53,7 +53,7 @@ app.use('/register', user);
 app.use('/markers', markers);
 app.use('/api/favorites', favorites);
 app.use('/api/flights', Flights);
-
+app.use('/api/search', Search);
 
 const checkAuthenticated = (req, res, next) => {
   //this function checks if the user is logged in
@@ -127,6 +127,15 @@ app.get('/flights', (req, res) => {
   }).catch(function (error) {
     res.json(error);
   });
+});
+
+// search businesses
+
+app.get('/search', (req, res) => {
+  axios.get('https://api.yelp.com/v3/businesses/search?key=1iVxm0JzrSlcEbM4lIyO82t4m9PPXpYKKSPgc-2Zg8ndvlqtOTp7yUk9zwn82C4EZucCSNC_r-xmgq5OB8rcel-YSXCJjxDCcSTWFoto-009EHZLq_ic9io_LugiYHYx')
+    .then(function (response) { console.log(res.json(response.data.data)); })
+    //res.json(response.data.data))
+    .catch(err => res.json(err));
 });
 
 app.listen(3000, () => console.log('Server is on http://localhost:3000'));
