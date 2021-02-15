@@ -28,16 +28,13 @@ class CreateMarker extends Component {
 
   }
 
-
   handleCloseModal() {
     this.setState({ isOpen: false });
   }
 
-
   handleOpenModal() {
     this.setState({ isOpen: true });
   }
-
 
   onMarkerDragEnd (coord, index) {
     const { latLng } = coord;
@@ -51,16 +48,15 @@ class CreateMarker extends Component {
     this.handleOpenModal();
   }
 
-
   render() {
     const { marker } = this.state;
     const style = {
       justifyContent: 'center',
       alignItems: 'center',
+      display: 'flex',
       width: '96vw',
       height: '85vh'
     };
-
 
     const containerStyle = {
       position: 'relative',
@@ -68,76 +64,59 @@ class CreateMarker extends Component {
       height: '100%'
     };
 
-
     const mapStyles = [
       {
         'featureType': 'landscape.natural',
         'elementType': 'geometry.fill',
-        'stylers': [
-          {
-            'visibility': 'on'
-          },
-          {
-            'color': '#E0EFEF'
-          }
-        ]
+        'stylers':
+          [
+            { 'visibility': 'on' },
+            { 'color': '#E0EFEF' }
+          ]
       },
       {
         'featureType': 'poi',
         'elementType': 'geometry.fill',
-        'stylers': [
-          {
-            'visibility': 'on'
-          },
-          {
-            'hue': '#1900FF'
-          },
-          {
-            'color': '#C0E8E8'
-          }
-        ]
+        'stylers':
+          [
+            { 'visibility': 'on' },
+            { 'hue': '#1900FF' },
+            { 'color': '#C0E8E8' }
+          ]
       },
       {
         'featureType': 'road',
         'elementType': 'geometry',
-        'stylers': [
-          {
-            'lightness': 100
-          },
-          {
-            'visibility': 'simplified'
-          }
-        ]
+        'stylers':
+          [
+            { 'lightness': 100 },
+            { 'visibility': 'simplified' }
+          ]
       },
       {
         'featureType': 'road',
         'elementType': 'labels',
-        'stylers': [
-          {
-            'visibility': 'off'
-          }
-        ]
+        'stylers':
+          [
+            { 'visibility': 'off' }
+          ]
       },
       {
         'featureType': 'transit.line',
         'elementType': 'geometry',
-        'stylers': [
-          {
-            'visibility': 'on'
-          },
-          {
-            'lightness': 700
-          }
-        ]
+        'stylers':
+          [
+            { 'visibility': 'on' },
+            { 'lightness': 700 }
+          ]
       },
       {
         'featureType': 'water',
         'elementType': 'all',
-        'stylers': [
-          {
-            'color': '#7DCDCD'
-          }
-        ]
+        'stylers':
+          [
+            { 'color': '#7DCDCD' }
+          ]
       }
     ];
 

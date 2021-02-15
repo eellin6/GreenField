@@ -44,20 +44,17 @@ class MapContainer extends Component {
           markers: marker.data,
         });
       } )
-      .catch((err) => {
-      });
+      .catch((err) => console.warn(err));
   }
 
   commentFetcher() {
     axios.get('/comments')
       .then((comment) =>{
-
         this.setState({
           comments: comment.data
         });
       } )
-      .catch((err) => {
-      });
+      .catch((err) => console.warn(err));
   }
 
   componentDidMount() {
