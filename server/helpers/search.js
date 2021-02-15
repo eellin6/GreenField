@@ -3,7 +3,7 @@ const config = require('../../config');
 
 const searchBusiness = (term) => {
 
-  const url = `https://api.yelp.com/v3/businesses/search?term=${term}&location=NewOrleans&limit=5&key=${config.YELP_API}`;
+  const url = `https://api.yelp.com/v3/businesses/search?term=${term}&location=Louisiana&limit=5&key=${config.YELP_API}`;
 
   return axios.get(url, { headers: {
     Authorization: `Bearer ${config.YELP_API}`

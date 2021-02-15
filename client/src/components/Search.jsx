@@ -19,10 +19,6 @@ class Search extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
-
-  }
-
   handleSubmit (e) {
     this.setState({
       inputValue: e.target.value
@@ -33,7 +29,7 @@ class Search extends Component {
   handleSearch (inputValue) {
     axios.get('/api/search', {inputValue})
       .then((res) => {
-        console.log('LOOK HERE', res);
+
         // this.setState({
 
         // })
@@ -46,15 +42,15 @@ class Search extends Component {
       <div >
         <AppBar position="static">
 
-          <Toolbar>
-            <SearchBar />
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-            >
-            </IconButton>
-          </Toolbar>
+          <div>
+            <SearchBar
+              value={this.state.inputValue}
+              onChange={(newVal) => this.setState({ inputValue: newVal})}
+              onRequestSearch={() => this.handleSearch(this.state.inputValue)}
+            />
+
+          </div>
+
         </AppBar>
       </div>
     );
