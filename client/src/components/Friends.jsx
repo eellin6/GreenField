@@ -24,6 +24,8 @@ class Friends extends Component {
     this.fetchUsers();
   }
 
+  // map over users and return a list of users
+  // each user will have a + (if the users are not friends) or - (if the users are friends)
   render() {
     return (
       <div>

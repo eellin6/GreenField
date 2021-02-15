@@ -34,7 +34,6 @@ class MapContainer extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.commentFetcher = this.commentFetcher.bind(this);
-
   }
 
   markerFetcher() {
@@ -174,71 +173,55 @@ class MapContainer extends Component {
       {
         'featureType': 'landscape.natural',
         'elementType': 'geometry.fill',
-        'stylers': [
-          {
-            'visibility': 'on'
-          },
-          {
-            'color': '#E0EFEF'
-          }
-        ]
+        'stylers':
+          [
+            { 'visibility': 'on' },
+            { 'color': '#E0EFEF' }
+          ]
       },
       {
         'featureType': 'poi',
         'elementType': 'geometry.fill',
-        'stylers': [
-          {
-            'visibility': 'on'
-          },
-          {
-            'hue': '#1900FF'
-          },
-          {
-            'color': '#C0E8E8'
-          }
-        ]
+        'stylers':
+          [
+            { 'visibility': 'on' },
+            { 'hue': '#1900FF' },
+            { 'color': '#C0E8E8' }
+          ]
       },
       {
         'featureType': 'road',
         'elementType': 'geometry',
-        'stylers': [
-          {
-            'lightness': 100
-          },
-          {
-            'visibility': 'simplified'
-          }
-        ]
+        'stylers':
+          [
+            { 'lightness': 100 },
+            { 'visibility': 'simplified' }
+          ]
       },
       {
         'featureType': 'road',
         'elementType': 'labels',
-        'stylers': [
-          {
-            'visibility': 'off'
-          }
-        ]
+        'stylers':
+          [
+            { 'visibility': 'off' }
+          ]
       },
       {
         'featureType': 'transit.line',
         'elementType': 'geometry',
-        'stylers': [
-          {
-            'visibility': 'on'
-          },
-          {
-            'lightness': 700
-          }
-        ]
+        'stylers':
+          [
+            { 'visibility': 'on' },
+            { 'lightness': 700 }
+          ]
       },
       {
         'featureType': 'water',
         'elementType': 'all',
-        'stylers': [
-          {
-            'color': '#7DCDCD'
-          }
-        ]
+        'stylers':
+          [
+            { 'color': '#7DCDCD' }
+          ]
       }
     ];
 
