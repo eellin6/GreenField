@@ -15,9 +15,13 @@ router.route('/').post((req, res) => {
     .then((data) => {
       console.log('THIS IS DATA:', data);
       res.redirect('/');
-
     }).catch((err) => console.log(err));
+});
 
+router.route('/').get((req, res) => {
+  return User.findAll({})
+    .then((data) => res.send(data))
+    .catch((err) => console.warn(err));
 });
 
 module.exports = router;
