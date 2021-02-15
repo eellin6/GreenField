@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
-import { GOOGLEMAPS_TOKEN } from '../../../config';
+import { GOOGLEMAPS_TOKEN, directions } from '../../../config';
 import axios from 'axios';
 import { FaRegHeart, FaHeart } from 'react-icons/fa';
 class MapContainer extends Component {

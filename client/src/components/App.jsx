@@ -8,6 +8,7 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Search from '../components/Search';
 import Flights from './Flights.jsx';
+import Restaurant from './Restaurant.jsx';
 class App extends Component {
 
   constructor(props) {
@@ -50,6 +51,8 @@ class App extends Component {
       return <CreateMarker changeView={this.changeView} handleClick={() => this.changeView('anypostview')}/>;
     } else if (view === 'flights') {
       return <Flights changeView={this.changeView} handleClick={() => this.changeView('flights')}/>;
+    } else if (view === 'restaurant') {
+      return <Restaurant changeView={this.changeView} handleClick={() => this.changeView('restaurant')}/>;
     }
   }
 
@@ -155,6 +158,23 @@ class App extends Component {
                       </Typography>
                     </Button>
                   </Grid>
+                </div>
+                <div>
+                  <Grid item>
+                    <Button
+                      className="btn"
+                      type="button"
+                      position="relative"
+                      color="inherit"
+                      onClick={() => this.changeView('restaurant')}
+                    >
+                      <Typography variant="h6">
+                Grub
+                      </Typography>
+                    </Button>
+                  </Grid>
+                </div>
+                <div>
                   <Grid item>
                     <Button className="btn"
                       color="inherit"
