@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Search from '../components/Search';
 import Flights from './Flights.jsx';
 import Restaurant from './Restaurant.jsx';
+import Friends from './Friends.jsx';
 class App extends Component {
 
   constructor(props) {
@@ -53,7 +54,10 @@ class App extends Component {
       return <Flights changeView={this.changeView} handleClick={() => this.changeView('flights')}/>;
     } else if (view === 'restaurant') {
       return <Restaurant changeView={this.changeView} handleClick={() => this.changeView('restaurant')}/>;
+    } else if (view === 'friends') {
+      return <Friends changeView={this.changeView} handleClick={() => this.changeView('friends')}/>;
     }
+
   }
 
 
@@ -141,11 +145,6 @@ class App extends Component {
                 </div>
                 <div>
                   <Grid item>
-                    <Search />
-                  </Grid>
-                </div>
-                <div>
-                  <Grid item>
                     <Button
                       className="btn"
                       type="button"
@@ -176,6 +175,26 @@ class App extends Component {
                 </div>
                 <div>
                   <Grid item>
+                    <Button
+                      className="btn"
+                      type="button"
+                      position="relative"
+                      color="inherit"
+                      onClick={() => this.changeView('friends')}
+                    >
+                      <Typography variant="h6">
+                Find Friends
+                      </Typography>
+                    </Button>
+                  </Grid>
+                </div>
+                <div>
+                  <Grid item>
+                    <Search />
+                  </Grid>
+                </div>
+                <div>
+                  <Grid item>
                     <Button className="btn"
                       color="inherit"
                       onClick={function signOut() {
@@ -183,7 +202,10 @@ class App extends Component {
                         auth2.signOut().then(function () {
                           console.log('User signed out.');
                         });
-                      }}>Sign out
+                      }}>
+                      <Typography variant="h6">
+                        Sign out
+                      </Typography>
                     </Button>
                   </Grid>
                 </div>
