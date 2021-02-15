@@ -136,3 +136,10 @@ label {
   color: #545F66;
   font-size: 3em;
 }
+
+.restaurant {
+  color: DodgerBlue;
+  padding: 40px;
+  font-family: Arial;
+  text-align: center;
+}

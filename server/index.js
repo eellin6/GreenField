@@ -117,7 +117,7 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
 
 app.get('/', (req, res) => res.send(`Welcome ${req.user.displayName}!`));
 
-Documenu.configure('cbc4ba8f37ca50c83b77150de8f14c43');
+//Documenu.configure('e8b92ac752273c041946038b6e3223f7');
 
 const params = {'lat': '30.0086171', 'lon': '-90.1775958', 'distance': 10};
 
