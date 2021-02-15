@@ -1,136 +1,143 @@
 * {
-  font-family: 'Lora', serif
+	font-family: 'Lora', serif;
 }
 body {
-  background-color: #DD8D61;
+	background-color: #dd8d61;
 }
-header, h1, label{
-  text-align: center;
+header,
+h1,
+label {
+	text-align: center;
 }
-.nav{
-  text-align: center;
+.nav {
+	text-align: center;
 }
-.register{
-  text-align: center;
+.register {
+	text-align: center;
 }
 .login {
-  text-align: center;
+	text-align: center;
 }
 hr.rounded {
-  border-top: 3px solid rgb(31, 90, 201);
-  border-radius: 5px;
+	border-top: 3px solid rgb(31, 90, 201);
+	border-radius: 5px;
 }
 modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width:100%;
-  height: 80%;
-  background: rgba(0, 0, 0, 0.6);
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 80%;
+	background: rgba(0, 0, 0, 0.6);
 }
 .modal-main {
-  padding: 2em;
-  position:fixed;
-  background: #E0EFEF;
-  width: 30%;
-  height: 20%;
-  top:50%;
-  left:50%;
-  transform: translate(-50%,-50%);
+	padding: 2em;
+	position: fixed;
+	background: #e0efef;
+	width: 30%;
+	height: 20%;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 .display-block {
-  display: block;
+	display: block;
 }
 .display-none {
-  display: none;
+	display: none;
 }
-button{
-  background:#b1cc74;
-  color:#fff;
-  border:none;
-  position:relative;
-  height:60px;
-  font-size:1.6em;
-  padding:0 2em;
-  cursor:pointer;
-  transition:800ms ease all;
-  outline:none;
+button {
+	background: #b1cc74;
+	color: #fff;
+	border: none;
+	position: relative;
+	height: 60px;
+	font-size: 1.6em;
+	padding: 0 2em;
+	cursor: pointer;
+	transition: 800ms ease all;
+	outline: none;
 }
-button:hover{
-  background:#fff;
-  color:#b1cc74;
+button:hover {
+	background: #fff;
+	color: #b1cc74;
 }
-button:before,button:after{
-  content:'';
-  position:absolute;
-  top:0;
-  right:0;
-  height:2px;
-  width:0;
-  background: #B1CC74;
-  transition:400ms ease all;
+button:before,
+button:after {
+	content: '';
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 2px;
+	width: 0;
+	background: #b1cc74;
+	transition: 400ms ease all;
 }
-button:after{
-  right:inherit;
-  top:inherit;
-  left:0;
-  bottom:0;
+button:after {
+	right: inherit;
+	top: inherit;
+	left: 0;
+	bottom: 0;
 }
-button:hover:before,button:hover:after{
-  width:100%;
-  transition:800ms ease all;
+button:hover:before,
+button:hover:after {
+	width: 100%;
+	transition: 800ms ease all;
 }
 .modal-btn {
-  background:#b1cc74;
-  color:#fff;
-  border:none;
-  position:relative;
-  height:18px;
-  font-size: 1em;
-  padding:0 1em;
-  cursor:pointer;
-  transition:800ms ease all;
-  outline:none;
+	background: #b1cc74;
+	color: #fff;
+	border: none;
+	position: relative;
+	height: 18px;
+	font-size: 1em;
+	padding: 0 1em;
+	cursor: pointer;
+	transition: 800ms ease all;
+	outline: none;
 }
-.modal-btn:hover{
-  background:#fff;
-  color: #B1CC74;
+.modal-btn:hover {
+	background: #fff;
+	color: #b1cc74;
 }
-.modal-btn:before,button:after{
-  content:'';
-  position:absolute;
-  top:0;
-  right:0;
-  height:2px;
-  width:0;
-  background: #B1CC74;
-  transition:400ms ease all;
+.modal-btn:before,
+button:after {
+	content: '';
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 2px;
+	width: 0;
+	background: #b1cc74;
+	transition: 400ms ease all;
 }
-.modal-btn:after{
-  right:inherit;
-  top:inherit;
-  left:0;
-  bottom:0;
+.modal-btn:after {
+	right: inherit;
+	top: inherit;
+	left: 0;
+	bottom: 0;
 }
-.modal-btn:hover:before,button:hover:after{
-  width:100%;
-  transition:800ms ease all;
+.modal-btn:hover:before,
+button:hover:after {
+	width: 100%;
+	transition: 800ms ease all;
 }
-label, input {
-  display: grid;
+label,
+input {
+	display: grid;
 }
 label {
-  margin-bottom: 20px;
+	margin-bottom: 20px;
 }
 .instructions {
-  color: #545F66;
-  text-align: left;
-  font-weight: bold;
+	color: #545f66;
+	text-align: left;
+	font-weight: bold;
 }
 .instructions-drag {
-  color: #545F66;
-  text-align: center;
-  font-size: 2em;
+	color: #fff;
+	text-align: center;
+	font-size: 1.5em;
 }
 .logo {
   color: #545F66;
@@ -142,4 +149,6 @@ label {
   padding: 40px;
   font-family: Arial;
   text-align: center;
+	color: #545f66;
+	font-size: 3em;
 }

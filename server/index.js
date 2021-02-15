@@ -46,34 +46,34 @@ const comments = require('./routes/comments');
 const favorites = require('./routes/favorites');
 const markers = require('./routes/markers');
 const photos = require('./routes/photos');
-const user = require('./routes/user');
+const users = require('./routes/user');
 // const flights = require('./routes/flights');
 
 app.use('/comments', comments);
-app.use('/register', user);
+app.use('/users', users);
 app.use('/markers', markers);
 app.use('/api/favorites', favorites);
 app.use('/api/flights', Flights);
 app.use('/api/search', Search);
 
-const checkAuthenticated = (req, res, next) => {
-  //this function checks if the user is logged in
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect('/login');
-};
-const notAuthenticated = (req, res, next) => {
-  //this function checks if the user is not logged in
-  //not working
-  //if the user is logged in
-  if (req.isAuthenticated()) {
-    //redirect to the home page
-    return res.redirect('/');
-  }
-  //if they are not authenticated keep going
-  next();
-};
+// const checkAuthenticated = (req, res, next) => {
+//   //this function checks if the user is logged in
+//   if (req.isAuthenticated()) {
+//     return next();
+//   }
+//   res.redirect('/login');
+// };
+// const notAuthenticated = (req, res, next) => {
+//   //this function checks if the user is not logged in
+//   //not working
+//   //if the user is logged in
+//   if (req.isAuthenticated()) {
+//     //redirect to the home page
+//     return res.redirect('/');
+//   }
+//   //if they are not authenticated keep going
+//   next();
+// };
 
 app.post('/login', (req, res, next) => {
 
