@@ -122,33 +122,14 @@ Documenu.configure('cbc4ba8f37ca50c83b77150de8f14c43');
 const params = {'lat': '30.0086171', 'lon': '-90.1775958', 'distance': 10};
 
 app.get('/restaurant', async (req, res) => {
-  // const result = await Documenu.MenuItems.searchGeo(params);
+
   const result = await Documenu.Restaurants.getByState('LA');
-  const obj = {};
-  const result1 = [];
 
-  // result.data.map((name) => {
-  //   if (obj[name.restaurant_name]) {
-
-  //   } else {
-  //     obj[name.restaurant_name] = true;
-  //     result1.push(name);
-  //   }
-
-  // });
-  res.json(result.data.map((name) => name.restaurant_name));
-
-
+  res.json(result.data.map((name) => [name]));
 });
 
-
-
-
 //Flights
-
-
 app.get('/flights', (req, res) => {
-
   axios.get('http://api.aviationstack.com/v1/flights?access_key=9fc225919793eaac770cb4bde93384e5&dep_iata=MSY').then(function (response) {
     res.json(response.data.data);
   }).catch(function (error) {
