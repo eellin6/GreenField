@@ -52,6 +52,8 @@ class App extends Component {
       return <CreateMarker changeView={this.changeView} handleClick={() => this.changeView('anypostview')}/>;
     } else if (view === 'flights') {
       return <Flights changeView={this.changeView} handleClick={() => this.changeView('flights')}/>;
+    } else if (view === 'search') {
+      return <Search changeView={this.changeView} handleClick={() => this.changeView('search')}/>;
     } else if (view === 'restaurant') {
       return <Restaurant changeView={this.changeView} handleClick={() => this.changeView('restaurant')}/>;
     } else if (view === 'friends') {

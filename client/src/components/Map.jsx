@@ -51,7 +51,7 @@ class MapContainer extends Component {
   commentFetcher() {
     axios.get('/comments')
       .then((comment) =>{
-        console.log('this is comments axios get req', comment.data);
+
         this.setState({
           comments: comment.data
         });
