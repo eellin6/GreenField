@@ -15,6 +15,7 @@ const cookieSession = require('cookie-session');
 const axios = require('axios');
 const Documenu = require('documenu');
 const { Flights } = require('./api/flights');
+const { Search } = require('./api/search');
 
 require('dotenv').config();
 require('../passport.config');
@@ -45,7 +46,6 @@ const comments = require('./routes/comments');
 const favorites = require('./routes/favorites');
 const markers = require('./routes/markers');
 const photos = require('./routes/photos');
-const search = require('./routes/search');
 const user = require('./routes/user');
 // const flights = require('./routes/flights');
 
@@ -54,7 +54,7 @@ app.use('/register', user);
 app.use('/markers', markers);
 app.use('/api/favorites', favorites);
 app.use('/api/flights', Flights);
-
+app.use('/api/search', Search);
 
 const checkAuthenticated = (req, res, next) => {
   //this function checks if the user is logged in
@@ -136,5 +136,6 @@ app.get('/flights', (req, res) => {
     res.json(error);
   });
 });
+
 
 app.listen(3000, () => console.log('Server is on http://localhost:3000'));
