@@ -158,17 +158,6 @@ class App extends Component {
                       </Typography>
                     </Button>
                   </Grid>
-                  <Grid item>
-                    <Button className="btn"
-                      color="inherit"
-                      onClick={function signOut() {
-                        const auth2 = gapi.auth2.getAuthInstance();
-                        auth2.signOut().then(function () {
-                          console.log('User signed out.');
-                        });
-                      }}>Sign out
-                    </Button>
-                  </Grid>
                 </div>
                 <div>
                   <Grid item>
@@ -182,6 +171,19 @@ class App extends Component {
                       <Typography variant="h6">
                 Grub
                       </Typography>
+                    </Button>
+                  </Grid>
+                </div>
+                <div>
+                  <Grid item>
+                    <Button className="btn"
+                      color="inherit"
+                      onClick={function signOut() {
+                        const auth2 = gapi.auth2.getAuthInstance();
+                        auth2.signOut().then(function () {
+                          console.log('User signed out.');
+                        });
+                      }}>Sign out
                     </Button>
                   </Grid>
                 </div>
