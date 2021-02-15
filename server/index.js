@@ -13,6 +13,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
 const axios = require('axios');
+const Documenu = require('documenu');
 const { Flights } = require('./api/flights');
 const { Search } = require('./api/search');
 
@@ -116,12 +117,19 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
 
 app.get('/', (req, res) => res.send(`Welcome ${req.user.displayName}!`));
 
+Documenu.configure('cbc4ba8f37ca50c83b77150de8f14c43');
+
+const params = {'lat': '30.0086171', 'lon': '-90.1775958', 'distance': 10};
+
+app.get('/restaurant', async (req, res) => {
+
+  const result = await Documenu.Restaurants.getByState('LA');
+
+  res.json(result.data.map((name) => [name]));
+});
 
 //Flights
-
-
 app.get('/flights', (req, res) => {
-
   axios.get('http://api.aviationstack.com/v1/flights?access_key=9fc225919793eaac770cb4bde93384e5&dep_iata=MSY').then(function (response) {
     res.json(response.data.data);
   }).catch(function (error) {
@@ -131,4 +139,3 @@ app.get('/flights', (req, res) => {
 
 
 app.listen(3000, () => console.log('Server is on http://localhost:3000'));
-// went from 313 to 155 lines using routes
