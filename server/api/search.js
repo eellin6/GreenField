@@ -3,7 +3,9 @@ const Search = Router();
 const { searchBusiness } = require('../helpers/search');
 
 Search.get('/', (req, res) => {
-  searchBusiness()
+  const { term } = req.body;
+
+  searchBusiness(term)
     .then((data) => res.status(200).json(data))
     .catch(() => res.warn(404));
 });

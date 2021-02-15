@@ -129,14 +129,6 @@ app.get('/flights', (req, res) => {
   });
 });
 
-// search businesses
-
-app.get('/search', (req, res) => {
-  axios.get('https://api.yelp.com/v3/businesses/search?key=1iVxm0JzrSlcEbM4lIyO82t4m9PPXpYKKSPgc-2Zg8ndvlqtOTp7yUk9zwn82C4EZucCSNC_r-xmgq5OB8rcel-YSXCJjxDCcSTWFoto-009EHZLq_ic9io_LugiYHYx')
-    .then(function (response) { console.log(res.json(response.data.data)); })
-    //res.json(response.data.data))
-    .catch(err => res.json(err));
-});
 
 app.listen(3000, () => console.log('Server is on http://localhost:3000'));
 // went from 313 to 155 lines using routes
