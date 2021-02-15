@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Search from '../components/Search';
 import Flights from './Flights.jsx';
 import Restaurant from './Restaurant.jsx';
+import Friends from './Friends.jsx';
 class App extends Component {
 
   constructor(props) {
@@ -55,7 +56,10 @@ class App extends Component {
       return <Search changeView={this.changeView} handleClick={() => this.changeView('search')}/>;
     } else if (view === 'restaurant') {
       return <Restaurant changeView={this.changeView} handleClick={() => this.changeView('restaurant')}/>;
+    } else if (view === 'friends') {
+      return <Friends changeView={this.changeView} handleClick={() => this.changeView('friends')}/>;
     }
+
   }
 
 
@@ -123,82 +127,81 @@ class App extends Component {
                   </Button>
                 </Grid>
 
-
-                <div>
-
-                  <Grid item>
-                    <Button
-                      className="btn"
-                      type="button"
-                      position="relative"
-                      color="inherit"
-                      onClick={() => this.changeView('addMarker')}
-                    >
-                      <Typography variant="h6">
+                <Grid item>
+                  <Button
+                    className="btn"
+                    type="button"
+                    position="relative"
+                    color="inherit"
+                    onClick={() => this.changeView('addMarker')}
+                  >
+                    <Typography variant="h6">
                 Add a Pin
-                      </Typography>
-                    </Button>
-                  </Grid>
+                    </Typography>
+                  </Button>
+                </Grid>
 
-                </div>
-                <div>
-                  <Grid item>
-                    <Button
-                      className="btn"
-                      type="button"
-                      position="relative"
-                      color="inherit"
-                      onClick={() => this.changeView('search')}
-                    >
-                      <Typography variant="h6">
-                Search
-                      </Typography>
-                    </Button>
-                  </Grid>
-                </div>
-                <div>
-                  <Grid item>
-                    <Button
-                      className="btn"
-                      type="button"
-                      position="relative"
-                      color="inherit"
-                      onClick={() => this.changeView('flights')}
-                    >
-                      <Typography variant="h6">
+                <Grid item>
+                  <Button
+                    className="btn"
+                    type="button"
+                    position="relative"
+                    color="inherit"
+                    onClick={() => this.changeView('flights')}
+                  >
+                    <Typography variant="h6">
                 Flights
-                      </Typography>
-                    </Button>
-                  </Grid>
-                </div>
-                <div>
-                  <Grid item>
-                    <Button
-                      className="btn"
-                      type="button"
-                      position="relative"
-                      color="inherit"
-                      onClick={() => this.changeView('restaurant')}
-                    >
-                      <Typography variant="h6">
+                    </Typography>
+                  </Button>
+                </Grid>
+
+                <Grid item>
+                  <Button
+                    className="btn"
+                    type="button"
+                    position="relative"
+                    color="inherit"
+                    onClick={() => this.changeView('restaurant')}
+                  >
+                    <Typography variant="h6">
                 Grub
-                      </Typography>
-                    </Button>
-                  </Grid>
-                </div>
-                <div>
-                  <Grid item>
-                    <Button className="btn"
-                      color="inherit"
-                      onClick={function signOut() {
-                        const auth2 = gapi.auth2.getAuthInstance();
-                        auth2.signOut().then(function () {
-                          console.log('User signed out.');
-                        });
-                      }}>Sign out
-                    </Button>
-                  </Grid>
-                </div>
+                    </Typography>
+                  </Button>
+                </Grid>
+
+                <Grid item>
+                  <Button
+                    className="btn"
+                    type="button"
+                    position="relative"
+                    color="inherit"
+                    onClick={() => this.changeView('friends')}
+                  >
+                    <Typography variant="h6">
+                Find Friends
+                    </Typography>
+                  </Button>
+                </Grid>
+
+                <Grid item>
+                  <Search />
+                </Grid>
+
+                <Grid item>
+                  <Button className="btn"
+                    color="inherit"
+                    onClick={function signOut() {
+                      const auth2 = gapi.auth2.getAuthInstance();
+                      auth2.signOut().then(function () {
+                        console.log('User signed out.');
+                      });
+                    }}>
+                    <Typography variant="h6">
+                        Sign out
+                    </Typography>
+                  </Button>
+                </Grid>
+
               </Grid>
             </Toolbar>
           </AppBar>

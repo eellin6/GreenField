@@ -17,9 +17,6 @@ db.authenticate()
     console.log('could not connect to database', err);
   });
 
-
-
-
 const User = db.define('User', {
   username: Sequelize.STRING,
   password: Sequelize.STRING,
@@ -35,31 +32,26 @@ const Markers = db.define('Markers', {
     unique: true
   },
   comments: Sequelize.STRING,
-
-
-
-
 });
+
 const Comments = db.define('Comments', {
   description: Sequelize.STRING,
-
   comments: Sequelize.STRING
-
 });
+
 const Favorites = db.define('Favorites', {
   latitude: Sequelize.DECIMAL(10, 4),
   longitude: Sequelize.DECIMAL(10, 4),
   imageUrl: Sequelize.STRING,
   description: Sequelize.STRING
-
 });
 
 
 
-db.sync({ force: true })
-  .then(() => {
-    console.log('Database & tables created!');
-  }).catch((err) => { console.log(err); });
+// db.sync({ force: true })
+//   .then(() => {
+//     console.log('Database & tables created!');
+//   }).catch((err) => { console.log(err); });
 
 
 module.exports = {
