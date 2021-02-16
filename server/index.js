@@ -50,7 +50,7 @@ const user = require('./routes/user');
 // const flights = require('./routes/flights');
 
 app.use('/comments', comments);
-app.use('/register', user);
+app.use('/users', user);
 app.use('/markers', markers);
 app.use('/api/favorites', favorites);
 app.use('/api/flights', Flights);
