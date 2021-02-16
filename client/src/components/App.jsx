@@ -184,7 +184,17 @@ class App extends Component {
                 </Grid>
 
                 <Grid item>
-                  <Search />
+                  <Button
+                    className="btn"
+                    type="button"
+                    position="relative"
+                    color="inherit"
+                    onClick={() => this.changeView('search')}
+                  >
+                    <Typography variant="h6">
+                Search
+                    </Typography>
+                  </Button>
                 </Grid>
 
                 <Grid item>

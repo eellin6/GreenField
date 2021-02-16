@@ -5,7 +5,6 @@ import axios from 'axios';
 import React, {Component} from 'react';
 import SearchBar from 'material-ui-search-bar';
 
-//import React, { Component, useStyles } from 'react';
 
 
 class Search extends Component {
@@ -52,7 +51,11 @@ class Search extends Component {
           </div>
 
         </AppBar>
+
+        <div></div>
       </div>
+
+
     );
   }
 }
