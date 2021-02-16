@@ -56,66 +56,70 @@ app.use('/api/favorites', favorites);
 app.use('/api/flights', Flights);
 app.use('/api/search', Search);
 
-const checkAuthenticated = (req, res, next) => {
-  //this function checks if the user is logged in
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect('/login');
-};
-const notAuthenticated = (req, res, next) => {
-  //this function checks if the user is not logged in
-  //not working
-  //if the user is logged in
-  if (req.isAuthenticated()) {
-    //redirect to the home page
-    return res.redirect('/');
-  }
-  //if they are not authenticated keep going
-  next();
-};
+// const checkAuthenticated = (req, res, next) => {
+//   //this function checks if the user is logged in
+//   if (req.isAuthenticated()) {
+//     return next();
+//   }
+//   res.redirect('/login');
+// };
+// const notAuthenticated = (req, res, next) => {
+//   //this function checks if the user is not logged in
+//   //not working
+//   //if the user is logged in
+//   if (req.isAuthenticated()) {
+//     //redirect to the home page
+//     return res.redirect('/');
+//   }
+//   //if they are not authenticated keep going
+//   next();
+// };
 
-app.post('/login', (req, res, next) => {
+// app.post('/login', (req, res, next) => {
+//   const {email, password} = req.body;
+//   console.log('login req.body', req.body);
+//   return User.findOne({where: {email: req.body.email}}).then((data) => {
+//     if (data) {
+//       console.log('this is login server data', data);
+//       if (password === data.password) {
+//         console.log('LOGIN CORRECT');
+//         res.redirect('/');
+//       } else {
+//         console.log('INCORRECT PASSWORD');
+//         res.redirect('/');
+//       }
+//     } else {
+//       console.log('DOES NOT WORK');
+//       res.status(401).send('USER NOT FOUND');
+//     }
+//   });
+// });
 
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }),
+  ((req, res) => console.info('DISPLAYNAME 107', req.user.displayName)));
 
-  const {email, password} = req.body;
-  console.log('login req.body', req.body);
-  return User.findOne({where: {email: req.body.email}}).then((data) => {
-
-    if (data) {
-      console.log('this is login server data', data);
-
-      if (password === data.password) {
-        console.log('LOGIN CORRECT');
-        res.redirect('/');
-      } else {
-        console.log('INCORRECT PASSWORD');
-        res.redirect('/');
-      }
-
-    } else {
-      console.log('DOES NOT WORK');
-      res.status(401).send('USER NOT FOUND');
-    }
-  });
-});
-
-//logout route
-app.get('/logout', (req, res) => {
-  req.session = null;
-  req.logout();
-  res.redirect('/');
-});
-
-app.get('/auth/google', passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
 app.get('/auth/error', (req, res) => res.send('Unknown Error'));
-app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/auth/error' }),
+
+app.get('/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/auth/error' }),
   function(req, res) {
-    res.redirect('/');
+    res.cookie('NOLABOUND', req.user.displayName).redirect('/');
   }
 );
 
-app.get('/', (req, res) => res.send(`Welcome ${req.user.displayName}!`));
+app.get('/', (req, res) => {
+  console.log('DISPLAYNAME 119', req.user.displayName);
+  res.send(`Welcome ${req.user.displayName}!`);
+});
+
+//logout route
+app.delete('/logout', (req, res) => {
+  // req.session = null;
+  // req.logout();
+  res.clearCookie('NOLABOUND').json(false).redirect('/');
+});
+
 
 Documenu.configure('cbc4ba8f37ca50c83b77150de8f14c43');
 
