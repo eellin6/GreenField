@@ -143,7 +143,7 @@ class MapContainer extends Component {
             onClick={this.onHeartClick}
             style={{ color: 'red' }}></FaRegHeart>
         }
-        <a href={this.state.selectedPlace.picture}>ENLARGE PHOTO</a>
+        <a href={this.state.selectedPlace.picture}> ENLARGE PHOTO</a>
         <form action="/comments" method='POST' >
           <input type="text" readOnly value={this.state.selectedPlace.name}
             onBlur={this.value = this.value == '' ? 'default' : this.value}

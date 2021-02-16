@@ -13,7 +13,7 @@ router.route('/').post((req, res) => {
   });
   newUser.save()
     .then((data) => {
-      console.log('THIS IS DATA:', data);
+      console.log('THIS IS USER DATA:', data);
       res.redirect('/');
     }).catch((err) => console.log(err));
 });

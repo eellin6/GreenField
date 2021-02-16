@@ -29,6 +29,7 @@
     "bootstrap": "^5.0.0-beta1",
     "cloudinary": "^1.24.0",
     "cloudinary-react": "^1.6.8",
+    "cookie-parser": "^1.4.5",
     "cookie-session": "^1.4.0",
     "cors": "^2.8.5",
     "documenu": "^1.1.0",

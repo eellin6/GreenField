@@ -6,12 +6,13 @@ const session = require('express-session');
 const cors = require('cors');
 const formData = require('express-form-data');
 const { GoogleStrategy } = require('../passport.config.js');
-const express = require('express');
 const { User, Favorites, Markers, Comments } = require('./db/database.js');
+const express = require('express');
 const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
+const cookieParser = require('cookie-parser');
 const axios = require('axios');
 const Documenu = require('documenu');
 const { Flights } = require('./api/flights');
@@ -27,6 +28,7 @@ app.use(bodyParser.json());
 app.use(cookieSession({ name: 'google-auth-session', keys: ['key1', 'key2']}));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cookieParser());
 app.use(cors());
 app.use(flash());
 app.use(formData.parse());
@@ -97,21 +99,21 @@ app.use('/api/search', Search);
 
 app.get('/auth/google',
   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }),
-  ((req, res) => console.info('DISPLAYNAME 107', req.user.displayName)));
+  ((req, res) => console.info('DISPLAYNAME 100', req.user.displayName)));
 
 app.get('/auth/error', (req, res) => res.send('Unknown Error'));
 
 app.get('/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/auth/error' }),
-  function(req, res) {
+  passport.authenticate('google', { failureRedirect: '/auth/error' }), (req, res) => {
     res.cookie('NOLABOUND', req.user.displayName).redirect('/');
+    console.log(res.cookie);
   }
 );
 
-app.get('/', (req, res) => {
-  console.log('DISPLAYNAME 119', req.user.displayName);
-  res.send(`Welcome ${req.user.displayName}!`);
-});
+// app.get('/', (req, res) => {
+//   console.log('DISPLAYNAME 112', req.user.displayName);
+//   res.send(`Welcome ${req.user.displayName}!`);
+// });
 
 //logout route
 app.delete('/logout', (req, res) => {
