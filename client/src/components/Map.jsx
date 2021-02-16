@@ -135,15 +135,19 @@ class MapContainer extends Component {
       <div>
         <h5><img src={this.state.selectedPlace.picture} width={200} height={200}/></h5>
         <h6>{this.state.selectedPlace.name}</h6>
-        {this.state.isFavorite ? <FaHeart
-          onClick={this.onHeartClick}
-          style={{ color: 'red' }}
-        ></FaHeart> : <FaRegHeart onClick={this.onHeartClick} style={{ color: 'red' }}></FaRegHeart>
+        {this.state.isFavorite
+          ? <FaHeart
+            onClick={this.onHeartClick}
+            style={{ color: 'red' }}></FaHeart>
+          : <FaRegHeart
+            onClick={this.onHeartClick}
+            style={{ color: 'red' }}></FaRegHeart>
         }
         <a href={this.state.selectedPlace.picture}>ENLARGE PHOTO</a>
         <form action="/comments" method='POST' >
-          <input type="text" readOnly value={this.state.selectedPlace.name} onBlur={this.value = this.value == '' ? 'default'
-            : this.value} name='description'/>
+          <input type="text" readOnly value={this.state.selectedPlace.name}
+            onBlur={this.value = this.value == '' ? 'default' : this.value}
+            name='description'/>
           <label>Add Comment
             <input type='text' id='comments' name='comments' />
           </label>
@@ -228,8 +232,8 @@ class MapContainer extends Component {
     const style = {
       justifyContent: 'center',
       alignItems: 'center',
-      width: '96vw',
-      height: '85vh'
+      width: '100%',
+      height: '75vh'
     };
 
     const containerStyle = {

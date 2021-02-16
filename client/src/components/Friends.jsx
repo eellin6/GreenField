@@ -14,7 +14,7 @@ class Friends extends Component {
   fetchUsers() {
     axios.get('/users')
       .then(({ data }) => {
-        console.log(data);
+        console.log('LOOK USERS DATA', data);
         this.setState({ users: data });
       })
       .catch((err) => console.warn(err));
