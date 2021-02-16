@@ -46,34 +46,34 @@ const comments = require('./routes/comments');
 const favorites = require('./routes/favorites');
 const markers = require('./routes/markers');
 const photos = require('./routes/photos');
-const users = require('./routes/user');
+const user = require('./routes/user');
 // const flights = require('./routes/flights');
 
 app.use('/comments', comments);
-app.use('/users', users);
+app.use('/register', user);
 app.use('/markers', markers);
 app.use('/api/favorites', favorites);
 app.use('/api/flights', Flights);
 app.use('/api/search', Search);
 
-// const checkAuthenticated = (req, res, next) => {
-//   //this function checks if the user is logged in
-//   if (req.isAuthenticated()) {
-//     return next();
-//   }
-//   res.redirect('/login');
-// };
-// const notAuthenticated = (req, res, next) => {
-//   //this function checks if the user is not logged in
-//   //not working
-//   //if the user is logged in
-//   if (req.isAuthenticated()) {
-//     //redirect to the home page
-//     return res.redirect('/');
-//   }
-//   //if they are not authenticated keep going
-//   next();
-// };
+const checkAuthenticated = (req, res, next) => {
+  //this function checks if the user is logged in
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login');
+};
+const notAuthenticated = (req, res, next) => {
+  //this function checks if the user is not logged in
+  //not working
+  //if the user is logged in
+  if (req.isAuthenticated()) {
+    //redirect to the home page
+    return res.redirect('/');
+  }
+  //if they are not authenticated keep going
+  next();
+};
 
 app.post('/login', (req, res, next) => {
 
@@ -129,9 +129,21 @@ app.get('/restaurant', async (req, res) => {
 });
 
 //Flights
+//1970
+const time = new Date(+0);
+//adding seconds to 1970
+time.setSeconds(time.getSeconds() + 1613429220);
+//logging the updated time
+console.info(String(time));
+
 app.get('/flights', (req, res) => {
-  axios.get('http://api.aviationstack.com/v1/flights?access_key=9fc225919793eaac770cb4bde93384e5&dep_iata=MSY').then(function (response) {
-    res.json(response.data.data);
+  axios.get('http://flightxml.flightaware.com/json/FlightXML2/Scheduled?airport=KMSY&howMany=4&offset=0', {
+    headers: {
+      'Authorization': 'Basic ZWVsbGluNjoyNmQ3YWM4NzhlY2E4ZDc0OWEzOWZmYzkzNTg0MzMyNTc3NmY1MWI5'
+    },
+    data: ''
+  }).then(function ({ data }) {
+    res.json(data.ScheduledResult.scheduled);
   }).catch(function (error) {
     res.json(error);
   });
