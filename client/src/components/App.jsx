@@ -24,16 +24,16 @@ class App extends Component {
     };
 
     this.changeView = this.changeView.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
+    // this.handleLogout = this.handleLogout.bind(this);
 
   }
 
 
-  handleLogout() {
-    axios.get('/logout')
-      .then(console.log('You successfully logged out'))
-      .catch(err => console.error('error logging out', err));
-  }
+  // handleLogout() {
+  //   axios.get('/logout')
+  //     .then(console.log('You successfully logged out'))
+  //     .catch(err => console.error('error logging out', err));
+  // }
 
 
   changeView(option) {
@@ -49,15 +49,15 @@ class App extends Component {
     if (view === 'map') {
       return <GoogleApiWrapper handleClick={() => this.changeView('anypostview')}/>;
     } else if (view === 'addMarker') {
-      return <CreateMarker changeView={this.changeView} handleClick={() => this.changeView('anypostview')}/>;
+      return <CreateMarker changeView={() => this.changeView('anypostview')}/>;
     } else if (view === 'flights') {
-      return <Flights changeView={this.changeView} handleClick={() => this.changeView('flights')}/>;
+      return <Flights changeView={() => this.changeView('flights')}/>;
     } else if (view === 'search') {
-      return <Search changeView={this.changeView} handleClick={() => this.changeView('search')}/>;
+      return <Search changeView={() => this.changeView('search')}/>;
     } else if (view === 'restaurant') {
-      return <Restaurant changeView={this.changeView} handleClick={() => this.changeView('restaurant')}/>;
+      return <Restaurant changeView={() => this.changeView('restaurant')}/>;
     } else if (view === 'friends') {
-      return <Friends changeView={this.changeView} handleClick={() => this.changeView('friends')}/>;
+      return <Friends changeView={() => this.changeView('friends')}/>;
     }
 
   }
@@ -121,9 +121,6 @@ class App extends Component {
                   <Button className={styles.menuButton} color="inherit" aria-label="Menu"
                     onClick={() => this.changeView('map')}>
                     <HomeIcon />
-                    <Typography variant="h6" className={useStyles.title}>
-                Home
-                    </Typography>
                   </Button>
                 </Grid>
 
