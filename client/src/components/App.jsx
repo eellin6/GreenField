@@ -121,9 +121,6 @@ class App extends Component {
                   <Button className={styles.menuButton} color="inherit" aria-label="Menu"
                     onClick={() => this.changeView('map')}>
                     <HomeIcon />
-                    <Typography variant="h6" className={useStyles.title}>
-                Home
-                    </Typography>
                   </Button>
                 </Grid>
 
