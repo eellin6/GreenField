@@ -3,7 +3,8 @@ const Search = Router();
 const { searchBusiness } = require('../helpers/search');
 
 Search.get('/', (req, res) => {
-  const { term } = req.body;
+  console.log('LINE SIX', req.query);
+  const { term } = req.query;
 
   searchBusiness(term)
     .then((data) => res.status(200).json(data))
