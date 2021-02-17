@@ -8,12 +8,15 @@ const BusinessList = ({businessList = []}) => {
           if (data) {
             return (
               <div>
-                <div key={data.name}></div>
-                <h2>{data.name}</h2>
-                <div key={data.location.address1}></div>
-                <h2>{data.location.address1}</h2>
-                <div key={data.rating}></div>
-                <h2>{data.rating}</h2>
+                <div key={String(i)}>
+                  <h2>{data[0].name}</h2>
+                </div>
+                {/* <div>
+                  <h2>{data[0].location.address1}</h2>
+                </div>
+                <div>
+                  <h2>{data.businesses.rating}</h2>
+                </div> */}
               </div>
             );
           }

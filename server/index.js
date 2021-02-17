@@ -18,6 +18,7 @@ const Documenu = require('documenu');
 const { Flights } = require('./api/flights');
 const { Search } = require('./api/search');
 
+
 require('dotenv').config();
 require('../passport.config');
 app.set('view engine', 'ejs');
@@ -63,6 +64,8 @@ app.use('/markers', markers);
 app.use('/api/favorites', favorites);
 app.use('/api/flights', Flights);
 app.use('/api/search', Search);
+
+
 
 app.get('/auth/google',
   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }),
