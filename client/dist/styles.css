@@ -137,6 +137,32 @@ label {
 .instructions-drag {
 	color: #fff;
 	text-align: center;
+	font-size: 1.5em;
+}
+.logo {
+  color: #545F66;
+  font-size: 3em;
+}
+.restaurant {
+  width: 25%;
+	margin: 5px ;
+	background-color: #FFFFF7;
+	border-radius: 5px;
+	border: 1px solid  rgb(31, 90, 201);
+	cursor: pointer;
+	color: black;
+	font-family: 'Varela Round', sans-serif;
+	font-size: .95em;
+	padding: 2px 1px;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px #459cc4;
+}
+
+.restaurant:hover {
+	background-color:  rgb(31, 90, 201);
+	color: white;
+	border-radius: 5px;
+	border: 1px solid #dd8d61;
 	font-size: 1.75em;
 	margin: 20px 0;
 }
