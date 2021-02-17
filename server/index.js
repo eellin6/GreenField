@@ -6,12 +6,13 @@ const session = require('express-session');
 const cors = require('cors');
 const formData = require('express-form-data');
 const { GoogleStrategy } = require('../passport.config.js');
-const express = require('express');
 const { User, Favorites, Markers, Comments } = require('./db/database.js');
+const express = require('express');
 const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
+const cookieParser = require('cookie-parser');
 const axios = require('axios');
 const Documenu = require('documenu');
 const { Flights } = require('./api/flights');
@@ -27,6 +28,7 @@ app.use(bodyParser.json());
 app.use(cookieSession({ name: 'google-auth-session', keys: ['key1', 'key2']}));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cookieParser());
 app.use(cors());
 app.use(flash());
 app.use(formData.parse());
@@ -46,11 +48,11 @@ const comments = require('./routes/comments');
 const favorites = require('./routes/favorites');
 const markers = require('./routes/markers');
 const photos = require('./routes/photos');
-const users = require('./routes/user');
+const user = require('./routes/user');
 // const flights = require('./routes/flights');
 
 app.use('/comments', comments);
-app.use('/users', users);
+app.use('/users', user);
 app.use('/markers', markers);
 app.use('/api/favorites', favorites);
 app.use('/api/flights', Flights);
@@ -75,47 +77,51 @@ app.use('/api/search', Search);
 //   next();
 // };
 
-app.post('/login', (req, res, next) => {
+// app.post('/login', (req, res, next) => {
+//   const {email, password} = req.body;
+//   console.log('login req.body', req.body);
+//   return User.findOne({where: {email: req.body.email}}).then((data) => {
+//     if (data) {
+//       console.log('this is login server data', data);
+//       if (password === data.password) {
+//         console.log('LOGIN CORRECT');
+//         res.redirect('/');
+//       } else {
+//         console.log('INCORRECT PASSWORD');
+//         res.redirect('/');
+//       }
+//     } else {
+//       console.log('DOES NOT WORK');
+//       res.status(401).send('USER NOT FOUND');
+//     }
+//   });
+// });
 
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }),
+  ((req, res) => console.info('DISPLAYNAME 100', req.user.displayName)));
 
-  const {email, password} = req.body;
-  console.log('login req.body', req.body);
-  return User.findOne({where: {email: req.body.email}}).then((data) => {
-
-    if (data) {
-      console.log('this is login server data', data);
-
-      if (password === data.password) {
-        console.log('LOGIN CORRECT');
-        res.redirect('/');
-      } else {
-        console.log('INCORRECT PASSWORD');
-        res.redirect('/');
-      }
-
-    } else {
-      console.log('DOES NOT WORK');
-      res.status(401).send('USER NOT FOUND');
-    }
-  });
-});
-
-//logout route
-app.get('/logout', (req, res) => {
-  req.session = null;
-  req.logout();
-  res.redirect('/');
-});
-
-app.get('/auth/google', passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
 app.get('/auth/error', (req, res) => res.send('Unknown Error'));
-app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/auth/error' }),
-  function(req, res) {
-    res.redirect('/');
+
+app.get('/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/auth/error' }), (req, res) => {
+    res.cookie('NOLABOUND', req.user.displayName).redirect('/');
+    console.log(res.cookie);
   }
 );
 
-app.get('/', (req, res) => res.send(`Welcome ${req.user.displayName}!`));
+// app.get('/', (req, res) => {
+//   console.log('DISPLAYNAME 112', req.user.displayName);
+//   res.send(`Welcome ${req.user.displayName}!`);
+// });
+
+//logout route
+app.delete('/logout', (req, res) => {
+  // req.session = null;
+  // req.logout();
+  res.clearCookie('NOLABOUND').json(false).redirect('/');
+});
+
 
 //Documenu.configure('e8b92ac752273c041946038b6e3223f7');
 
@@ -129,9 +135,21 @@ app.get('/restaurant', async (req, res) => {
 });
 
 //Flights
+//1970
+const time = new Date(+0);
+//adding seconds to 1970
+time.setSeconds(time.getSeconds() + 1613429220);
+//logging the updated time
+console.info(String(time));
+
 app.get('/flights', (req, res) => {
-  axios.get('http://api.aviationstack.com/v1/flights?access_key=9fc225919793eaac770cb4bde93384e5&dep_iata=MSY').then(function (response) {
-    res.json(response.data.data);
+  axios.get('http://flightxml.flightaware.com/json/FlightXML2/Scheduled?airport=KMSY&howMany=4&offset=0', {
+    headers: {
+      'Authorization': 'Basic ZWVsbGluNjoyNmQ3YWM4NzhlY2E4ZDc0OWEzOWZmYzkzNTg0MzMyNTc3NmY1MWI5'
+    },
+    data: ''
+  }).then(function ({ data }) {
+    res.json(data.ScheduledResult.scheduled);
   }).catch(function (error) {
     res.json(error);
   });

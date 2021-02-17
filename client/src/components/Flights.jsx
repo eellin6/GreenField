@@ -14,14 +14,18 @@ const getFlights = () => {
     <div>
       {
         posts.map((post, i) => {
+          const time = new Date(+0);
+          //adding seconds to 1970
+          time.setSeconds(time.getSeconds() + post.estimatedarrivaltime);
+          //logging the updated time
+          // console.info(String(time));
           return (
           //throw key to stop error
             <div key={ String(i) }>
-              <div>Date: { post.flight_date }</div>
-              <div>Status: { post.flight_status }</div>
-              <div>Destination: { post.arrival.airport }</div>
-              <div>Landing Time: { post.arrival.scheduled }</div>
-              <div>Flight Number: { post.flight.number }</div>
+              <div>Destination: { post.destinationName }</div>
+              <div>Landing Time: { String(time) }</div>
+              <div>Flight Number: { post.ident }</div>
+              <button>Save Flight</button>
               <br></br>
             </div>
           );

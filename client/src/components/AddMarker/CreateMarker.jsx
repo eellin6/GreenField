@@ -54,8 +54,8 @@ class CreateMarker extends Component {
       justifyContent: 'center',
       alignItems: 'center',
       display: 'flex',
-      width: '96vw',
-      height: '85vh'
+      width: '100%',
+      height: '75vh'
     };
 
     const containerStyle = {
@@ -123,7 +123,7 @@ class CreateMarker extends Component {
 
     return (
       <div>
-        <h3><span className="instructions-drag">Drag Pin to Location</span></h3>
+        <div className="instructions-drag">Drag Pin to a Location</div>
         <Map
           onClick={(e) => console.log(e)}
           google={this.props.google}
