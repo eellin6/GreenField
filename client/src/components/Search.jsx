@@ -2,25 +2,23 @@ import { IconButton, Toolbar, InputBase, AppBar} from '@material-ui/core';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import axios from 'axios';
-import React, {Component} from 'react';
-import SearchBar from 'material-ui-search-bar';
+//import React, {Component} from 'react';
+//import SearchBar from 'material-ui-search-bar';
 
-//import React, { Component, useStyles } from 'react';
+import React, { Component } from 'react';
+import SearchBar from './SearchBar';
+import BusinessList from './BusinessList';
 
-
-class Search extends Component {
+class SearchPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       inputValue: '',
+      searchResults: []
     };
 
-    this.handleSearch = this.handleSearch.bind(this);
+    //this.handleSearch = this.handleSearch.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  componentDidMount() {
-
   }
 
   handleSubmit (e) {
@@ -30,39 +28,88 @@ class Search extends Component {
 
   }
 
-  handleSearch (inputValue) {
-    axios.get('/api/search', {inputValue})
-      .then((res) => {
-        console.log('LOOK HERE', res);
-        // this.setState({
-
-        // })
-      });
-  }
+  // handleSearch (inputValue) {
+  //   axios.get('/api/search', {inputValue})
+  //     .then(({data}) => {
+  //       console.log('look HEREEEEEEEEEEEEEEE', data);
+  //       //const {}
+  //       this.setState({
+  //         inputValue: data.businesses
+  //       });
+  //     }).catch((err) => console.error(err));
+  // }
 
   render () {
-
+    const { inputValue, searchResults } = this.state;
     return (
       <div >
         <AppBar position="static">
 
-          <Toolbar>
-            <SearchBar />
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-            >
-            </IconButton>
-          </Toolbar>
+
+
         </AppBar>
+        <div>
+          <SearchBar
+            value={this.state.inputValue}
+            onChange={() => this.handleSubmit}
+            onRequestSearch={() => this.handleSearch(this.state.inputValue)}
+            businessList={searchResults}
+          />
+
+        </div>
+        <div>
+          {/* <BusinessList
+            businessList={searchResults}
+          /> */}
+        </div>
+
       </div>
+
+
     );
   }
 }
 
 
+// const SearchPage = (props) => {
+//   const [input, setInput] = useState('');
+//   const [busListDefault, setBusListDefault] = useState();
+//   const [businessList, setBusinessList] = useState();
 
-export default Search;
+//   const getBusinesses = (input) => {
+//     axios.get('/api/search')
+
+//       .then(({data}) => {
+//         console.log(data);
+//         const { businesses } = data;
+//         console.log(businesses);
+//         setBusinessList(businesses);
+//         setBusListDefault(businesses);
+//       });
+//   };
+
+//   useEffect( () => { getBusinesses(); }, []);
+
+//   return (
+//     <>
+//       <h1>List of Businesses</h1>
+//       <SearchBar
+//         input={input}
+
+//       />
+//       <BusinessList/>
+
+//     </>
+//   );
+// };
+
+
+export default SearchPage;
+
+
+
+
+
+
 
 
