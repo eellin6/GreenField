@@ -7,7 +7,7 @@ import axios from 'axios';
 
 import React, { Component } from 'react';
 import SearchBar from './SearchBar';
-import BusinessList from './BusinessList';
+//import BusinessList from './BusinessList';
 
 class SearchPage extends Component {
   constructor(props) {

@@ -176,6 +176,11 @@ label {
 	margin: 20px 0;
 }
 
+.business {
+	background-color: 'blue';
+	border: 1px solid #dd8d61;
+}
+
 #logo {
 	margin: 25px 0 10px 0;
 	z-index: 1;

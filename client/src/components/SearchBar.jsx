@@ -38,17 +38,21 @@ const SearchBar = () => {
           results.map((data, i) => {
             if (data) {
               return (
-                <div>
+                <div className='business'>
                   <div key={String(i)}>
 
                     <h2> Name: {data.name}</h2>
                   </div>
-                  <div key={String(i)}>
+                  <div className='loc'>
                     <h3>Address: {data.location.address1} {data.location.city} {data.location.state} {data.location.zip_code}</h3>
                   </div>
-                  <div className='rating'>
-                    <h3>rating: {data.rating}</h3>
+                  <div className='phone'>
+                    <h3>Phone Number: {data.phone}</h3>
                   </div>
+                  <div className='rating'>
+                    <h3>Rating: {data.rating}</h3>
+                  </div>
+
                 </div>
               );
             }
