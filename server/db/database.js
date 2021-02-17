@@ -1,6 +1,12 @@
 /* eslint-disable camelcase */
-const {Sequelize} = require('sequelize');
+const Sequelize = require('sequelize');
 const mysql = require('mysql2');
+
+// const db = new Sequelize('newMaps', 'root', '', {
+//   host: 'localhost',
+//   dialect: 'mysql'
+//   // logging: false
+// });
 
 const db = new Sequelize('bpqhvmuoeogfmdagveod', 'urwckhywrljgmor7', 'xOmX9ozGoAr54BAFXWs3', {
   host: 'bpqhvmuoeogfmdagveod-mysql.services.clever-cloud.com',
@@ -16,7 +22,7 @@ db.authenticate()
     console.log('could not connect to database', err);
   });
 
-const User = db.define('User', {
+const Users = db.define('Users', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
@@ -52,7 +58,10 @@ const Markers = db.define('Markers', {
     type: Sequelize.STRING,
     unique: true
   },
-  isFavorite: Sequelize.BOOLEAN,
+  isFavorite: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
   id_user: Sequelize.INTEGER
 });
 
@@ -78,7 +87,10 @@ const Flights = db.define('Flights', {
   destination: Sequelize.STRING,
   landingTime: Sequelize.STRING,
   flightNumber: Sequelize.STRING,
-  isSaved: Sequelize.BOOLEAN,
+  isSaved: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
   id_user: Sequelize.INTEGER
 });
 
@@ -92,7 +104,7 @@ db.sync({ force: true })
 
 module.exports = {
   db,
-  User,
+  Users,
   Markers,
   Flights,
   Comments,
