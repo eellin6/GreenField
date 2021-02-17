@@ -1,27 +1,22 @@
 * {
 	font-family: Arial, Helvetica, sans-serif;
 }
+
 body {
 	background-color: #dd8d61;
 }
+
 header,
 h1,
 label {
 	text-align: center;
 }
-.nav {
-	text-align: center;
-}
-.register {
-	text-align: center;
-}
-.login {
-	text-align: center;
-}
+
 hr.rounded {
 	border-top: 3px solid rgb(31, 90, 201);
 	border-radius: 5px;
 }
+
 modal {
 	position: fixed;
 	top: 0;
@@ -30,6 +25,7 @@ modal {
 	height: 80%;
 	background: rgba(0, 0, 0, 0.6);
 }
+
 .modal-main {
 	padding: 2em;
 	position: fixed;
@@ -40,14 +36,17 @@ modal {
 	left: 50%;
 	transform: translate(-50%, -50%);
 }
+
 .display-block {
 	display: block;
 }
+
 .display-none {
 	display: none;
 }
+
 button {
-	background: #b1cc74;
+	background: #7dcdcd;
 	color: #fff;
 	border: none;
 	position: relative;
@@ -60,8 +59,9 @@ button {
 }
 button:hover {
 	background: #fff;
-	color: #b1cc74;
+	color: #7dcdcd;
 }
+
 button:before,
 button:after {
 	content: '';
@@ -70,20 +70,23 @@ button:after {
 	right: 0;
 	height: 2px;
 	width: 0;
-	background: #b1cc74;
+	background: #7dcdcd;
 	transition: 400ms ease all;
 }
+
 button:after {
 	right: inherit;
 	top: inherit;
 	left: 0;
 	bottom: 0;
 }
+
 button:hover:before,
 button:hover:after {
 	width: 100%;
 	transition: 800ms ease all;
 }
+
 .modal-btn {
 	background: #b1cc74;
 	color: #fff;
@@ -96,10 +99,12 @@ button:hover:after {
 	transition: 800ms ease all;
 	outline: none;
 }
+
 .modal-btn:hover {
 	background: #fff;
 	color: #b1cc74;
 }
+
 .modal-btn:before,
 button:after {
 	content: '';
@@ -111,32 +116,67 @@ button:after {
 	background: #b1cc74;
 	transition: 400ms ease all;
 }
+
 .modal-btn:after {
 	right: inherit;
 	top: inherit;
 	left: 0;
 	bottom: 0;
 }
+
 .modal-btn:hover:before,
 button:hover:after {
 	width: 100%;
 	transition: 800ms ease all;
 }
+
 label,
 input {
 	display: grid;
 }
+
 label {
 	margin-bottom: 20px;
 }
+
 .instructions {
 	color: #545f66;
 	text-align: left;
 	font-weight: bold;
 }
+
 .instructions-drag {
 	color: #fff;
 	text-align: center;
+	font-size: 1.5em;
+	margin: 10px 0;
+}
+
+.restaurant {
+	width: 25%;
+	margin: 5px;
+	background-color: #fffff7;
+	border-radius: 5px;
+	border: 1px solid rgb(31, 90, 201);
+	cursor: pointer;
+	color: black;
+	font-family: 'Varela Round', sans-serif;
+	font-size: .95em;
+	padding: 2px 1px;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px #459cc4;
+}
+
+.restaurant:hover {
+	background-color: rgb(31, 90, 201);
+	color: white;
+	border-radius: 5px;
+	border: 1px solid #dd8d61;
 	font-size: 1.75em;
 	margin: 20px 0;
+}
+
+#logo {
+	margin: 25px 0 10px 0;
+	z-index: 1;
 }
