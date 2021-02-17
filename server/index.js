@@ -64,45 +64,6 @@ app.use('/api/favorites', favorites);
 app.use('/api/flights', Flights);
 app.use('/api/search', Search);
 
-// const checkAuthenticated = (req, res, next) => {
-//   //this function checks if the user is logged in
-//   if (req.isAuthenticated()) {
-//     return next();
-//   }
-//   res.redirect('/login');
-// };
-// const notAuthenticated = (req, res, next) => {
-//   //this function checks if the user is not logged in
-//   //not working
-//   //if the user is logged in
-//   if (req.isAuthenticated()) {
-//     //redirect to the home page
-//     return res.redirect('/');
-//   }
-//   //if they are not authenticated keep going
-//   next();
-// };
-
-// app.post('/login', (req, res, next) => {
-//   const {email, password} = req.body;
-//   console.log('login req.body', req.body);
-//   return User.findOne({where: {email: req.body.email}}).then((data) => {
-//     if (data) {
-//       console.log('this is login server data', data);
-//       if (password === data.password) {
-//         console.log('LOGIN CORRECT');
-//         res.redirect('/');
-//       } else {
-//         console.log('INCORRECT PASSWORD');
-//         res.redirect('/');
-//       }
-//     } else {
-//       console.log('DOES NOT WORK');
-//       res.status(401).send('USER NOT FOUND');
-//     }
-//   });
-// });
-
 app.get('/auth/google',
   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }),
   ((req, res) => console.info('DISPLAYNAME 102', req.user.displayName)));
@@ -112,23 +73,15 @@ app.get('/auth/error', (req, res) => res.send('Unknown Error'));
 app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/auth/error' }), (req, res) => {
     res.cookie('NOLABOUND', req.user.displayName).redirect('/');
-    console.log(res.cookie);
   }
 );
 
 app.get('/isLoggedin', (req, res) => req.cookies.NOLABOUND ? res.json(true) : res.json(false));
 
-app.get('/', (req, res) => {
-  console.log('DISPLAYNAME 116', req.user.displayName);
-  res.send(`Welcome ${req.user.displayName}!`);
-});
+app.get('/', (req, res) => res.send(`Welcome ${req.user.displayName}!`));
 
 //logout route
-app.delete('/logout', (req, res) => {
-  // req.session = null;
-  // req.logout();
-  res.clearCookie('NOLABOUND').json(false);
-});
+app.delete('/logout', (req, res) => res.clearCookie('NOLABOUND').json(false));
 
 
 //Documenu.configure('e8b92ac752273c041946038b6e3223f7');
