@@ -6,7 +6,7 @@ import { AppBar, Toolbar, Button, Typography} from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import SearchBar from '../components/Search';
+import SearchPage from '../components/Search';
 import Flights from './Flights.jsx';
 import Restaurant from './Restaurant.jsx';
 import Friends from './Friends.jsx';
@@ -53,7 +53,7 @@ class App extends Component {
     } else if (view === 'flights') {
       return <Flights changeView={() => this.changeView('flights')}/>;
     } else if (view === 'search') {
-      return <Search changeView={() => this.changeView('search')}/>;
+      return <SearchPage changeView={() => this.changeView('search')}/>;
     } else if (view === 'restaurant') {
       return <Restaurant changeView={() => this.changeView('restaurant')}/>;
     } else if (view === 'friends') {

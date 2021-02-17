@@ -7,10 +7,35 @@ import axios from 'axios';
 
 import React, { useState, useEffect } from 'react';
 import SearchBar from './SearchBar';
+import BusinessList from './BusinessList';
 
 const SearchPage = (props) => {
+  const [input, setInput] = useState('');
+  const [busListDefault, setBusListDefault] = useState();
+  const [businessList, setBusinessList] = useState();
 
+  const getBusinesses = (input) => {
+    axios.get('/api/search', {input})
+      .then(data => {
+        setBusinessList(data);
+        setBusListDefault(data);
+      });
+  };
+
+  useEffect( () => { getBusinesses(); }, []);
+
+  return (
+    <>
+      <h1>List of Businesses</h1>
+      <SearchBar
+        input={input}
+
+      />
+
+    </>
+  );
 };
+
 
 export default SearchPage;
 
