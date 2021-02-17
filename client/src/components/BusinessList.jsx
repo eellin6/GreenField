@@ -1,31 +1,34 @@
-import React from 'react';
+// import React from 'react';
 
-const BusinessList = ({businessList = []}) => {
-  return (
-    <div>
-      {
-        businessList.map((data, i) => {
-          if (data) {
-            return (
-              <div>
-                <div key={String(i)}>
-                  <h2>{data[0].name}</h2>
-                </div>
-                {/* <div>
-                  <h2>{data[0].location.address1}</h2>
-                </div>
-                <div>
-                  <h2>{data.businesses.rating}</h2>
-                </div> */}
-              </div>
-            );
-          }
-          return null;
-        })
+// const BusinessList = ({businessList = []}) => {
+//   return (
+//     <div>
+//       {
+//         businessList.map((data, i) => {
+//           if (data) {
+//             return (
+//               <div>
+//                 <div key={String(i)}>
 
-      }
-    </div>
-  );
-};
+//                   <h2> Name {data.name}</h2>
 
-export default BusinessList;
+
+//                 </div>
+//                 <div key={String(i)}>
+//                   <h3>Address: {data.location.address1}</h3>
+//                 </div>
+//                 <div className='rating'>
+//                   <h3>rating: {data.rating}</h3>
+//                 </div>
+//               </div>
+//             );
+//           }
+//           return null;
+//         })
+
+//       }
+//     </div>
+//   );
+// };
+
+// export default BusinessList;

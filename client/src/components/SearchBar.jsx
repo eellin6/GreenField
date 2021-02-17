@@ -40,14 +40,15 @@ const SearchBar = () => {
               return (
                 <div>
                   <div key={String(i)}>
-                    <h2>{data.name}</h2>
+
+                    <h2> Name: {data.name}</h2>
                   </div>
-                  {/* <div>
-                  <h2>{data[0].location.address1}</h2>
-                </div>
-                <div>
-                  <h2>{data.businesses.rating}</h2>
-                </div> */}
+                  <div key={String(i)}>
+                    <h3>Address: {data.location.address1} {data.location.city} {data.location.state} {data.location.zip_code}</h3>
+                  </div>
+                  <div className='rating'>
+                    <h3>rating: {data.rating}</h3>
+                  </div>
                 </div>
               );
             }

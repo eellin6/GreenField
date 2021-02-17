@@ -53,13 +53,14 @@ class SearchPage extends Component {
             value={this.state.inputValue}
             onChange={() => this.handleSubmit}
             onRequestSearch={() => this.handleSearch(this.state.inputValue)}
+            businessList={searchResults}
           />
 
         </div>
         <div>
-          <BusinessList
+          {/* <BusinessList
             businessList={searchResults}
-          />
+          /> */}
         </div>
 
       </div>
