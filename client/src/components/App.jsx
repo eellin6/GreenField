@@ -11,6 +11,7 @@ import Search from '../components/Search';
 import Flights from './Flights.jsx';
 import Restaurant from './Restaurant.jsx';
 import Friends from './Friends.jsx';
+import Directions from './Directions.jsx';
 class App extends Component {
 
   constructor(props) {
@@ -61,6 +62,8 @@ class App extends Component {
       return <Restaurant changeView={() => this.changeView('restaurant')}/>;
     } else if (view === 'friends') {
       return <Friends changeView={() => this.changeView('friends')}/>;
+    } else if (view === 'directions') {
+      return <Directions changeView={() => this.changeView('directions')}/>;
     }
 
   }
@@ -165,6 +168,17 @@ class App extends Component {
                     color="inherit"
                     onClick={() => this.changeView('friends')}>
                     <Typography variant="h6">Find Friends</Typography>
+                  </Button>
+                </Grid>
+
+                <Grid item>
+                  <Button
+                    className="btn"
+                    type="button"
+                    position="relative"
+                    color="inherit"
+                    onClick={() => this.changeView('directions')}>
+                    <Typography variant="h6">Directions</Typography>
                   </Button>
                 </Grid>
 
