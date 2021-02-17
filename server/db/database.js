@@ -2,16 +2,15 @@
 const {Sequelize} = require('sequelize');
 const mysql = require('mysql2');
 
-const db = new Sequelize('maps', 'root', '', {
-  host: 'localhost',
+const db = new Sequelize('bpqhvmuoeogfmdagveod', 'urwckhywrljgmor7', 'xOmX9ozGoAr54BAFXWs3', {
+  host: 'bpqhvmuoeogfmdagveod-mysql.services.clever-cloud.com',
   dialect: 'mysql',
-  logging: false
 });
 
 //const db = new Sequelize('mysql://localhost:3000/maps')
 db.authenticate()
   .then(() => {
-    console.log('connected to the database');
+    console.log('CONNECTED to the database');
   })
   .catch((err) => {
     console.log('could not connect to database', err);
