@@ -17,46 +17,84 @@ db.authenticate()
   });
 
 const User = db.define('User', {
-  username: Sequelize.STRING,
-  password: Sequelize.STRING,
-  email: Sequelize.STRING
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    allowNull: false,
+    primaryKey: true
+  },
+
+  username: {
+    type: Sequelize.STRING,
+    allowNull: false
+  }
+});
+
+const Friends = db.define('Friends', {
+  id_user: Sequelize.INTEGER,
+  id_friend: Sequelize.INTEGER
 });
 
 const Markers = db.define('Markers', {
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    allowNull: false,
+    primaryKey: true
+  },
   latitude: Sequelize.DECIMAL(10, 4),
   longitude: Sequelize.DECIMAL(10, 4),
-  imageUrl: Sequelize.STRING(1000),
+  imageUrl: {
+    type: Sequelize.STRING(1000),
+    allowNull: false
+  },
   description: {
     type: Sequelize.STRING,
     unique: true
   },
-  comments: Sequelize.STRING,
+  isFavorite: Sequelize.BOOLEAN,
+  id_user: Sequelize.INTEGER
 });
 
 const Comments = db.define('Comments', {
-  description: Sequelize.STRING,
-  comments: Sequelize.STRING
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    allowNull: false,
+    primaryKey: true
+  },
+  comments: Sequelize.STRING,
+  is_user: Sequelize.INTEGER,
+  id_marker: Sequelize.INTEGER
 });
 
-const Favorites = db.define('Favorites', {
-  latitude: Sequelize.DECIMAL(10, 4),
-  longitude: Sequelize.DECIMAL(10, 4),
-  imageUrl: Sequelize.STRING,
-  description: Sequelize.STRING
+const Flights = db.define('Flights', {
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    allowNull: false,
+    primaryKey: true
+  },
+  destination: Sequelize.STRING,
+  landingTime: Sequelize.STRING,
+  flightNumber: Sequelize.STRING,
+  isSaved: Sequelize.BOOLEAN,
+  id_user: Sequelize.INTEGER
 });
 
 
 
-// db.sync({ force: true })
-//   .then(() => {
-//     console.log('Database & tables created!');
-//   }).catch((err) => { console.log(err); });
+db.sync({ force: true })
+  .then(() => {
+    console.log('Database & tables created!');
+  }).catch((err) => { console.log(err); });
 
 
 module.exports = {
   db,
   User,
   Markers,
-  Favorites,
-  Comments
+  Flights,
+  Comments,
+  Friends
 };
