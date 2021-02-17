@@ -73,6 +73,7 @@ class Modal extends Component {
               <span><button className="modal-btn" type='submit' onClick={this.handleClick}>Add Pin</button></span>
             </div>
           </form>
+
         </section>
       </div>
     );

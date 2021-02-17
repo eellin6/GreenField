@@ -7,7 +7,7 @@ import axios from 'axios';
 
 import React, { Component } from 'react';
 import SearchBar from './SearchBar';
-//import BusinessList from './BusinessList';
+
 
 class SearchPage extends Component {
   constructor(props) {
@@ -28,17 +28,6 @@ class SearchPage extends Component {
 
   }
 
-  // handleSearch (inputValue) {
-  //   axios.get('/api/search', {inputValue})
-  //     .then(({data}) => {
-  //       console.log('look HEREEEEEEEEEEEEEEE', data);
-  //       //const {}
-  //       this.setState({
-  //         inputValue: data.businesses
-  //       });
-  //     }).catch((err) => console.error(err));
-  // }
-
   render () {
     const { inputValue, searchResults } = this.state;
     return (
@@ -57,11 +46,6 @@ class SearchPage extends Component {
           />
 
         </div>
-        <div>
-          {/* <BusinessList
-            businessList={searchResults}
-          /> */}
-        </div>
 
       </div>
 
@@ -71,37 +55,7 @@ class SearchPage extends Component {
 }
 
 
-// const SearchPage = (props) => {
-//   const [input, setInput] = useState('');
-//   const [busListDefault, setBusListDefault] = useState();
-//   const [businessList, setBusinessList] = useState();
 
-//   const getBusinesses = (input) => {
-//     axios.get('/api/search')
-
-//       .then(({data}) => {
-//         console.log(data);
-//         const { businesses } = data;
-//         console.log(businesses);
-//         setBusinessList(businesses);
-//         setBusListDefault(businesses);
-//       });
-//   };
-
-//   useEffect( () => { getBusinesses(); }, []);
-
-//   return (
-//     <>
-//       <h1>List of Businesses</h1>
-//       <SearchBar
-//         input={input}
-
-//       />
-//       <BusinessList/>
-
-//     </>
-//   );
-// };
 
 
 export default SearchPage;
