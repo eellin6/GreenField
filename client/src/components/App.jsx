@@ -25,7 +25,6 @@ class App extends Component {
     };
 
     this.changeView = this.changeView.bind(this);
-    // this.handleLogout = this.handleLogout.bind(this);
     this.logout = this.logout.bind(this);
 
   }
@@ -36,14 +35,6 @@ class App extends Component {
       .catch((err) => console.warn(err));
   }
 
-
-  // handleLogout() {
-  //   axios.get('/logout')
-  //     .then(console.log('You successfully logged out'))
-  //     .catch(err => console.error('error logging out', err));
-  // }
-
-
   changeView(option) {
     this.setState({
       view: option
@@ -51,15 +42,15 @@ class App extends Component {
   }
 
   logout(bool) {
-    this.setState({isLoggedIn: bool});
+    this.setState({ isLoggedIn: bool });
   }
 
 
   renderView() {
-    const { view, lat, lng, isLoggedIn } = this.state;
+    const { view, lat, lng } = this.state;
     // This will render different views when navigation is clicked
     if (view === 'map') {
-      return <GoogleApiWrapper handleClick={() => this.changeView('anypostview')}/>;
+      return <GoogleApiWrapper changeView={() => this.changeView('anypostview')}/>;
     } else if (view === 'addMarker') {
       return <CreateMarker changeView={() => this.changeView('anypostview')}/>;
     } else if (view === 'flights') {
@@ -76,13 +67,7 @@ class App extends Component {
 
 
   render() {
-    const { view } = this.state;
-    //if the status of a user is not logged in, display a login button
-    const status = 'Login';
-    // if(isLoggedIn){
-    //   //if the status of a user is logged in, display logout button
-    //   status = 'Logout'
-    // }
+    const { view, isLoggedIn } = this.state;
 
     // styles for NavBar
     const styles = {
@@ -106,7 +91,8 @@ class App extends Component {
       menuButton: {
         marginRight: theme.spacing(2),
       },
-      title: {flexGrow: 1,
+      title: {
+        flexGrow: 1,
         display: 'none',
         [theme.breakpoints.up('sm')]: {
           display: 'block',
@@ -114,26 +100,25 @@ class App extends Component {
       },
     }));
 
-
     return (
-
       <div >
         <header>
-          <img src="https://i.ibb.co/ry3RrBM/NOLA-bound-logo.png"
-            alt="NOLA-bound-logo"
-            height="200px" width="auto"/>
+          <div id="logo">
+            <img src="https://i.ibb.co/ry3RrBM/NOLA-bound-logo.png"
+              alt="NOLA-bound-logo"
+              height="175px" width="auto"/>
+          </div>
         </header>
         <div className='nav'>
           <AppBar position="static">
             <Toolbar>
               <Grid container direction="row" alignItems="center" spacing={5}>
-                <Grid item>
-                  <div><a className='loginButton' href="/auth/google"><GoogleButton /></a></div>
-                </Grid>
 
                 <Grid item>
-
-                  <Button className={styles.menuButton} color="inherit" aria-label="Menu"
+                  <Button
+                    className={styles.menuButton}
+                    color="inherit"
+                    aria-label="Menu"
                     onClick={() => this.changeView('map')}>
                     <HomeIcon />
                   </Button>
@@ -145,11 +130,8 @@ class App extends Component {
                     type="button"
                     position="relative"
                     color="inherit"
-                    onClick={() => this.changeView('addMarker')}
-                  >
-                    <Typography variant="h6">
-                Add a Pin
-                    </Typography>
+                    onClick={() => this.changeView('addMarker')}>
+                    <Typography variant="h6">Add a Pin</Typography>
                   </Button>
                 </Grid>
 
@@ -159,11 +141,8 @@ class App extends Component {
                     type="button"
                     position="relative"
                     color="inherit"
-                    onClick={() => this.changeView('flights')}
-                  >
-                    <Typography variant="h6">
-                Flights
-                    </Typography>
+                    onClick={() => this.changeView('flights')}>
+                    <Typography variant="h6">Flights</Typography>
                   </Button>
                 </Grid>
 
@@ -173,11 +152,8 @@ class App extends Component {
                     type="button"
                     position="relative"
                     color="inherit"
-                    onClick={() => this.changeView('restaurant')}
-                  >
-                    <Typography variant="h6">
-                Grub
-                    </Typography>
+                    onClick={() => this.changeView('restaurant')}>
+                    <Typography variant="h6">Grub</Typography>
                   </Button>
                 </Grid>
 
@@ -187,11 +163,8 @@ class App extends Component {
                     type="button"
                     position="relative"
                     color="inherit"
-                    onClick={() => this.changeView('friends')}
-                  >
-                    <Typography variant="h6">
-                Find Friends
-                    </Typography>
+                    onClick={() => this.changeView('friends')}>
+                    <Typography variant="h6">Find Friends</Typography>
                   </Button>
                 </Grid>
 
@@ -200,28 +173,24 @@ class App extends Component {
                 </Grid>
 
                 <Grid item>
-                  {/* <Button className="btn"
-                    color="inherit"
-                    onClick={function signOut() {
-                      const auth2 = gapi.auth2.getAuthInstance();
-                      auth2.signOut().then(function () {
-                        console.log('User signed out.');
-                      });
-                    }}>
-                    <Typography variant="h6">
-                        Sign out
-                    </Typography>
-                  </Button> */}
-                  <Button
-                    className='btn'
-                    color="inherit"
-                    onClick={() => axios.delete('/logout')
-                      .then(({ data }) => this.logout(data))
-                      .catch((err) => console.warn(err))} >
-                    <Typography variant="h6">
-                        Sign out
-                    </Typography>
-                  </Button>
+                  {
+                    !isLoggedIn
+                      ?
+                      <div>
+                        <a className='loginButton' href="/auth/google"><GoogleButton /></a>
+                      </div>
+                      :
+                      <div>
+                        <Button
+                          className='btn'
+                          color="inherit"
+                          onClick={() => axios.delete('/logout')
+                            .then(({ data }) => this.logout(data))
+                            .catch((err) => console.warn(err))} >
+                          <Typography variant="h6">Sign out</Typography>
+                        </Button>
+                      </div>
+                  }
                 </Grid>
 
               </Grid>
