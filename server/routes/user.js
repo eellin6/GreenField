@@ -1,12 +1,12 @@
 const router = require('express').Router();
 
-const { User } = require('../db/database');
+const { Users } = require('../db/database');
 
 router.route('/').post((req, res) => {
 
   const { username, email, password } = req.body;
 
-  const newUser = new User({
+  const newUser = new Users({
     username,
     password,
     email
@@ -19,7 +19,7 @@ router.route('/').post((req, res) => {
 });
 
 router.route('/').get((req, res) => {
-  return User.findAll({})
+  return Users.findAll({})
     .then((data) => res.send(data))
     .catch((err) => console.warn(err));
 });
