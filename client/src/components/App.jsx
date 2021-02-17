@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import GoogleApiWrapper from './Map';
+import GoogleButton from 'react-google-button';
 import axios from 'axios';
 import CreateMarker from '../components/AddMarker/CreateMarker';
 import { AppBar, Toolbar, Button, Typography} from '@material-ui/core';
@@ -25,7 +26,14 @@ class App extends Component {
 
     this.changeView = this.changeView.bind(this);
     // this.handleLogout = this.handleLogout.bind(this);
+    this.logout = this.logout.bind(this);
 
+  }
+
+  componentDidMount() {
+    axios.get('/isLoggedin')
+      .then(({ data }) => this.setState({ isLoggedIn: data }))
+      .catch((err) => console.warn(err));
   }
 
 
@@ -42,9 +50,13 @@ class App extends Component {
     });
   }
 
+  logout(bool) {
+    this.setState({isLoggedIn: bool});
+  }
+
 
   renderView() {
-    const { view, lat, lng } = this.state;
+    const { view, lat, lng, isLoggedIn } = this.state;
     // This will render different views when navigation is clicked
     if (view === 'map') {
       return <GoogleApiWrapper handleClick={() => this.changeView('anypostview')}/>;
@@ -64,7 +76,7 @@ class App extends Component {
 
 
   render() {
-    const { view, isLoggedIn } = this.state;
+    const { view } = this.state;
     //if the status of a user is not logged in, display a login button
     const status = 'Login';
     // if(isLoggedIn){
@@ -110,12 +122,15 @@ class App extends Component {
           <img src="https://i.ibb.co/ry3RrBM/NOLA-bound-logo.png"
             alt="NOLA-bound-logo"
             height="200px" width="auto"/>
-          <div className="g-signin2" data-onsuccess="onSignIn"></div>
         </header>
         <div className='nav'>
           <AppBar position="static">
             <Toolbar>
               <Grid container direction="row" alignItems="center" spacing={5}>
+                <Grid item>
+                  <div><a className='loginButton' href="/auth/google"><GoogleButton /></a></div>
+                </Grid>
+
                 <Grid item>
 
                   <Button className={styles.menuButton} color="inherit" aria-label="Menu"
@@ -185,7 +200,7 @@ class App extends Component {
                 </Grid>
 
                 <Grid item>
-                  <Button className="btn"
+                  {/* <Button className="btn"
                     color="inherit"
                     onClick={function signOut() {
                       const auth2 = gapi.auth2.getAuthInstance();
@@ -193,6 +208,16 @@ class App extends Component {
                         console.log('User signed out.');
                       });
                     }}>
+                    <Typography variant="h6">
+                        Sign out
+                    </Typography>
+                  </Button> */}
+                  <Button
+                    className='btn'
+                    color="inherit"
+                    onClick={() => axios.delete('/logout')
+                      .then(({ data }) => this.logout(data))
+                      .catch((err) => console.warn(err))} >
                     <Typography variant="h6">
                         Sign out
                     </Typography>

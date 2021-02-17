@@ -34,9 +34,15 @@ app.use(flash());
 app.use(formData.parse());
 app.use(session({
   secret: process.env.clientSecret,
-  resave: false, //should we resave if nothing changes
+  resave: true, //should we resave if nothing changes
   saveUninitialized: false // do we want to save empty value
 }));
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -99,7 +105,7 @@ app.use('/api/search', Search);
 
 app.get('/auth/google',
   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }),
-  ((req, res) => console.info('DISPLAYNAME 100', req.user.displayName)));
+  ((req, res) => console.info('DISPLAYNAME 102', req.user.displayName)));
 
 app.get('/auth/error', (req, res) => res.send('Unknown Error'));
 
@@ -110,16 +116,18 @@ app.get('/auth/google/callback',
   }
 );
 
-// app.get('/', (req, res) => {
-//   console.log('DISPLAYNAME 112', req.user.displayName);
-//   res.send(`Welcome ${req.user.displayName}!`);
-// });
+app.get('/isLoggedin', (req, res) => req.cookies.NOLABOUND ? res.json(true) : res.json(false));
+
+app.get('/', (req, res) => {
+  console.log('DISPLAYNAME 116', req.user.displayName);
+  res.send(`Welcome ${req.user.displayName}!`);
+});
 
 //logout route
 app.delete('/logout', (req, res) => {
   // req.session = null;
   // req.logout();
-  res.clearCookie('NOLABOUND').json(false).redirect('/');
+  res.clearCookie('NOLABOUND').json(false);
 });
 
 

@@ -7,13 +7,8 @@ passport.use(new GoogleStrategy({
   clientSecret: process.env.clientSecret,
   callbackURL: '/auth/google/callback'
 },
-passport.serializeUser(function(user, done) {
-  done(null, user);
-}),
-passport.deserializeUser(function(user, done) {
-  done(null, user);
-}),
 function(accessToken, refreshToken, profile, done) {
-  return done(null, profile);
+  console.log(profile);
+  done(null, profile);
 }
 ));
