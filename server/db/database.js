@@ -13,7 +13,7 @@ const db = new Sequelize('bpqhvmuoeogfmdagveod', 'urwckhywrljgmor7', 'xOmX9ozGoA
   dialect: 'mysql',
 });
 
-//const db = new Sequelize('mysql://localhost:3000/maps')
+//const db = new Sequelize('mysql://localhost:8080/maps')
 db.authenticate()
   .then(() => {
     console.log('CONNECTED to the database');
