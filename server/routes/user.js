@@ -1,27 +1,20 @@
-const router = require('express').Router();
+const { Router } = require('express');
+const User = Router();
 
 const { Users } = require('../db/database');
+const { addUser } = require('../helpers/user');
 
-router.route('/').post((req, res) => {
-
-  const { username, email, password } = req.body;
-
-  const newUser = new Users({
-    username,
-    password,
-    email
-  });
-  newUser.save()
-    .then((data) => {
-      console.log('THIS IS USER DATA:', data);
-      res.redirect('/');
-    }).catch((err) => console.log(err));
+User.post('/', (req, res) => {
+  console.log (req.cookies.NOLABOUND);
+  return addUser(req.cookies.NOLABOUND)
+    .then((data) => res.send(data))
+    .catch((err) => console.warn(err));
 });
 
-router.route('/').get((req, res) => {
+User.get('/', (req, res) => {
   return Users.findAll({})
     .then((data) => res.send(data))
     .catch((err) => console.warn(err));
 });
 
-module.exports = router;
+module.exports = User;
