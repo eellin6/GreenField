@@ -17,6 +17,7 @@ const axios = require('axios');
 const Documenu = require('documenu');
 const { Flights } = require('./api/flights');
 const { Search } = require('./api/search');
+const { addUser } = require('./helpers/user');
 
 
 require('dotenv').config();
@@ -75,17 +76,33 @@ app.get('/auth/error', (req, res) => res.send('Unknown Error'));
 
 app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/auth/error' }), (req, res) => {
-    res.cookie('NOLABOUND', req.user.displayName).redirect('/');
+    // console.log('IN THE GET', req.user.displayName);
+    return res.cookie('NOLABOUND', req.user.displayName).redirect('/');
   }
 );
 
-app.get('/isLoggedin', (req, res) => req.cookies.NOLABOUND ? res.json(true) : res.json(false));
+app.get('/isLoggedin', (req, res) => {
+  console.log('ISLOGGEDIN', req.cookies.NOLABOUND);
+  req.cookies.NOLABOUND ? res.json(true) : res.json(false);
+});
 
-app.get('/', (req, res) => res.send(`Welcome ${req.user.displayName}!`));
+app.post('/isLoggedin', (req, res) => {
+  console.log('COOOOOKIIIIIIESSSSS', req.cookies.NOLABOUND);
+  // if (req.cookies.NOLABOUND) {
+  return addUser(req.cookies.NOLABOUND)
+    .then((data) => res.send(data).status(201))
+    .catch((err) => console.warn(err).status(400));
+  // }
+});
 
 //logout route
 app.delete('/logout', (req, res) => res.clearCookie('NOLABOUND').json(false));
 
+// app.post('/users', (req, res) => {
+//   return addUser(req.cookies.NOLABOUND)
+//     .then((data) => res.send(data).status(201))
+//     .catch((err) => console.warn(err).status(400));
+// });
 
 //Documenu.configure('e8b92ac752273c041946038b6e3223f7');
 

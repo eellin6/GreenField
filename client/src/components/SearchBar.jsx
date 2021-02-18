@@ -22,7 +22,7 @@ const SearchBar = () => {
       <button type="submit"
         onClick={() => {
           //console.log('line 24', keyword);
-          axios.get(`https://nolabound.uc.r.appspot.com/api/search?term=${keyword} `)
+          axios.get(`http://localhost:8080/api/search?term=${keyword} `)
             .then(({data}) => {
 
               setResults(data.businesses);
@@ -38,12 +38,11 @@ const SearchBar = () => {
           results.map((data, i) => {
             if (data) {
               return (
-                <div>
-                  <div key={String(i)}>
-
+                <div key={String(i)}>
+                  <div>
                     <h2> Name: {data.name}</h2>
                   </div>
-                  <div key={String(i)}>
+                  <div>
                     <h3>Address: {data.location.address1} {data.location.city} {data.location.state} {data.location.zip_code}</h3>
                   </div>
                   <div className='rating'>
