@@ -44,6 +44,7 @@ const Directions = () => {
 
   return (
     <div id="floating-panel">
+
       <b>Start: </b>
       <select id="start">
         <option value="chicago, il">Chicago</option>
