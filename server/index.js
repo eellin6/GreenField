@@ -11,7 +11,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
-const cookieSession = require('cookie-session');
+// const cookieSession = require('cookie-session');
 const cookieParser = require('cookie-parser');
 const axios = require('axios');
 const Documenu = require('documenu');
@@ -27,7 +27,7 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, '..', 'client', 'dist')));
 app.use(bodyParser.json());
-app.use(cookieSession({ name: 'google-auth-session', keys: ['key1', 'key2']}));
+// app.use(cookieSession({ name: 'google-auth-session', keys: ['key1', 'key2']}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cookieParser());
@@ -76,33 +76,23 @@ app.get('/auth/error', (req, res) => res.send('Unknown Error'));
 
 app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/auth/error' }), (req, res) => {
-    // console.log('IN THE GET', req.user.displayName);
-    return res.cookie('NOLABOUND', req.user.displayName).redirect('/');
+    res.cookie('NOLABOUND', req.user.displayName);
+    return addUser(req.user.displayName)
+      .then(() => res.redirect('/'))
+      .catch((err) => console.warn(err));
   }
 );
 
 app.get('/isLoggedin', (req, res) => {
+  req.cookies.NOLABOUND ? res.send(true) : res.send(false);
   console.log('ISLOGGEDIN', req.cookies.NOLABOUND);
-  req.cookies.NOLABOUND ? res.json(true) : res.json(false);
-});
-
-app.post('/isLoggedin', (req, res) => {
-  console.log('COOOOOKIIIIIIESSSSS', req.cookies.NOLABOUND);
-  // if (req.cookies.NOLABOUND) {
-  return addUser(req.cookies.NOLABOUND)
-    .then((data) => res.send(data).status(201))
-    .catch((err) => console.warn(err).status(400));
-  // }
 });
 
 //logout route
-app.delete('/logout', (req, res) => res.clearCookie('NOLABOUND').json(false));
-
-// app.post('/users', (req, res) => {
-//   return addUser(req.cookies.NOLABOUND)
-//     .then((data) => res.send(data).status(201))
-//     .catch((err) => console.warn(err).status(400));
-// });
+app.delete('/logout', (req, res) => {
+  res.clearCookie('NOLABOUND');
+  res.json(false);
+});
 
 //Documenu.configure('e8b92ac752273c041946038b6e3223f7');
 
