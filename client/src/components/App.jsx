@@ -11,7 +11,8 @@ import SearchPage from '../components/Search';
 import Flights from './Flights.jsx';
 import Restaurant from './Restaurant.jsx';
 import Friends from './Friends.jsx';
-import Directions from './Directions.jsx';
+import Map2 from './Directions.jsx';
+import App2 from './DirectionsApp.jsx';
 class App extends Component {
 
   constructor(props) {
@@ -22,7 +23,7 @@ class App extends Component {
       view: 'map',
       lat: 29.9,
       lng: -91.6,
-      inputValue: ''
+      inputValue: '',
     };
 
     this.changeView = this.changeView.bind(this);
@@ -40,6 +41,10 @@ class App extends Component {
     this.setState({
       view: option
     });
+  }
+
+  pleasework() {
+    MapLoader = withScriptjs(Map2);
   }
 
   logout(bool) {
@@ -63,7 +68,7 @@ class App extends Component {
     } else if (view === 'friends') {
       return <Friends changeView={() => this.changeView('friends')}/>;
     } else if (view === 'directions') {
-      return <Directions changeView={() => this.changeView('directions')}/>;
+      return <App2 changeView={() => this.changeView('directions')}/>;
     }
 
   }

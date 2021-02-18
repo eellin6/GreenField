@@ -57,6 +57,7 @@
     "react-bootstrap": "^1.4.3",
     "react-dom": "^17.0.1",
     "react-google-button": "^0.7.2",
+    "react-google-maps": "^9.4.5",
     "react-hook-form": "^6.15.1",
     "react-icons": "^4.1.0",
     "react-native-maps-directions": "^1.8.0",
