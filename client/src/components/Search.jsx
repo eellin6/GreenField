@@ -1,14 +1,6 @@
-import { IconButton, Toolbar, InputBase, AppBar} from '@material-ui/core';
-import { fade, makeStyles } from '@material-ui/core/styles';
-import SearchIcon from '@material-ui/icons/Search';
-import axios from 'axios';
-//import React, {Component} from 'react';
-//import SearchBar from 'material-ui-search-bar';
-
 import React, { Component } from 'react';
+import { AppBar } from '@material-ui/core';
 import SearchBar from './SearchBar';
-
-
 class SearchPage extends Component {
   constructor(props) {
     super(props);
@@ -17,7 +9,7 @@ class SearchPage extends Component {
       searchResults: []
     };
 
-    //this.handleSearch = this.handleSearch.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -25,45 +17,24 @@ class SearchPage extends Component {
     this.setState({
       inputValue: e.target.value
     });
-
   }
 
   render () {
     const { inputValue, searchResults } = this.state;
     return (
       <div >
-        <AppBar position="static">
-
-
-
-        </AppBar>
+        <AppBar position="static"/>
         <div>
           <SearchBar
             value={this.state.inputValue}
             onChange={() => this.handleSubmit}
-            onRequestSearch={() => this.handleSearch(this.state.inputValue)}
+            onRequestSearch={() => this.handleSearch(inputValue)}
             businessList={searchResults}
           />
-
         </div>
-
       </div>
-
-
     );
   }
 }
 
-
-
-
-
 export default SearchPage;
-
-
-
-
-
-
-
-
