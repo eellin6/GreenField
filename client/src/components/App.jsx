@@ -11,6 +11,8 @@ import SearchPage from '../components/Search';
 import Flights from './Flights.jsx';
 import Restaurant from './Restaurant.jsx';
 import Friends from './Friends.jsx';
+import Map2 from './Directions.jsx';
+import App2 from './DirectionsApp.jsx';
 class App extends Component {
 
   constructor(props) {
@@ -21,7 +23,7 @@ class App extends Component {
       view: 'map',
       lat: 29.9,
       lng: -91.6,
-      inputValue: ''
+      inputValue: '',
     };
 
     this.changeView = this.changeView.bind(this);
@@ -31,14 +33,24 @@ class App extends Component {
 
   componentDidMount() {
     axios.get('/isLoggedin')
-      .then(({ data }) => this.setState({ isLoggedIn: data }))
-      .catch((err) => console.warn(err));
+      .then(({ data }) => {
+        console.log(data);
+        this.setState({ isLoggedIn: data });
+      });
+    //   .catch((err) => console.warn(err));
+    // axios.post('/isLoggedin')
+    //   .then(({ data }) => console.log(data))
+    //   .catch((err) => console.warn(err));
   }
 
   changeView(option) {
     this.setState({
       view: option
     });
+  }
+
+  pleasework() {
+    MapLoader = withScriptjs(Map2);
   }
 
   logout(bool) {
@@ -61,6 +73,8 @@ class App extends Component {
       return <Restaurant changeView={() => this.changeView('restaurant')}/>;
     } else if (view === 'friends') {
       return <Friends changeView={() => this.changeView('friends')}/>;
+    } else if (view === 'directions') {
+      return <App2 changeView={() => this.changeView('directions')}/>;
     }
 
   }
@@ -165,6 +179,17 @@ class App extends Component {
                     color="inherit"
                     onClick={() => this.changeView('friends')}>
                     <Typography variant="h6">Find Friends</Typography>
+                  </Button>
+                </Grid>
+
+                <Grid item>
+                  <Button
+                    className="btn"
+                    type="button"
+                    position="relative"
+                    color="inherit"
+                    onClick={() => this.changeView('directions')}>
+                    <Typography variant="h6">Directions</Typography>
                   </Button>
                 </Grid>
 
