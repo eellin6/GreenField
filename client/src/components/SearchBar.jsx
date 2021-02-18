@@ -22,7 +22,7 @@ const SearchBar = () => {
       <button type="submit"
         onClick={() => {
           //console.log('line 24', keyword);
-          axios.get(`http://localhost:3000/api/search?term=${keyword} `)
+          axios.get(`https://nolabound.uc.r.appspot.com/api/search?term=${keyword} `)
             .then(({data}) => {
 
               setResults(data.businesses);
