@@ -3,7 +3,7 @@ const passport = require('passport');
 const cloudinary = require('cloudinary');
 const flash = require('express-flash');
 const session = require('express-session');
-const cors = require('cors');
+// const cors = require('cors');
 const formData = require('express-form-data');
 const { GoogleStrategy } = require('../passport.config.js');
 const { Users, Favorites, Markers, Comments } = require('./db/database.js');
@@ -30,7 +30,7 @@ app.use(cookieSession({ name: 'google-auth-session', keys: ['key1', 'key2']}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cookieParser());
-app.use(cors());
+// app.use(cors());
 app.use(flash());
 app.use(formData.parse());
 app.use(session({
@@ -120,4 +120,4 @@ app.get('/flights', (req, res) => {
 });
 
 
-app.listen(3000, () => console.log('Server is on http://localhost:3000'));
+app.listen(8080, () => console.log('Server is on http://localhost:8080'));
