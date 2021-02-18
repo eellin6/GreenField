@@ -3,7 +3,7 @@ const passport = require('passport');
 const cloudinary = require('cloudinary');
 const flash = require('express-flash');
 const session = require('express-session');
-const cors = require('cors');
+// const cors = require('cors');
 const formData = require('express-form-data');
 const { GoogleStrategy } = require('../passport.config.js');
 const { Users, Favorites, Markers, Comments } = require('./db/database.js');
@@ -17,6 +17,7 @@ const axios = require('axios');
 const Documenu = require('documenu');
 const { Flights } = require('./api/flights');
 const { Search } = require('./api/search');
+const { addUser } = require('./helpers/user');
 
 
 require('dotenv').config();
@@ -30,7 +31,7 @@ app.use(cookieSession({ name: 'google-auth-session', keys: ['key1', 'key2']}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cookieParser());
-app.use(cors());
+// app.use(cors());
 app.use(flash());
 app.use(formData.parse());
 app.use(session({
@@ -75,17 +76,33 @@ app.get('/auth/error', (req, res) => res.send('Unknown Error'));
 
 app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/auth/error' }), (req, res) => {
-    res.cookie('NOLABOUND', req.user.displayName).redirect('/');
+    // console.log('IN THE GET', req.user.displayName);
+    return res.cookie('NOLABOUND', req.user.displayName).redirect('/');
   }
 );
 
-app.get('/isLoggedin', (req, res) => req.cookies.NOLABOUND ? res.json(true) : res.json(false));
+app.get('/isLoggedin', (req, res) => {
+  console.log('ISLOGGEDIN', req.cookies.NOLABOUND);
+  req.cookies.NOLABOUND ? res.json(true) : res.json(false);
+});
 
-app.get('/', (req, res) => res.send(`Welcome ${req.user.displayName}!`));
+app.post('/isLoggedin', (req, res) => {
+  console.log('COOOOOKIIIIIIESSSSS', req.cookies.NOLABOUND);
+  // if (req.cookies.NOLABOUND) {
+  return addUser(req.cookies.NOLABOUND)
+    .then((data) => res.send(data).status(201))
+    .catch((err) => console.warn(err).status(400));
+  // }
+});
 
 //logout route
 app.delete('/logout', (req, res) => res.clearCookie('NOLABOUND').json(false));
 
+// app.post('/users', (req, res) => {
+//   return addUser(req.cookies.NOLABOUND)
+//     .then((data) => res.send(data).status(201))
+//     .catch((err) => console.warn(err).status(400));
+// });
 
 //Documenu.configure('e8b92ac752273c041946038b6e3223f7');
 
@@ -120,4 +137,4 @@ app.get('/flights', (req, res) => {
 });
 
 
-app.listen(3000, () => console.log('Server is on http://localhost:3000'));
+app.listen(8080, () => console.log('Server is on http://localhost:8080'));
