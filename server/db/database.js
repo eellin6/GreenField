@@ -11,12 +11,13 @@ const mysql = require('mysql2');
 const db = new Sequelize('bpqhvmuoeogfmdagveod', 'urwckhywrljgmor7', 'xOmX9ozGoAr54BAFXWs3', {
   host: 'bpqhvmuoeogfmdagveod-mysql.services.clever-cloud.com',
   dialect: 'mysql',
-  // logging: false
+  logging: false
 });
 
 const database = 'bpqhvmuoeogfmdagveod';
 
 db.query(`CREATE DATABASE IF NOT EXISTS \`${database}\`;`);
+db.query(`USE \`${database}\`;`);
 
 const Users = db.define('Users', {
   id: {
@@ -69,7 +70,7 @@ const Comments = db.define('Comments', {
     primaryKey: true
   },
   comments: Sequelize.STRING,
-  is_user: Sequelize.INTEGER,
+  id_user: Sequelize.INTEGER,
   id_marker: Sequelize.INTEGER
 });
 
