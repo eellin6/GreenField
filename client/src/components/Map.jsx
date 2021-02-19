@@ -1,6 +1,7 @@
 /* eslint-disable eqeqeq */
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import ReactStars from 'react-rating-stars-component';
 
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
 import { GOOGLEMAPS_TOKEN, directions } from '../../../config';
@@ -86,9 +87,9 @@ class MapContainer extends Component {
   onHeartClick() {
     console.log(this.state.selectedPlace);
     console.log('this.state.comments', this.state.comments);
-    const { position, name, picture } = this.state.selectedPlace;
+    const { position, name, picture, rating } = this.state.selectedPlace;
     const { lat, lng } = position;
-    const data = {latitude: lat, longitude: lng, description: name, imageUrl: picture};
+    const data = {latitude: lat, longitude: lng, description: name, imageUrl: picture, rating: rating};
     axios.post('/api/favorites', data)
       .then(this.setState({isFavorite: !this.state.isFavorite}))
       .catch(err => console.log(err));
@@ -275,6 +276,7 @@ class MapContainer extends Component {
                 name={marker.description}
                 onClick={this.onMarkerClick}
                 picture={marker.imageUrl}
+                rating={marker.rating}
                 comments={[]}
               />
             ))}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import ReactStars from 'react-rating-stars-component';
+import Rating from '../Rating';
 class Modal extends Component {
   constructor(props) {
 
@@ -9,7 +9,7 @@ class Modal extends Component {
     this.state = {
       description: '',
       picture: null,
-      rating: 0
+      rating: 1
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleFileChange = this.handleFileChange.bind(this);
@@ -31,10 +31,10 @@ class Modal extends Component {
     });
   }
 
-  handleRatingChange(event) {
-    const rating = event.target.rating;
+  handleRatingChange(event, newVal) {
+    console.log('LOOK HERE', rating);
     this.setState({
-      [rating]: event.target.value
+      rating: newVal
     });
   }
 
@@ -58,7 +58,7 @@ class Modal extends Component {
     const { description, picture, rating } = this.state;
     formData.append('description', description);
     formData.append('picture', picture);
-    formData.append('rating', rating);
+    formData.append('rating', this.props.rating);
     formData.append('latitude', this.props.marker.position.lat);
     formData.append('longitude', this.props.marker.position.lng);
     console.log(formData, 'line 42');
@@ -68,6 +68,9 @@ class Modal extends Component {
 
   render() {
     const showHideClassName = this.props.show ? 'modal display-block' : 'modal display-none';
+
+    const { rating } = this.state;
+
     return (
       <div className={showHideClassName}>
         <section className="modal-main">
@@ -79,11 +82,8 @@ class Modal extends Component {
               <input type="file" placeholder="insert picture" name='picture' id="imagepath" onChange={this.handleFileChange}/>
             </label>
             <label className="instructions">Add Rating
-              <ReactStars
-                count={5}
-                onChange={this.handleRatingChange}
-                size={24}
-                activeColor="#ffd700"
+              <Rating
+
               />
             </label>
             <div>
