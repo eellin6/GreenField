@@ -9,7 +9,7 @@ class SearchPage extends Component {
       searchResults: []
     };
 
-    this.handleSearch = this.handleSearch.bind(this);
+    // this.handleSearch = this.handleSearch.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
