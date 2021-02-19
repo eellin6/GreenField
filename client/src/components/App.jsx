@@ -37,10 +37,6 @@ class App extends Component {
         console.log(data);
         this.setState({ isLoggedIn: data });
       });
-    //   .catch((err) => console.warn(err));
-    // axios.post('/isLoggedin')
-    //   .then(({ data }) => console.log(data))
-    //   .catch((err) => console.warn(err));
   }
 
   changeView(option) {

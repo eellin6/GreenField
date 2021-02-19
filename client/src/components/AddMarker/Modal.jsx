@@ -7,7 +7,8 @@ class Modal extends Component {
     console.log('PROPS', props);
     this.state = {
       description: '',
-      picture: null
+      picture: null,
+      id: 0
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleFileChange = this.handleFileChange.bind(this);
@@ -47,15 +48,23 @@ class Modal extends Component {
 
   uploadFormWithData() {
     const formData = new FormData();
-    const { description, picture } = this.state;
+    const { description, picture, id } = this.state;
     formData.append('description', description);
     formData.append('picture', picture);
+    formData.append('id', id);
     formData.append('latitude', this.props.marker.position.lat);
     formData.append('longitude', this.props.marker.position.lng);
     console.log(formData, 'line 42');
     this.submitForm(formData);
   }
 
+  componentDidMount() {
+    axios.get('/users/find')
+      .then(({ data: { id } }) => {
+        this.setState({ id: id });
+      })
+      .catch((err) => console.warn(err));
+  }
 
   render() {
     const showHideClassName = this.props.show ? 'modal display-block' : 'modal display-none';
