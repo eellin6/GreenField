@@ -59,10 +59,10 @@ const Markers = db.define('Markers', {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
-  // rating: {
-  //   type: Sequelize.INTEGER,
-  //   defaultValue: null
-  // },
+  rating: {
+    type: Sequelize.INTEGER,
+    defaultValue: null
+  },
   id_user: Sequelize.INTEGER
 });
 
@@ -74,6 +74,7 @@ const Comments = db.define('Comments', {
     primaryKey: true
   },
   comments: Sequelize.STRING,
+  description: Sequelize.STRING,
   id_user: Sequelize.INTEGER,
   id_marker: Sequelize.INTEGER
 });

@@ -15,6 +15,13 @@ router.route('/').get((req, res) => {
     });
 });
 
+// router.route('/find').get((req, res) => {
+//   const { id } = req.body;
+//   Markers.findOne({ where: { id } })
+//     .then((data) => res.send(data))
+//     .catch((err) => console.warn(err));
+// });
+
 router.route('/create').post((req, res) => {
 
   const values = Object.values(req.files);

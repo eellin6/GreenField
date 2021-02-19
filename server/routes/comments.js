@@ -18,12 +18,15 @@ router.route('/').get((req, res) => {
 
 router.route('/').post((req, res) => {
 
-  const { comments, idUser, idMarker } = req.body;
+  // const { comments, description, idUser, idMarker } = req.body;
+  console.log(req.body);
+  const { comments, description } = req.body;
 
   const newComment = new Comments({
     comments,
-    id_user: idUser,
-    id_marker: idMarker
+    description,
+    // id_user: idUser,
+    // id_marker: idMarker
   });
 
   newComment.save()
