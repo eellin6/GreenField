@@ -26,7 +26,8 @@ class MapContainer extends Component {
       comments: null,
       view: 'map',
       newArea: false,
-      reload: false
+      reload: false,
+      markerId: 0
     };
 
     this.onMarkerClick = this.onMarkerClick.bind(this);
@@ -41,6 +42,7 @@ class MapContainer extends Component {
   markerFetcher() {
     axios.get('/markers')
       .then((marker) =>{
+        console.log(marker.data);
         this.setState({
           markers: marker.data,
         });
@@ -79,20 +81,18 @@ class MapContainer extends Component {
        comments: comments
      };
     axios.post('/comments', data)
-      .then(data => console.log('User Registered'))
+      .then(data => console.log('User Registered', data))
       .catch((err) => console.log('AXIOS POST ERROR', err));
   }
 
 
   onHeartClick() {
     console.log(this.state.selectedPlace);
-    console.log('this.state.comments', this.state.comments);
-    const { position, name, picture, rating } = this.state.selectedPlace;
+    // console.log('this.state.comments', this.state.comments);
+    const { position, name, picture } = this.state.selectedPlace;
     const { lat, lng } = position;
-    const data = {latitude: lat, longitude: lng, description: name, imageUrl: picture, rating: rating};
-    axios.post('/api/favorites', data)
-      .then(this.setState({isFavorite: !this.state.isFavorite}))
-      .catch(err => console.log(err));
+    // const data = {latitude: lat, longitude: lng, description: name, imageUrl: picture};
+    this.setState({isFavorite: !this.state.isFavorite});
   }
 
 
@@ -133,6 +133,7 @@ class MapContainer extends Component {
 
 
   onInfoWindowOpen(props, e) {
+    const { markers } = this.state;
     const fav = (
       <div>
         <h5><img src={this.state.selectedPlace.picture} width={200} height={200}/></h5>

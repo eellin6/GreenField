@@ -9,7 +9,8 @@ class Modal extends Component {
     this.state = {
       description: '',
       picture: null,
-      rating: 1
+      rating: 1,
+      id: 0
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleFileChange = this.handleFileChange.bind(this);
@@ -55,16 +56,23 @@ class Modal extends Component {
 
   uploadFormWithData() {
     const formData = new FormData();
-    const { description, picture, rating } = this.state;
+    const { description, picture, id } = this.state;
     formData.append('description', description);
     formData.append('picture', picture);
-    formData.append('rating', this.props.rating);
+    formData.append('id', id);
     formData.append('latitude', this.props.marker.position.lat);
     formData.append('longitude', this.props.marker.position.lng);
     console.log(formData, 'line 42');
     this.submitForm(formData);
   }
 
+  componentDidMount() {
+    axios.get('/users/find')
+      .then(({ data: { id } }) => {
+        this.setState({ id: id });
+      })
+      .catch((err) => console.warn(err));
+  }
 
   render() {
     const showHideClassName = this.props.show ? 'modal display-block' : 'modal display-none';
@@ -83,14 +91,12 @@ class Modal extends Component {
             </label>
             <label className="instructions">Add Rating
               <Rating
-
               />
             </label>
-            <div>
-              <span><button className="modal-btn" type='submit' onClick={this.handleClick}>Add Pin</button></span>
-            </div>
-          </form>
 
+            <span><button className="modal-btn" type='submit' onClick={this.handleClick}>Add Pin</button></span>
+
+          </form>
         </section>
       </div>
     );

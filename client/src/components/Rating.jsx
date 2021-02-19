@@ -23,7 +23,7 @@ class Rating extends Component {
 
     return (
       <div>
-        <h3>Rating: {rating}</h3>
+        <h4>Rating: {rating}</h4>
         <ReactStars
           count={5}
           onChange={this.onStarClick}
