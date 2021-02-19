@@ -15,25 +15,25 @@ router.route('/').get((req, res) => {
 });
 
 
-router.route('/').post((req, res) => {
+// router.route('/').post((req, res) => {
 
-  req.body.map((marker) => {
-    const {latitude,
-      longitude,
-      description} = marker;
+//   req.body.map((marker) => {
+//     const {latitude,
+//       longitude,
+//       description} = marker;
 
-    const newMarker = new Markers({
-      latitude,
-      longitude,
-      description
-    });
+//     const newMarker = new Markers({
+//       latitude,
+//       longitude,
+//       description
+//     });
 
-    newMarker.save()
-      .then((data) => console.log('MARKERS ADDED'))
-      .catch((err) => console.warn(err));
+//     newMarker.save()
+//       .then((data) => console.log('MARKERS ADDED???'))
+//       .catch((err) => console.warn(err));
 
-  });
-});
+//   });
+// });
 
 
 router.route('/create').post((req, res) => {
