@@ -88,9 +88,7 @@ class MapContainer extends Component {
     const { position, name, picture } = this.state.selectedPlace;
     const { lat, lng } = position;
     const data = {latitude: lat, longitude: lng, description: name, imageUrl: picture};
-    axios.post('/api/favorites', data)
-      .then(this.setState({isFavorite: !this.state.isFavorite}))
-      .catch(err => console.log(err));
+    this.setState({isFavorite: !this.state.isFavorite});
   }
 
 

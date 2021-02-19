@@ -59,6 +59,10 @@ const Markers = db.define('Markers', {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
+  // rating: {
+  //   type: Sequelize.INTEGER,
+  //   defaultValue: null
+  // },
   id_user: Sequelize.INTEGER
 });
 

@@ -6,7 +6,6 @@ const session = require('express-session');
 // const cors = require('cors');
 const formData = require('express-form-data');
 const { GoogleStrategy } = require('../passport.config.js');
-const { Users, Favorites, Markers, Comments } = require('./db/database.js');
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -53,7 +52,6 @@ cloudinary.config({
 });
 
 const comments = require('./routes/comments');
-const favorites = require('./routes/favorites');
 const markers = require('./routes/markers');
 const photos = require('./routes/photos');
 const user = require('./routes/user');
@@ -62,7 +60,6 @@ const user = require('./routes/user');
 app.use('/comments', comments);
 app.use('/users', user);
 app.use('/markers', markers);
-app.use('/api/favorites', favorites);
 app.use('/api/flights', Flights);
 app.use('/api/search', Search);
 

@@ -1,6 +1,9 @@
+/* eslint-disable camelcase */
 const router = require('express').Router();
 
 const { Comments } = require('../db/database');
+
+
 
 
 router.route('/').get((req, res) => {
@@ -13,14 +16,14 @@ router.route('/').get((req, res) => {
 
 });
 
-
 router.route('/').post((req, res) => {
 
-  const { comments, description } = req.body;
+  const { comments, idUser, idMarker } = req.body;
 
   const newComment = new Comments({
     comments,
-    description
+    id_user: idUser,
+    id_marker: idMarker
   });
 
   newComment.save()

@@ -2,6 +2,7 @@ const router = require('express').Router();
 
 const { Markers } = require('../db/database');
 const cloudinary = require('cloudinary');
+const { getIdByUsername } = require('../helpers/user');
 
 router.route('/').get((req, res) => {
 
@@ -14,38 +15,14 @@ router.route('/').get((req, res) => {
     });
 });
 
-
-// router.route('/').post((req, res) => {
-
-//   req.body.map((marker) => {
-//     const {latitude,
-//       longitude,
-//       description} = marker;
-
-//     const newMarker = new Markers({
-//       latitude,
-//       longitude,
-//       description
-//     });
-
-//     newMarker.save()
-//       .then((data) => console.log('MARKERS ADDED???'))
-//       .catch((err) => console.warn(err));
-
-//   });
-// });
-
-
 router.route('/create').post((req, res) => {
 
   const values = Object.values(req.files);
   const promises = values.map(image => cloudinary.uploader.upload(image.path));
 
-
-  const {latitude,
-    longitude,
-    description} = req.body;
-
+  const { latitude, longitude, description, id } = req.body;
+  console.log('BODYYYYY SYSTEM', req.body);
+  // const id = getIdByUsername(username);
 
   Promise
     .all(promises)
@@ -55,18 +32,13 @@ router.route('/create').post((req, res) => {
         latitude,
         imageUrl: res[0].url,
         longitude,
-        description
+        description,
+        // eslint-disable-next-line camelcase
+        id_user: id
       });
       newMarker.save()
-        .then((data) => {
-          console.log('MARKERS ADDED');
-
-
-        })
-        .catch((err) => {
-          console.log('this is the err we are looking for', err);
-
-        });
+        .then((data) => console.log('MARKERS ADDED'))
+        .catch((err) => console.log('this is the err we are looking for', err));
     })
     .catch(err => console.error('Error creating marker', err));
 });
