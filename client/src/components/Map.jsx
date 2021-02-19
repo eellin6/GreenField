@@ -1,6 +1,7 @@
 /* eslint-disable eqeqeq */
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
 import { GOOGLEMAPS_TOKEN, directions } from '../../../config';
 import axios from 'axios';
@@ -153,6 +154,7 @@ class MapContainer extends Component {
           </label>
           <button className="modal-btn" type="submit">Post</button>
         </form>
+
         <div>
           <h1>Comments Section</h1>
         </div>

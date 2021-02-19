@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import ReactStars from 'react-rating-stars-component';
 class Modal extends Component {
   constructor(props) {
 
@@ -7,7 +8,8 @@ class Modal extends Component {
     console.log('PROPS', props);
     this.state = {
       description: '',
-      picture: null
+      picture: null,
+      rating: 0
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleFileChange = this.handleFileChange.bind(this);
@@ -29,6 +31,12 @@ class Modal extends Component {
     });
   }
 
+  handleRatingChange(event) {
+    const rating = event.target.rating;
+    this.setState({
+      [rating]: event.target.value
+    });
+  }
 
   handleClick(e) {
     e.preventDefault();
@@ -47,9 +55,10 @@ class Modal extends Component {
 
   uploadFormWithData() {
     const formData = new FormData();
-    const { description, picture } = this.state;
+    const { description, picture, rating } = this.state;
     formData.append('description', description);
     formData.append('picture', picture);
+    formData.append('rating', rating);
     formData.append('latitude', this.props.marker.position.lat);
     formData.append('longitude', this.props.marker.position.lng);
     console.log(formData, 'line 42');
@@ -68,6 +77,14 @@ class Modal extends Component {
             </label>
             <label className="instructions">Add Picture
               <input type="file" placeholder="insert picture" name='picture' id="imagepath" onChange={this.handleFileChange}/>
+            </label>
+            <label className="instructions">Add Rating
+              <ReactStars
+                count={5}
+                onChange={this.handleRatingChange}
+                size={24}
+                activeColor="#ffd700"
+              />
             </label>
             <div>
               <span><button className="modal-btn" type='submit' onClick={this.handleClick}>Add Pin</button></span>
