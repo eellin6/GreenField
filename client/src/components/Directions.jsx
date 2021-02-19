@@ -34,9 +34,6 @@ class Map2 extends Component {
         },
         (result, status) => {
           if (status === google.maps.DirectionsStatus.OK) {
-          // this.setState({
-          //   directions: result
-          // });
             const overViewCoords = result.routes[0].overview_path;
             this.setState({
               directions: overViewCoords,
@@ -62,7 +59,7 @@ class Map2 extends Component {
         <Polyline
           path={directions}
           options={{
-            strokeColor: '#38B',
+            strokeColor: '#38B332',
             strokeOpacity: 1,
             strokeWeight: 7,
           }}
@@ -79,7 +76,40 @@ class Map2 extends Component {
             height: '75vh' }} />}
           mapElement={<div style={{ height: '100%' }} />}
         />
+        <div id="floating-panel">
+          <b>Start: </b>
+          <select id="start">
+            <option value="new orleans, la">New Orleans</option>
+            <option value="baton rouge, la">Baton Rouge</option>
+            <option value="birmingham, al">Birmingham</option>
+            <option value="dallas, tx">Dallas</option>
+            <option value="miami, fl">Miami</option>
+            <option value="philadelphia, pa">Philadelphia</option>
+            <option value="new york, ny">New York</option>
+            <option value="chicago, il">Chicago</option>
+            <option value="las vegas, nv">Las Vegas</option>
+            <option value="los angeles, ca">Los Angeles</option>
+            <option value="san francisco, ca">San Francisco</option>
+            <option value="seattle, wa">Seattle</option>
+          </select>
+          <b>End: </b>
+          <select id="end">
+            <option value="new orleans, la">New Orleans</option>
+            <option value="baton rouge, la">Baton Rouge</option>
+            <option value="birmingham, al">Birmingham</option>
+            <option value="dallas, tx">Dallas</option>
+            <option value="miami, fl">Miami</option>
+            <option value="philadelphia, pa">Philadelphia</option>
+            <option value="new york, ny">New York</option>
+            <option value="chicago, il">Chicago</option>
+            <option value="las vegas, nv">Las Vegas</option>
+            <option value="los angeles, ca">Los Angeles</option>
+            <option value="san francisco, ca">San Francisco</option>
+            <option value="seattle, wa">Seattle</option>
+          </select>
+        </div>
       </div>
+
     );
   }
 }
