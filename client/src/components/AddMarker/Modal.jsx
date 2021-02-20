@@ -17,6 +17,7 @@ class Modal extends Component {
     this.submitForm = this.submitForm.bind(this);
     this.uploadFormWithData = this.uploadFormWithData.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleRatingChange = this.handleRatingChange.bind(this);
   }
 
 
@@ -32,9 +33,10 @@ class Modal extends Component {
     });
   }
 
-  handleRatingChange(event, newVal) {
+  handleRatingChange(event) {
+    console.info('lineeeeeeee 36 here', event);
     this.setState({
-      rating: newVal
+      rating: event
     });
   }
 
@@ -92,7 +94,7 @@ class Modal extends Component {
             <label className="instructions">Add Rating
               <Rating
                 value={rating}
-                onChange={this.handleRatingChange}
+                onStarClick={this.handleRatingChange}
               />
             </label>
 
