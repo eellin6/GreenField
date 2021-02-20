@@ -5,7 +5,6 @@ const distPath = path.resolve(__dirname, 'client', 'dist');
 module.exports = {
   mode: 'development',
   devtool: 'inline-source-map',
-  watch: true,
   entry: path.resolve(srcPath, 'Index.jsx'),
   output: {
     path: distPath,

@@ -60,6 +60,7 @@ const user = require('./routes/user');
 app.use('/comments', comments);
 app.use('/users', user);
 app.use('/markers', markers);
+app.use('/photos', photos);
 app.use('/api/flights', Flights);
 app.use('/api/search', Search);
 
