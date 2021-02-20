@@ -80,32 +80,32 @@ class Map2 extends Component {
           <b>Start: </b>
           <select id="start">
             <option value="new orleans, la">New Orleans</option>
+            <option value="3301 veterans memorial blvd, metairie, la">Lakeside Mall</option>
+            <option value="4700 veterans memorial blvd, metairie, la">Cafe Du Monde</option>
+            <option value="718 st peter, new orleans, la">Pat O'Brien's</option>
+            <option value="1751 gentilly blvd, new orleans, la">The Fair Grounds</option>
+            <option value="701 decatur st, new orleans, la">Jackson Square</option>
+            <option value="1500 sugar bowl dr, new orleans, la">Superdome</option>
+            <option value="1 palm dr, new orleans, la">City Park</option>
+            <option value="cres park trail, new orleans, la">Crescent Park</option>
+            <option value="6500 magazine st, new orleans, la">Zoo</option>
+            <option value="1 terminal dr, kenner, la">New Orleans Airport</option>
             <option value="baton rouge, la">Baton Rouge</option>
-            <option value="birmingham, al">Birmingham</option>
-            <option value="dallas, tx">Dallas</option>
-            <option value="miami, fl">Miami</option>
-            <option value="philadelphia, pa">Philadelphia</option>
-            <option value="new york, ny">New York</option>
-            <option value="chicago, il">Chicago</option>
-            <option value="las vegas, nv">Las Vegas</option>
-            <option value="los angeles, ca">Los Angeles</option>
-            <option value="san francisco, ca">San Francisco</option>
-            <option value="seattle, wa">Seattle</option>
           </select>
           <b>End: </b>
           <select id="end">
             <option value="new orleans, la">New Orleans</option>
+            <option value="3301 veterans memorial blvd, metairie, la">Lakeside Mall</option>
+            <option value="4700 veterans memorial blvd, metairie, la">Cafe Du Monde</option>
+            <option value="718 st peter, new orleans, la">Pat O'Brien's</option>
+            <option value="1751 gentilly blvd, new orleans, la">The Fair Grounds</option>
+            <option value="701 decatur st, new orleans, la">Jackson Square</option>
+            <option value="1500 sugar bowl dr, new orleans, la">Superdome</option>
+            <option value="1 palm dr, new orleans, la">City Park</option>
+            <option value="cres park trail, new orleans, la">Crescent Park</option>
+            <option value="6500 magazine st, new orleans, la">Zoo</option>
+            <option value="1 terminal dr, kenner, la">New Orleans Airport</option>
             <option value="baton rouge, la">Baton Rouge</option>
-            <option value="birmingham, al">Birmingham</option>
-            <option value="dallas, tx">Dallas</option>
-            <option value="miami, fl">Miami</option>
-            <option value="philadelphia, pa">Philadelphia</option>
-            <option value="new york, ny">New York</option>
-            <option value="chicago, il">Chicago</option>
-            <option value="las vegas, nv">Las Vegas</option>
-            <option value="los angeles, ca">Los Angeles</option>
-            <option value="san francisco, ca">San Francisco</option>
-            <option value="seattle, wa">Seattle</option>
           </select>
         </div>
       </div>
