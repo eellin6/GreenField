@@ -25,6 +25,7 @@ router.route('/').get((req, res) => {
 router.route('/create').post((req, res) => {
 
   const values = Object.values(req.files);
+  // console.info(values[0].image);
   const promises = values.map(image => cloudinary.uploader.upload(image.path));
 
   const { latitude, longitude, description, id, rating} = req.body;
