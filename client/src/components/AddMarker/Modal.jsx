@@ -56,9 +56,10 @@ class Modal extends Component {
 
   uploadFormWithData() {
     const formData = new FormData();
-    const { description, picture, id } = this.state;
+    const { description, picture, id, rating } = this.state;
     formData.append('description', description);
     formData.append('picture', picture);
+    formData.append('rating', rating);
     formData.append('id', id);
     formData.append('latitude', this.props.marker.position.lat);
     formData.append('longitude', this.props.marker.position.lng);

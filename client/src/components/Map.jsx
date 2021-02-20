@@ -1,12 +1,11 @@
 /* eslint-disable eqeqeq */
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import ReactStars from 'react-rating-stars-component';
-
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
 import { GOOGLEMAPS_TOKEN, directions } from '../../../config';
 import axios from 'axios';
 import { FaRegHeart, FaHeart } from 'react-icons/fa';
+import Rating from './Rating';
 class MapContainer extends Component {
 
   constructor(props) {
@@ -27,7 +26,8 @@ class MapContainer extends Component {
       view: 'map',
       newArea: false,
       reload: false,
-      markerId: 0
+      markerId: 0,
+      rating: 1
     };
 
     this.onMarkerClick = this.onMarkerClick.bind(this);
@@ -65,14 +65,12 @@ class MapContainer extends Component {
     this.commentFetcher();
   }
 
-
   handleChange(event) {
     const name = event.target.name;
     this.setState({
       [name]: event.target.value
     });
   }
-
 
   handleSubmit() {
     const {comments} = this.state;
@@ -89,9 +87,9 @@ class MapContainer extends Component {
   onHeartClick() {
     console.log(this.state.selectedPlace);
     // console.log('this.state.comments', this.state.comments);
-    const { position, name, picture } = this.state.selectedPlace;
+    const { position, name, picture, rating } = this.state.selectedPlace;
     const { lat, lng } = position;
-    // const data = {latitude: lat, longitude: lng, description: name, imageUrl: picture};
+    const data = {latitude: lat, longitude: lng, description: name, imageUrl: picture, rating: rating};
     this.setState({isFavorite: !this.state.isFavorite});
   }
 
@@ -151,6 +149,10 @@ class MapContainer extends Component {
           <input type="text" readOnly value={this.state.selectedPlace.name}
             onBlur={this.value = this.value == '' ? 'default' : this.value}
             name='description'/>
+          <div>
+            <Rating
+            />
+          </div>
           <label>Add Comment
             <input type='text' id='comments' name='comments' />
           </label>
@@ -246,7 +248,7 @@ class MapContainer extends Component {
       height: '100%'
     };
 
-    const { view } = this.state;
+    const { view, rating } = this.state;
     const location = this.props.location;
 
 
@@ -277,7 +279,7 @@ class MapContainer extends Component {
                 name={marker.description}
                 onClick={this.onMarkerClick}
                 picture={marker.imageUrl}
-                rating={marker.rating}
+
                 comments={[]}
               />
             ))}
@@ -288,6 +290,8 @@ class MapContainer extends Component {
               onOpen={e => this.onInfoWindowOpen(this.props, e)}
             >
               <div id='iwc'>
+              </div>
+              <div>
               </div>
             </InfoWindow>
           </Map>

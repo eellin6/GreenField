@@ -19,7 +19,8 @@ class CreateMarker extends Component {
       ],
       isOpen: false,
       description: '',
-      picture: null
+      picture: null,
+      rating: 1
     };
 
     this.onMarkerDragEnd = this.onMarkerDragEnd.bind(this);
