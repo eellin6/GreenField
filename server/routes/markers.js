@@ -40,10 +40,11 @@ router.route('/create').post((req, res) => {
         imageUrl: res[0].url,
         longitude,
         description,
-        rating: res[0].rating,
+        rating: rating,
         // eslint-disable-next-line camelcase
         id_user: id
       });
+      //console.log('markerrr line 47', rating);
       newMarker.save()
         .then((data) => console.log('MARKERS ADDED'))
         .catch((err) => console.log('this is the err we are looking for', err));

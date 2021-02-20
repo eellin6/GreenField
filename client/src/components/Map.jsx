@@ -73,10 +73,11 @@ class MapContainer extends Component {
   }
 
   handleSubmit() {
-    const {comments} = this.state;
+    const {comments, rating} = this.state;
     const data =
      { description: this.state.selectedPlace.name,
-       comments: comments
+       comments: comments,
+       rating: rating
      };
     axios.post('/comments', data)
       .then(data => console.log('User Registered', data))
@@ -131,7 +132,7 @@ class MapContainer extends Component {
 
 
   onInfoWindowOpen(props, e) {
-    const { markers } = this.state;
+    const { markers, rating } = this.state;
     const fav = (
       <div>
         <h5><img src={this.state.selectedPlace.picture} width={200} height={200}/></h5>
