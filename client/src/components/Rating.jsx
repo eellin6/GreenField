@@ -5,30 +5,31 @@ class Rating extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      rating: 1
-    };
-
-    this.onStarClick = this.onStarClick.bind(this);
+    //this.updateStars = this.updateStars.bind(this);
+    console.info('hereeeeeeee', this.props);
   }
 
 
-  onStarClick(nextVal, prevVal, name) {
-    this.setState({
-      rating: nextVal
-    });
-  }
+  // updateStars(nextVal, prevVal, name) {
+  //   const { onStarClick } = this.props;
+  //   //updates data
+  //   onStarClick(nextVal);
+
+  //   this.setState({
+  //     rating: nextVal
+  //   });
+  // }
 
   render() {
-    const { rating } = this.state;
+    const { value, onStarClick } = this.props;
 
     return (
       <div>
-        <h4>Rating: {rating}</h4>
+        <h4>Rating: {value}</h4>
         <ReactStars
           count={5}
-          onChange={this.onStarClick}
-          value={rating}
+          onChange={onStarClick}
+          value={value}
           size={24}
           activeColor="#ffd700"
         />
