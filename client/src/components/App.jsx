@@ -33,10 +33,7 @@ class App extends Component {
 
   componentDidMount() {
     axios.get('/isLoggedin')
-      .then(({ data }) => {
-        console.log(data);
-        this.setState({ isLoggedIn: data });
-      });
+      .then(({ data }) => this.setState({ isLoggedIn: data }));
   }
 
   changeView(option) {
