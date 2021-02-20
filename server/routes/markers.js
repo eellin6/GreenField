@@ -51,10 +51,9 @@ router.route('/create').post((req, res) => {
 });
 
 router.route('/:id').delete((req, res) => {
-  console.info('REQ.PARAMS', req.params);
   const { id } = req.params;
   return Markers.destroy({ where: { id: id }})
-    .then((data) => res.send(data))
+    .then((data) => res.status(200).json(data))
     .catch((err) => console.log(err));
 });
 
