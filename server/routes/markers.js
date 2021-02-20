@@ -52,5 +52,12 @@ router.route('/create').post((req, res) => {
     .catch(err => console.error('Error creating marker', err));
 });
 
+router.route('/:id').delete((req, res) => {
+  const { id } = req.params;
+  return Markers.destroy({ where: { id: id }})
+    .then((data) => res.status(200).json(data))
+    .catch((err) => console.log(err));
+});
+
 
 module.exports = router;

@@ -53,7 +53,7 @@ class App extends Component {
 
 
   renderView() {
-    const { view, lat, lng } = this.state;
+    const { view } = this.state;
     // This will render different views when navigation is clicked
     if (view === 'map') {
       return <GoogleApiWrapper changeView={() => this.changeView('anypostview')}/>;
@@ -77,7 +77,7 @@ class App extends Component {
 
 
   render() {
-    const { view, isLoggedIn } = this.state;
+    const { isLoggedIn } = this.state;
 
     // styles for NavBar
     const styles = {
