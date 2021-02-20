@@ -96,6 +96,23 @@ const Flights = db.define('Flights', {
   id_user: Sequelize.INTEGER
 });
 
+const Photos = db.define('Photos', {
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    allowNull: false,
+    primaryKey: true
+  },
+  imageUrl: {
+    type: Sequelize.STRING(1000),
+    allowNull: false
+  },
+  description: {
+    type: Sequelize.STRING,
+    unique: true
+  },
+  id_user: Sequelize.INTEGER
+});
 
 
 // db.sync({ force: true })
@@ -110,5 +127,6 @@ module.exports = {
   Markers,
   Flights,
   Comments,
-  Friends
+  Friends,
+  Photos
 };
