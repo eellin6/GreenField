@@ -136,7 +136,7 @@ class MapContainer extends Component {
     const { markers } = this.state;
     const fav = (
       <div>
-        <h5><img src={this.state.selectedPlace.picture} width={200} height={200}/></h5>
+        <h5><img src={this.state.selectedPlace.picture} maxWidth={200} maxHeight={200} overflow={hidden}/></h5>
         <h6>{this.state.selectedPlace.name}</h6>
         {this.state.isFavorite
           ? <FaHeart
@@ -148,7 +148,7 @@ class MapContainer extends Component {
         }
         <a href={this.state.selectedPlace.picture}> ENLARGE PHOTO</a>
         <form action="/comments" method='POST' >
-          <input type="text" readOnly value={this.state.selectedPlace.name}
+          <input type="text" readOnlyValue={this.state.selectedPlace.name}
             onBlur={this.value = this.value == '' ? 'default' : this.value}
             name='description'/>
           <label>Add Comment

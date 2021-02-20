@@ -55,10 +55,11 @@ const comments = require('./routes/comments');
 const markers = require('./routes/markers');
 const photos = require('./routes/photos');
 const user = require('./routes/user');
-// const flights = require('./routes/flights');
+const friends = require('./routes/friends');
 
 app.use('/comments', comments);
 app.use('/users', user);
+app.use('/friends', friends);
 app.use('/markers', markers);
 app.use('/api/flights', Flights);
 app.use('/api/search', Search);
