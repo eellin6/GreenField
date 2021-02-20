@@ -34,4 +34,16 @@ Friend.get('/follow', (req, res) => {
     .catch((err) => console.warn(err));
 });
 
+Friend.put('/:id', (req, res) => {
+  return deleteUser(req.params)
+    .then((data) => res.json(data))
+    .catch((err) => console.warn(err));
+});
+
+Friend.delete('/:id', (req, res) => {
+  return deleteUser(req.params)
+    .then((data) => res.json(data))
+    .catch((err) => console.warn(err));
+});
+
 module.exports = Friend;

@@ -199,3 +199,14 @@ label {
 	line-height: 30px;
 	padding-left: 10px;
 }
+
+.marker-img-container {
+	width: 250px;
+	max-height: auto;
+	overflow: hidden;
+}
+
+.marker-img {
+	width: 100%;
+	object-fit: cover;
+}
