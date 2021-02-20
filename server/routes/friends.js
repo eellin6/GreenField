@@ -1,25 +1,7 @@
-/* eslint-disable camelcase */
 const { Router } = require('express');
 const Friend = Router();
 
-const { Friends, Users } = require('../db/database');
-const { getIdByUsername } = require('../helpers/user');
-
-const followFriend = async(user, friend) => {
-  const userId = getIdByUsername(user);
-  const friendId = getIdByUsername(friend);
-  const newFriend = await Friends.findOrCreate({
-    id_user: userId,
-    is_friend: friendId,
-    where: { id_user: userId }
-  });
-  return newFriend;
-};
-
-const unfollowFriend = (body) => {
-  const { id } = body;
-  return Users.destroy({ where: { id } });
-};
+const { followFriend, unfollowFriend } = require('../helpers/friends');
 
 Friend.get('/', (req, res) => {
   return Friends.findAll({})
@@ -28,20 +10,24 @@ Friend.get('/', (req, res) => {
 });
 
 // get friend info from frontend
-Friend.get('/follow', (req, res) => {
-  return followFriend(req.cookies.NOLABOUND, friend)
+Friend.post('/follow', (req, res) => {
+  const user = req.cookies.NOLABOUND;
+  const friend = req.params;
+  return followFriend(user, friend)
     .then((data) => res.send(data))
     .catch((err) => console.warn(err));
 });
 
-Friend.put('/:id', (req, res) => {
-  return deleteUser(req.params)
-    .then((data) => res.json(data))
-    .catch((err) => console.warn(err));
-});
+// Friend.put('/:id', (req, res) => {
+//   return unfollowFriend(req.params)
+//     .then((data) => res.json(data))
+//     .catch((err) => console.warn(err));
+// });
 
 Friend.delete('/:id', (req, res) => {
-  return deleteUser(req.params)
+  const user = req.cookies.NOLABOUND;
+  const friend = req.params;
+  return unfollowFriend(user, friend)
     .then((data) => res.json(data))
     .catch((err) => console.warn(err));
 });
