@@ -6,11 +6,12 @@ class Friends extends Component {
     super(props);
     this.state = {
       users: [],
-      isFriend: false
+      isFriend: false,
+      friendName: ''
     };
     this.fetchUsers = this.fetchUsers.bind(this);
+    this.checkFriendStatus = this.checkFriendStatus.bind(this);
     this.updateFriendStatus = this.updateFriendStatus.bind(this);
-    // this.yourUsername = this.yourUsername.bind(this);
   }
 
   // get all users
@@ -20,23 +21,36 @@ class Friends extends Component {
       .catch((err) => console.warn(err));
   }
 
-  // update friend status in db
-  updateFriendStatus(friendName) {
-    axios.get('');
+  checkFriendStatus(friendName) {
+    console.info('FRIEND NAME', friendName);
+    axios.get('/friends/status', { params: { friend: friendName } })
+      .then(({ data }) => {
+        console.info(data);
+      })
+      .catch((err) => console.warn(err));
   }
 
-  // if user is you, don't show
-  // yourUsername(username) {
-  //   axios.get('/find', { username })
-  //     .then(({ data }) => console.log(data))
-  //     .catch((err) => console.warn(err));
-  // }
+  updateFriendStatus(friendName) {
+    //check friend status
+    this.checkFriendStatus(friendName)
+      .then(({ data }) => {
+        !data
+          ? axios.post('/friends', { params: { friend: friendName } })
+            .then(({ data }) => console.info('friend followed', data))
+            .catch((err) => console.warn(err))
+          : axios.delete('/friends', { params: { friend: friendName } })
+            .then(({ data }) => console.info('friend unfollowed', data))
+            .catch((err) => console.warn(err));
+      })
+      .then(() => this.setState({isFriend: !isFriend}))
+      .then(() => this.fetchUsers)
+      .catch((err) => console.warn(err));
+  }
 
   componentDidMount() {
     this.fetchUsers();
   }
 
-  // each user will have a + (if the users are not friends) or - (if the users are friends)
   render() {
     const { users, isFriend } = this.state;
     users.sort((a, b) => a.username - b.username);
@@ -47,7 +61,8 @@ class Friends extends Component {
             const { username } = user;
             // if (!this.yourUsername(username)) {
             return ( <div key={ String(i) }>
-              <div id="friend-list">
+              <div id="friend-item"
+                onClick={() => this.updateFriendStatus(username)}>
                 <span className="friend befriend">{isFriend ? '-' : '+'} </span>
                 <span className="friend"> {username}</span>
               </div>

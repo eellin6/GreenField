@@ -11,7 +11,8 @@ User.get('/', (req, res) => {
 });
 
 User.get('/find', (req, res) => {
-  return getIdByUsername(req.cookies.NOLABOUND)
+  const username = req.cookies.NOLABOUND;
+  return getIdByUsername(username)
     .then((data) => res.send(data))
     .catch((err) => console.warn(err));
 });
