@@ -9,6 +9,7 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import SearchPage from '../components/Search';
 import Flights from './Flights.jsx';
+import PhotoAlbum from './PhotoAlbum.jsx';
 import Restaurant from './Restaurant.jsx';
 import Friends from './Friends.jsx';
 import Map2 from './Directions.jsx';
@@ -62,6 +63,8 @@ class App extends Component {
       return <Flights changeView={() => this.changeView('flights')}/>;
     } else if (view === 'search') {
       return <SearchPage changeView={() => this.changeView('search')}/>;
+    } else if (view === 'photoAlbum') {
+      return <PhotoAlbum changeView={() => this.changeView('photoAlbum')}/>;
     } else if (view === 'restaurant') {
       return <Restaurant changeView={() => this.changeView('restaurant')}/>;
     } else if (view === 'friends') {
@@ -196,6 +199,19 @@ class App extends Component {
                   >
                     <Typography variant="h6">
                 Search
+                    </Typography>
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button
+                    className="btn"
+                    type="button"
+                    position="relative"
+                    color="inherit"
+                    onClick={() => this.changeView('photoAlbum')}
+                  >
+                    <Typography variant="h6">
+                Photo Album
                     </Typography>
                   </Button>
                 </Grid>
