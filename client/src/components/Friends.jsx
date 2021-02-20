@@ -41,15 +41,15 @@ class Friends extends Component {
     const { users, isFriend } = this.state;
     users.sort((a, b) => a.username - b.username);
     return (
-      <div>
+      <div id="friend-container">
         {
           users.map((user, i) => {
             const { username } = user;
             // if (!this.yourUsername(username)) {
             return ( <div key={ String(i) }>
-              <div>
-                <span>{isFriend ? '-' : '+'} </span>
-                <span> {username}</span>
+              <div id="friend-list">
+                <span className="friend befriend">{isFriend ? '-' : '+'} </span>
+                <span className="friend"> {username}</span>
               </div>
               <br></br>
             </div>
