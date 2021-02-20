@@ -31,7 +31,7 @@ modal {
 	position: fixed;
 	background: #e0efef;
 	width: 30%;
-	height: 20%;
+	height: 33%;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
@@ -174,6 +174,11 @@ label {
 	border: 1px solid #dd8d61;
 	font-size: 1.75em;
 	margin: 20px 0;
+}
+
+.business {
+	background-color: 'blue';
+	border: 1px solid #dd8d61;
 }
 
 #logo {

@@ -126,7 +126,7 @@ class App extends Component {
 
                 <Grid item>
                   <Button
-                    className={styles.menuButton}
+                    className='btn'
                     color="inherit"
                     aria-label="Menu"
                     onClick={() => this.changeView('map')}>

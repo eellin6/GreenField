@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Rating from '../Rating';
 class Modal extends Component {
   constructor(props) {
 
@@ -8,6 +9,7 @@ class Modal extends Component {
     this.state = {
       description: '',
       picture: null,
+      rating: 1,
       id: 0
     };
     this.handleChange = this.handleChange.bind(this);
@@ -30,6 +32,12 @@ class Modal extends Component {
     });
   }
 
+  handleRatingChange(event, newVal) {
+    console.log('LOOK HERE', rating);
+    this.setState({
+      rating: newVal
+    });
+  }
 
   handleClick(e) {
     e.preventDefault();
@@ -68,6 +76,9 @@ class Modal extends Component {
 
   render() {
     const showHideClassName = this.props.show ? 'modal display-block' : 'modal display-none';
+
+    const { rating } = this.state;
+
     return (
       <div className={showHideClassName}>
         <section className="modal-main">
@@ -78,9 +89,13 @@ class Modal extends Component {
             <label className="instructions">Add Picture
               <input type="file" placeholder="insert picture" name='picture' id="imagepath" onChange={this.handleFileChange}/>
             </label>
-            <div>
-              <span><button className="modal-btn" type='submit' onClick={this.handleClick}>Add Pin</button></span>
-            </div>
+            <label className="instructions">Add Rating
+              <Rating
+              />
+            </label>
+
+            <span><button className="modal-btn" type='submit' onClick={this.handleClick}>Add Pin</button></span>
+
           </form>
         </section>
       </div>
