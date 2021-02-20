@@ -199,3 +199,44 @@ label {
 	line-height: 30px;
 	padding-left: 10px;
 }
+
+.marker-img-container {
+	width: 250px;
+	max-height: auto;
+	overflow: hidden;
+}
+
+.marker-img {
+	width: 100%;
+	object-fit: cover;
+}
+
+#friend-container {
+	margin: 15px;
+	width: auto;
+	height: auto;
+	align-items: center;
+}
+
+#friend-list {
+	margin: 0 auto;
+	padding: 10px;
+	width: 25%;
+	height: auto;
+	background-color: #fff;
+	border-radius: 3px;
+	justify-content: center;
+}
+
+.friend {
+	margin: 15px;
+	cursor: pointer;
+	color: rgb(31, 90, 201);
+	font-size: 1.25em;
+	text-decoration: none;
+}
+
+.befriend:hover {
+	color: #dd8d61;
+	cursor: pointer;
+}

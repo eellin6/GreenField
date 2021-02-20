@@ -135,17 +135,23 @@ class MapContainer extends Component {
     const { markers, rating } = this.state;
     const fav = (
       <div>
-        <h5><img src={this.state.selectedPlace.picture} width={200} height={200}/></h5>
-        <h6>{this.state.selectedPlace.name}</h6>
-        {this.state.isFavorite
-          ? <FaHeart
-            onClick={this.onHeartClick}
-            style={{ color: 'red' }}></FaHeart>
-          : <FaRegHeart
-            onClick={this.onHeartClick}
-            style={{ color: 'red' }}></FaRegHeart>
-        }
-        <a href={this.state.selectedPlace.picture}> ENLARGE PHOTO</a>
+        <div className="marker-img-container">
+          <a href={this.state.selectedPlace.picture} target="_blank" >
+            <img className="marker-img" src={this.state.selectedPlace.picture}/>
+          </a>
+        </div>
+        <div>
+          {this.state.isFavorite
+            ? <FaHeart
+              onClick={this.onHeartClick}
+              style={{ color: 'red', float: 'left', padding: '0 5px 0 0' }}></FaHeart>
+            : <FaRegHeart
+              onClick={this.onHeartClick}
+              style={{ color: 'red', float: 'left', padding: '0 5px 0 0' }}></FaRegHeart>
+          }
+          <h4> {this.state.selectedPlace.name}</h4>
+          <h5><i>Click photo to enlarge</i></h5>
+        </div>
         <form action="/comments" method='POST' >
           <input type="text" readOnly value={this.state.selectedPlace.name}
             onBlur={this.value = this.value == '' ? 'default' : this.value}
@@ -154,7 +160,7 @@ class MapContainer extends Component {
             <Rating
             />
           </div>
-          <label>Add Comment
+          <label style={{ padding: '5px 0 0 0' }}>Add Comment
             <input type='text' id='comments' name='comments' />
           </label>
           <button className="modal-btn" type="submit">Post</button>
