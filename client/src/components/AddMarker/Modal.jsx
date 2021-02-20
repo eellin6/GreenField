@@ -33,7 +33,6 @@ class Modal extends Component {
   }
 
   handleRatingChange(event, newVal) {
-    console.log('LOOK HERE', rating);
     this.setState({
       rating: newVal
     });
@@ -56,9 +55,10 @@ class Modal extends Component {
 
   uploadFormWithData() {
     const formData = new FormData();
-    const { description, picture, id } = this.state;
+    const { description, picture, id, rating } = this.state;
     formData.append('description', description);
     formData.append('picture', picture);
+    formData.append('rating', rating);
     formData.append('id', id);
     formData.append('latitude', this.props.marker.position.lat);
     formData.append('longitude', this.props.marker.position.lng);
@@ -69,7 +69,7 @@ class Modal extends Component {
   componentDidMount() {
     axios.get('/users/find')
       .then(({ data: { id } }) => {
-        this.setState({ id: id });
+        this.setState({ id: id, });
       })
       .catch((err) => console.warn(err));
   }
@@ -91,6 +91,8 @@ class Modal extends Component {
             </label>
             <label className="instructions">Add Rating
               <Rating
+                value={rating}
+                onChange={this.handleRatingChange}
               />
             </label>
 

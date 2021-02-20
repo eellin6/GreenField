@@ -27,22 +27,24 @@ router.route('/create').post((req, res) => {
   const values = Object.values(req.files);
   const promises = values.map(image => cloudinary.uploader.upload(image.path));
 
-  const { latitude, longitude, description, id } = req.body;
+  const { latitude, longitude, description, id, rating} = req.body;
   console.log('BODYYYYY SYSTEM', req.body);
   // const id = getIdByUsername(username);
 
   Promise
     .all(promises)
     .then(res => {
-      console.log(res);
+
       const newMarker = new Markers({
         latitude,
         imageUrl: res[0].url,
         longitude,
         description,
+        rating: rating,
         // eslint-disable-next-line camelcase
         id_user: id
       });
+      //console.log('markerrr line 47', rating);
       newMarker.save()
         .then((data) => console.log('MARKERS ADDED'))
         .catch((err) => console.log('this is the err we are looking for', err));

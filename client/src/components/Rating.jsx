@@ -12,6 +12,7 @@ class Rating extends Component {
     this.onStarClick = this.onStarClick.bind(this);
   }
 
+
   onStarClick(nextVal, prevVal, name) {
     this.setState({
       rating: nextVal
