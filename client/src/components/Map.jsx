@@ -87,11 +87,6 @@ class MapContainer extends Component {
 
 
   onHeartClick() {
-    console.log(this.state.selectedPlace);
-    // console.log('this.state.comments', this.state.comments);
-    const { position, name, picture } = this.state.selectedPlace;
-    const { lat, lng } = position;
-    // const data = {latitude: lat, longitude: lng, description: name, imageUrl: picture};
     this.setState({isFavorite: !this.state.isFavorite});
   }
 
@@ -137,23 +132,27 @@ class MapContainer extends Component {
     const fav = (
       <div>
         <div className="marker-img-container">
-          <img className="marker-img" src={this.state.selectedPlace.picture}/>
+          <a href={this.state.selectedPlace.picture} target="_blank" >
+            <img className="marker-img" src={this.state.selectedPlace.picture}/>
+          </a>
         </div>
-        <h5>{this.state.selectedPlace.name}</h5>
-        {this.state.isFavorite
-          ? <FaHeart
-            onClick={this.onHeartClick}
-            style={{ color: 'red' }}></FaHeart>
-          : <FaRegHeart
-            onClick={this.onHeartClick}
-            style={{ color: 'red' }}></FaRegHeart>
-        }
-        <a href={this.state.selectedPlace.picture}> ENLARGE PHOTO</a>
+        <div>
+          {this.state.isFavorite
+            ? <FaHeart
+              onClick={this.onHeartClick}
+              style={{ color: 'red', float: 'left', padding: '0 5px 0 0' }}></FaHeart>
+            : <FaRegHeart
+              onClick={this.onHeartClick}
+              style={{ color: 'red', float: 'left', padding: '0 5px 0 0' }}></FaRegHeart>
+          }
+          <h4> {this.state.selectedPlace.name}</h4>
+          <h5><i>Click photo to enlarge</i></h5>
+        </div>
         <form action="/comments" method='POST' >
           <input type="text" readOnly value={this.state.selectedPlace.name}
             onBlur={this.value = this.value == '' ? 'default' : this.value}
             name='description'/>
-          <label>Add Comment
+          <label style={{ padding: '5px 0 0 0' }}>Add Comment
             <input type='text' id='comments' name='comments' />
           </label>
           <button className="modal-btn" type="submit">Post</button>
