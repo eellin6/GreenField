@@ -9,13 +9,11 @@ const followFriend = async (user, friendId) => {
     id_friend: friendId,
     where: { id_user: userId, id_friend: friendId }
   })
-    // .then((data) => console.log('followCHECK', data))
     .then((data) => data)
     .catch((err) => console.warn(err));
 };
 
 const checkFriendStatus = async (user, friend) => {
-  // console.info(friend);
   const userId = await getIdByUsername(user);
   return Friends.findOne({
     where: {
@@ -29,14 +27,13 @@ const checkFriendStatus = async (user, friend) => {
 
 const unfollowFriend = async (user, friend) => {
   const userId = await getIdByUsername(user);
-  console.info('friendshelpers 32 --------------', 'userID', userId, 'friendID', friend);
   return Friends.destroy({
     where: {
       id_user: userId,
       id_friend: friend
     }
   })
-    .then((data) => console.info('unfollowCHECK', data))
+    .then((data) => data)
     .catch((err) => console.warn(err));
 };
 

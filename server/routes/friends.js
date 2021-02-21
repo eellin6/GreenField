@@ -11,15 +11,12 @@ Friend.get('/', (req, res) => {
     .catch((err) => console.warn(err));
 });
 
-// find one
+// check if users are friends
 Friend.get('/status', (req, res) => {
   const user = req.cookies.NOLABOUND;
   const { friend } = req.query;
   return checkFriendStatus(user, friend)
-    .then((data) => {
-      // console.info('BOOL', data);
-      return data ? res.json(true) : res.json(false);
-    })
+    .then((data) => data ? res.json(true).status(200) : res.json(false).status(200))
     .catch((err) => console.warn(err));
 });
 
@@ -27,16 +24,15 @@ Friend.post('/', (req, res) => {
   const user = req.cookies.NOLABOUND;
   const { friend } = req.body;
   return followFriend(user, friend)
-    .then((data) => res.json(data))
+    .then((data) => res.json(data).status(201))
     .catch((err) => console.warn(err));
 });
 
 Friend.delete('/', (req, res) => {
   const user = req.cookies.NOLABOUND;
-  const { friend } = req.body;
-  console.info('LOOKING FOR FRIEND ---------', friend);
+  const { friend } = req.query;
   return unfollowFriend(user, friend)
-    .then((data) => res.json(data))
+    .then((data) => res.json(data).status(200))
     .catch((err) => console.warn(err));
 });
 
