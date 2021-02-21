@@ -15,6 +15,7 @@ class MapContainer extends Component {
       activeMarker: {},
       selectedPlace: {},
       markers: [],
+      markersByUser: [],
       favorites: [],
       currentLatLng: {
         lat: 0,
@@ -34,6 +35,7 @@ class MapContainer extends Component {
     this.onInfoWindowClose = this.onInfoWindowClose.bind(this);
     this.onHeartClick = this.onHeartClick.bind(this);
     this.markerFetcher = this.markerFetcher.bind(this);
+    this.fetchUserMarkers = this.fetchUserMarkers.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.commentFetcher = this.commentFetcher.bind(this);
@@ -47,6 +49,15 @@ class MapContainer extends Component {
           markers: marker.data,
         });
       } )
+      .catch((err) => console.warn(err));
+  }
+
+  fetchUserMarkers(username) {
+    axios.get('/markers/user', { user: username })
+      .then(({ data }) => {
+        // console.log(data);
+        this.setState({ markersByUser: data });
+      })
       .catch((err) => console.warn(err));
   }
 

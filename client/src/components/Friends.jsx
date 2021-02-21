@@ -55,7 +55,7 @@ class Friends extends Component {
               // console.info('THIS HERE', data);
               return axios.delete('/friends', { params: { friend: data } });
             })
-            .then((data) => {
+            .then(() => {
               // console.info('friend unfollowed', data);
               this.setState({ isFriend: false });
             })

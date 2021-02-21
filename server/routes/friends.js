@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const Friend = Router();
 
+const { Friends } = require('../db/database');
 const { followFriend, checkFriendStatus, unfollowFriend } = require('../helpers/friends');
 
 // get all friends
@@ -32,11 +33,18 @@ Friend.post('/', (req, res) => {
 
 Friend.delete('/', (req, res) => {
   const user = req.cookies.NOLABOUND;
-  const { friend } = req.query;
+  const { friend } = req.body;
   console.info('LOOKING FOR FRIEND ---------', friend);
   return unfollowFriend(user, friend)
     .then((data) => res.json(data))
     .catch((err) => console.warn(err));
+});
+
+Friend.delete('/:id', (req, res) => {
+  const { id } = req.params;
+  return Friends.destroy({ where: { id: id }})
+    .then((data) => res.status(200).json(data))
+    .catch((err) => console.log(err));
 });
 
 module.exports = Friend;
