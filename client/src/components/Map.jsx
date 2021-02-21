@@ -84,7 +84,6 @@ class MapContainer extends Component {
       .catch((err) => console.log('AXIOS POST ERROR', err));
   }
 
-
   onHeartClick() {
     console.log(this.state.selectedPlace);
     // console.log('this.state.comments', this.state.comments);
@@ -94,7 +93,6 @@ class MapContainer extends Component {
     this.setState({isFavorite: !this.state.isFavorite});
   }
 
-
   onMarkerClick (props, marker, e) {
     this.setState({
       selectedPlace: props,
@@ -102,7 +100,6 @@ class MapContainer extends Component {
       showingInfoWindow: true
     });
   }
-
 
   onMarkerDragEnd (coord, index) {
     const { latLng } = coord;
@@ -115,7 +112,6 @@ class MapContainer extends Component {
     });
   }
 
-
   onInfoWindowClose() {
     this.setState({
       activeMarker: null,
@@ -123,13 +119,11 @@ class MapContainer extends Component {
     });
   }
 
-
   changeView(option) {
     this.setState({
       view: option
     });
   }
-
 
   onInfoWindowOpen(props, e) {
     const { markers, rating } = this.state;
@@ -156,16 +150,14 @@ class MapContainer extends Component {
           <input type="text" readOnly value={this.state.selectedPlace.name}
             onBlur={this.value = this.value == '' ? 'default' : this.value}
             name='description'/>
-          <div>
-            <Rating
-            />
-          </div>
+          <div>  <Rating
+            value={this.state.selectedPlace.rating}
+          /></div>
           <label style={{ padding: '5px 0 0 0' }}>Add Comment
             <input type='text' id='comments' name='comments' />
           </label>
           <button className="modal-btn" type="submit">Post</button>
         </form>
-
         <div>
           <h1>Comments Section</h1>
         </div>
@@ -183,7 +175,6 @@ class MapContainer extends Component {
     );
     ReactDOM.render(React.Children.only(fav), document.getElementById('iwc'));
   }
-
 
   render() {
     const mapStyles = [
@@ -258,7 +249,6 @@ class MapContainer extends Component {
     const { view, rating } = this.state;
     const location = this.props.location;
 
-
     return (
       <div>
         <div className='main'>
@@ -286,9 +276,11 @@ class MapContainer extends Component {
                 name={marker.description}
                 onClick={this.onMarkerClick}
                 picture={marker.imageUrl}
-
+                rating={marker.rating}
                 comments={[]}
-              />
+              >
+
+              </Marker>
             ))}
             <InfoWindow
               marker={this.state.activeMarker}
@@ -296,6 +288,7 @@ class MapContainer extends Component {
               onClose={this.onInfoWindowClose}
               onOpen={e => this.onInfoWindowOpen(this.props, e)}
             >
+
               <div id='iwc'>
               </div>
               <div>

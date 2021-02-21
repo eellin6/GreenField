@@ -5,20 +5,7 @@ class Rating extends Component {
   constructor(props) {
     super(props);
 
-    //this.updateStars = this.updateStars.bind(this);
-    console.info('hereeeeeeee', this.props);
   }
-
-
-  // updateStars(nextVal, prevVal, name) {
-  //   const { onStarClick } = this.props;
-  //   //updates data
-  //   onStarClick(nextVal);
-
-  //   this.setState({
-  //     rating: nextVal
-  //   });
-  // }
 
   render() {
     const { value, onStarClick } = this.props;
@@ -33,8 +20,6 @@ class Rating extends Component {
           size={24}
           activeColor="#ffd700"
         />
-
-
       </div>
     );
   }

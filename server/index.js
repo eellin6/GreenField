@@ -56,10 +56,12 @@ const markers = require('./routes/markers');
 const photos = require('./routes/photos');
 const user = require('./routes/user');
 const friends = require('./routes/friends');
+const flights = require('./routes/flights');
 
 app.use('/comments', comments);
 app.use('/users', user);
 app.use('/friends', friends);
+app.use('/flights', flights);
 app.use('/markers', markers);
 app.use('/photos', photos);
 app.use('/api/flights', Flights);
