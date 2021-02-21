@@ -23,13 +23,9 @@ class Friends extends Component {
   }
 
   async checkFriendStatus(friendName) {
-    // console.info('FRIEND NAME', friendName);
     axios.get(`/users/id/${friendName}`)
-      .then(({data}) => {
-        return axios.get('/friends/status', { params: { friend: data } });
-      })
+      .then(({data}) => axios.get('/friends/status', { params: { friend: data } }))
       .then(({ data }) => {
-        // console.info('friends jsx --- bool', data);
         this.setState({isFriend: data});
         return data;
       })
@@ -40,28 +36,17 @@ class Friends extends Component {
     this.checkFriendStatus(friendName)
       .then((data) => {
         const { isFriend } = this.state;
-        // console.info('HERE', data);
         !isFriend
           ? axios.get(`/users/id/${friendName}`)
-            .then(({data}) => {
-              // console.info('get friend data', data);
-              return axios.post('/friends', { friend: data });
-            })
-            // .then(({ data }) => console.info('WHAT IS THIS', data))
-            .then(({ data }) => data)
+            .then(({data}) => axios.post('/friends', { friend: data }))
+            .then(() => this.setState({ isFriend: true }))
             .catch((err) => console.warn(err))
           : axios.get(`/users/id/${friendName}`)
-            .then(({ data }) => {
-              // console.info('THIS HERE', data);
-              return axios.delete('/friends', { params: { friend: data } });
-            })
-            .then((data) => {
-              // console.info('friend unfollowed', data);
-              this.setState({ isFriend: false });
-            })
+            .then(({ data }) => axios.delete('/friends', { params: { friend: data } }))
+            .then(() => this.setState({ isFriend: false }))
             .catch((err) => console.warn(err));
       })
-      .then(() => this.fetchUsers)
+      // .then(() => this.fetchUsers)
       .catch((err) => console.warn(err));
   }
 

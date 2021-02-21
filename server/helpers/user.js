@@ -4,7 +4,6 @@ const addUser = (username) => {
   return Users.findOrCreate({
     username, where: { username }
   });
-  // return newUser;
 };
 
 const deleteUser = (body) => {

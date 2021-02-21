@@ -30,6 +30,7 @@ router.route('/create').post((req, res) => {
 
   const { latitude, longitude, description, id, rating} = req.body;
   console.log('BODYYYYY SYSTEM', req.body);
+  console.log('BODYYYYY SYSTEM: id', id);
   // const id = getIdByUsername(username);
 
   Promise
