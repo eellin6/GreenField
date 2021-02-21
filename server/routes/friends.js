@@ -24,7 +24,8 @@ Friend.get('/status', (req, res) => {
 
 Friend.post('/', (req, res) => {
   const user = req.cookies.NOLABOUND;
-  const { friend } = req.query;
+  const { friend } = req.body;
+  console.info('LOOKING FOR FRIEND ---------', friend);
   return followFriend(user, friend)
     .then((data) => res.send(data))
     .catch((err) => console.warn(err));

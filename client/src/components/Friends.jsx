@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Friend from './Friend';
 class Friends extends Component {
 
   constructor(props) {
@@ -21,28 +22,39 @@ class Friends extends Component {
       .catch((err) => console.warn(err));
   }
 
-  checkFriendStatus(friendName) {
+  async checkFriendStatus(friendName) {
     console.info('FRIEND NAME', friendName);
-    axios.get('/friends/status', { params: { friend: friendName } })
+    axios.get(`/users/id/${friendName}`)
+      .then(({data}) => {
+        console.info('FIRST DATA', data);
+        return axios.get('/friends/status', { params: { friend: data } });
+      })
       .then(({ data }) => {
-        console.info(data);
+        console.info('friends jsx --- this is false bc undefined', data);
+        return data;
       })
       .catch((err) => console.warn(err));
   }
 
   updateFriendStatus(friendName) {
-    //check friend status
     this.checkFriendStatus(friendName)
-      .then(({ data }) => {
+      .then((data) => {
+        console.info('HERE', data);
         !data
-          ? axios.post('/friends', { params: { friend: friendName } })
-            .then(({ data }) => console.info('friend followed', data))
+          ? axios.get(`/users/id/${friendName}`)
+            .then(({data}) => {
+              console.info('LAST DATA `````', data);
+              return axios.post('/friends', { friend: data });
+            })
+            .then(({ data }) => {
+              console.info('THIS DATA ---', data);
+            })
             .catch((err) => console.warn(err))
           : axios.delete('/friends', { params: { friend: friendName } })
             .then(({ data }) => console.info('friend unfollowed', data))
             .catch((err) => console.warn(err));
       })
-      .then(() => this.setState({isFriend: !isFriend}))
+      // .then(() => this.setState({isFriend: !this.state.isFriend}))
       .then(() => this.fetchUsers)
       .catch((err) => console.warn(err));
   }
@@ -52,24 +64,17 @@ class Friends extends Component {
   }
 
   render() {
-    const { users, isFriend } = this.state;
+    const { users } = this.state;
     users.sort((a, b) => a.username - b.username);
     return (
       <div id="friend-container">
         {
           users.map((user, i) => {
             const { username } = user;
-            // if (!this.yourUsername(username)) {
-            return ( <div key={ String(i) }>
-              <div id="friend-item"
-                onClick={() => this.updateFriendStatus(username)}>
-                <span className="friend befriend">{isFriend ? '-' : '+'} </span>
-                <span className="friend"> {username}</span>
-              </div>
-              <br></br>
-            </div>
-            );
-            // }
+
+            return <Friend key={String(i)} username={username}
+              updateFriendStatus={this.updateFriendStatus} />;
+
           })
         }
       </div>

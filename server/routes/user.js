@@ -17,6 +17,13 @@ User.get('/find', (req, res) => {
     .catch((err) => console.warn(err));
 });
 
+User.get('/id/:username', (req, res) => {
+  const { username } = req.params;
+  return getIdByUsername(username)
+    .then((data) => res.json(data))
+    .catch((err) => console.warn(err));
+});
+
 User.delete('/:id', (req, res) => {
   return deleteUser(req.params)
     .then((data) => res.json(data))

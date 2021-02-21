@@ -15,13 +15,13 @@ const deleteUser = (body) => {
 const getIdByUsername = (username) => {
   return Users.findOne({ where: { username } })
     .then(({ id }) => {
-      console.log(id);
+      console.info('id works inside', id);
       return id;
     })
     .catch((err) => console.warn(err));
 };
 
-console.log('LOOOOK', getIdByUsername('Ian Wright'));
+
 
 module.exports = {
   addUser,
