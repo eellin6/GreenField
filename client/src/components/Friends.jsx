@@ -23,7 +23,7 @@ class Friends extends Component {
   }
 
   async checkFriendStatus(friendName) {
-    console.info('FRIEND NAME', friendName);
+    // console.info('FRIEND NAME', friendName);
     axios.get(`/users/id/${friendName}`)
       .then(({data}) => {
         return axios.get('/friends/status', { params: { friend: data } });

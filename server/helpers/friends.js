@@ -15,7 +15,7 @@ const followFriend = async (user, friend) => {
 };
 
 const checkFriendStatus = async (user, friend) => {
-  console.info(friend);
+  // console.info(friend);
   const userId = await getIdByUsername(user);
   return Friends.findOne({
     where: {
