@@ -1,60 +1,88 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Friend from './Friend';
 class Friends extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
       users: [],
-      isFriend: false
+      isFriend: false,
+      friendName: ''
     };
     this.fetchUsers = this.fetchUsers.bind(this);
+    this.checkFriendStatus = this.checkFriendStatus.bind(this);
     this.updateFriendStatus = this.updateFriendStatus.bind(this);
-    // this.yourUsername = this.yourUsername.bind(this);
   }
 
-  // get all users
+  // show all users
   fetchUsers() {
     axios.get('/users')
       .then(({ data }) => this.setState({ users: data }))
       .catch((err) => console.warn(err));
   }
 
-  // update friend status in db
-  updateFriendStatus(friendName) {
-    axios.get('');
+  async checkFriendStatus(friendName) {
+    // console.info('FRIEND NAME', friendName);
+    axios.get(`/users/id/${friendName}`)
+      .then(({data}) => {
+        return axios.get('/friends/status', { params: { friend: data } });
+      })
+      .then(({ data }) => {
+        // console.info('friends jsx --- bool', data);
+        this.setState({isFriend: data});
+        return data;
+      })
+      .catch((err) => console.warn(err));
   }
 
-  // if user is you, don't show
-  // yourUsername(username) {
-  //   axios.get('/find', { username })
-  //     .then(({ data }) => console.log(data))
-  //     .catch((err) => console.warn(err));
-  // }
+  updateFriendStatus(friendName) {
+    this.checkFriendStatus(friendName)
+      .then((data) => {
+        const { isFriend } = this.state;
+        // console.info('HERE', data);
+        !isFriend
+          ? axios.get(`/users/id/${friendName}`)
+            .then(({data}) => {
+              // console.info('get friend data', data);
+              return axios.post('/friends', { friend: data });
+            })
+            // .then(({ data }) => console.info('WHAT IS THIS', data))
+            .then(({ data }) => data)
+            .catch((err) => console.warn(err))
+          : axios.get(`/users/id/${friendName}`)
+            .then(({ data }) => {
+              // console.info('THIS HERE', data);
+              return axios.delete('/friends', { params: { friend: data } });
+            })
+            .then((data) => {
+              // console.info('friend unfollowed', data);
+              this.setState({ isFriend: false });
+            })
+            .catch((err) => console.warn(err));
+      })
+      .then(() => this.fetchUsers)
+      .catch((err) => console.warn(err));
+  }
 
   componentDidMount() {
     this.fetchUsers();
   }
 
-  // each user will have a + (if the users are not friends) or - (if the users are friends)
   render() {
-    const { users, isFriend } = this.state;
+    const { users } = this.state;
     users.sort((a, b) => a.username - b.username);
     return (
       <div id="friend-container">
         {
           users.map((user, i) => {
             const { username } = user;
-            // if (!this.yourUsername(username)) {
-            return ( <div key={ String(i) }>
-              <div id="friend-list">
-                <span className="friend befriend">{isFriend ? '-' : '+'} </span>
-                <span className="friend"> {username}</span>
-              </div>
-              <br></br>
-            </div>
+            return (
+              <Friend
+                key={String(i)}
+                username={username}
+                updateFriendStatus={this.updateFriendStatus} />
             );
-            // }
           })
         }
       </div>

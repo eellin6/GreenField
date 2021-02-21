@@ -6,13 +6,21 @@ const { addUser, deleteUser, getIdByUsername } = require('../helpers/user');
 
 User.get('/', (req, res) => {
   return Users.findAll({})
-    .then((data) => res.send(data))
+    .then((data) => res.json(data))
     .catch((err) => console.warn(err));
 });
 
 User.get('/find', (req, res) => {
-  return getIdByUsername(req.cookies.NOLABOUND)
-    .then((data) => res.send(data))
+  const username = req.cookies.NOLABOUND;
+  return getIdByUsername(username)
+    .then((data) => res.json(data))
+    .catch((err) => console.warn(err));
+});
+
+User.get('/id/:username', (req, res) => {
+  const { username } = req.params;
+  return getIdByUsername(username)
+    .then((data) => res.json(data))
     .catch((err) => console.warn(err));
 });
 

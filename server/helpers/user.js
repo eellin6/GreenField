@@ -1,10 +1,10 @@
 const { Users } = require('../db/database');
 
-const addUser = async(username) => {
-  const newUser = await Users.findOrCreate({
+const addUser = (username) => {
+  return Users.findOrCreate({
     username, where: { username }
   });
-  return newUser;
+  // return newUser;
 };
 
 const deleteUser = (body) => {
@@ -13,7 +13,9 @@ const deleteUser = (body) => {
 };
 
 const getIdByUsername = (username) => {
-  return Users.findOne({ where: { username } });
+  return Users.findOne({ where: { username } })
+    .then(({ id }) => id)
+    .catch((err) => console.warn(err));
 };
 
 module.exports = {
