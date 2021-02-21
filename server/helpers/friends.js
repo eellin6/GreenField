@@ -3,21 +3,20 @@ const { Friends, Users } = require('../db/database');
 const { getIdByUsername } = require('../helpers/user');
 
 const followFriend = async (user, friend) => {
-  console.info('friendshelpers 6 -------------------', 'user', user, 'friend', friend);
   const userId = await getIdByUsername(user);
   return Friends.findOrCreate({
     id_user: userId,
     id_friend: friend,
     where: { id_user: userId, id_friend: friend }
   })
-    .then((data) => console.info('followCHECK', data))
+    // .then((data) => console.log('followCHECK', data))
+    .then((data) => data)
     .catch((err) => console.warn(err));
 };
 
 const checkFriendStatus = async (user, friend) => {
-  console.info('friendshelpers 18 --------------', 'user', user, 'friend', friend);
+  console.info(friend);
   const userId = await getIdByUsername(user);
-  console.info('friendshelpers 21 --------------', 'userID', userId, 'friendID', friend);
   return Friends.findOne({
     where: {
       id_user: userId,
@@ -28,13 +27,13 @@ const checkFriendStatus = async (user, friend) => {
     .catch((err) => console.warn(err));
 };
 
-const unfollowFriend = (user, friend) => {
-  const userId = getIdByUsername(user);
-  const friendId = getIdByUsername(friend);
+const unfollowFriend = async (user, friend) => {
+  const userId = await getIdByUsername(user);
+  // console.info('friendshelpers 32 --------------', 'userID', userId, 'friendID', friend);
   return Friends.destroy({
     where: {
       id_user: userId,
-      id_friend: friendId
+      id_friend: friend
     }
   })
     .then((data) => console.info('unfollowCHECK', data))

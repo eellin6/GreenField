@@ -11,14 +11,11 @@ class Friend extends Component {
   }
 
   checkFriendStatus(friendName) {
-    console.info('FRIEND NAME', friendName);
     axios.get(`/users/id/${friendName}`)
       .then(({data}) => {
-        // console.info('FIRST DATA', data);
         return axios.get('/friends/status', { params: { friend: data } });
       })
       .then(({ data }) => {
-        // console.info('friends jsx --- this is false bc undefined', data);
         if (data) {
           this.setState({isFriend: data});
         }
@@ -40,7 +37,7 @@ class Friend extends Component {
             updateFriendStatus(username);
             this.setState({isFriend: !isFriend});
           }}>
-          <span className="friend befriend">{isFriend ? '-' : '+'} </span>
+          <span className="friend befriend"><b>{isFriend ? '-' : '+'} </b></span>
           <span className="friend"> {username}</span>
         </div>
         <br></br>

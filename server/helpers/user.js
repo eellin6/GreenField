@@ -14,14 +14,9 @@ const deleteUser = (body) => {
 
 const getIdByUsername = (username) => {
   return Users.findOne({ where: { username } })
-    .then(({ id }) => {
-      console.info('id works inside', id);
-      return id;
-    })
+    .then(({ id }) => id)
     .catch((err) => console.warn(err));
 };
-
-
 
 module.exports = {
   addUser,

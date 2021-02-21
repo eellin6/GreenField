@@ -15,7 +15,7 @@ class Friends extends Component {
     this.updateFriendStatus = this.updateFriendStatus.bind(this);
   }
 
-  // get all users
+  // show all users
   fetchUsers() {
     axios.get('/users')
       .then(({ data }) => this.setState({ users: data }))
@@ -26,11 +26,11 @@ class Friends extends Component {
     console.info('FRIEND NAME', friendName);
     axios.get(`/users/id/${friendName}`)
       .then(({data}) => {
-        console.info('FIRST DATA', data);
         return axios.get('/friends/status', { params: { friend: data } });
       })
       .then(({ data }) => {
-        console.info('friends jsx --- this is false bc undefined', data);
+        // console.info('friends jsx --- bool', data);
+        this.setState({isFriend: data});
         return data;
       })
       .catch((err) => console.warn(err));
@@ -39,22 +39,28 @@ class Friends extends Component {
   updateFriendStatus(friendName) {
     this.checkFriendStatus(friendName)
       .then((data) => {
-        console.info('HERE', data);
-        !data
+        const { isFriend } = this.state;
+        // console.info('HERE', data);
+        !isFriend
           ? axios.get(`/users/id/${friendName}`)
             .then(({data}) => {
-              console.info('LAST DATA `````', data);
+              // console.info('get friend data', data);
               return axios.post('/friends', { friend: data });
             })
-            .then(({ data }) => {
-              console.info('THIS DATA ---', data);
-            })
+            // .then(({ data }) => console.info('WHAT IS THIS', data))
+            .then(({ data }) => data)
             .catch((err) => console.warn(err))
-          : axios.delete('/friends', { params: { friend: friendName } })
-            .then(({ data }) => console.info('friend unfollowed', data))
+          : axios.get(`/users/id/${friendName}`)
+            .then(({ data }) => {
+              // console.info('THIS HERE', data);
+              return axios.delete('/friends', { params: { friend: data } });
+            })
+            .then((data) => {
+              // console.info('friend unfollowed', data);
+              this.setState({ isFriend: false });
+            })
             .catch((err) => console.warn(err));
       })
-      // .then(() => this.setState({isFriend: !this.state.isFriend}))
       .then(() => this.fetchUsers)
       .catch((err) => console.warn(err));
   }
@@ -71,10 +77,12 @@ class Friends extends Component {
         {
           users.map((user, i) => {
             const { username } = user;
-
-            return <Friend key={String(i)} username={username}
-              updateFriendStatus={this.updateFriendStatus} />;
-
+            return (
+              <Friend
+                key={String(i)}
+                username={username}
+                updateFriendStatus={this.updateFriendStatus} />
+            );
           })
         }
       </div>
