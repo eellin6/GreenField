@@ -18,6 +18,7 @@ class Modal extends Component {
     this.uploadFormWithData = this.uploadFormWithData.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleRatingChange = this.handleRatingChange.bind(this);
+    this.getUserID = this.getUserID.bind(this);
   }
 
 
@@ -68,12 +69,23 @@ class Modal extends Component {
     this.submitForm(formData);
   }
 
-  componentDidMount() {
+  async getUserID() {
     axios.get('/users/find')
-      .then(({ data: { id } }) => {
-        this.setState({ id: id, });
+      .then(({ data }) => {
+        console.info('WTF', data);
+        this.setState({ id: data });
       })
       .catch((err) => console.warn(err));
+  }
+
+  componentDidMount() {
+    this.getUserID();
+    // axios.get('/users/find')
+    //   .then(({ data: { id } }) => {
+    //     console.log('WTF', id);
+    //     this.setState({ id: id, });
+    //   })
+    //   .catch((err) => console.warn(err));
   }
 
   render() {

@@ -37,15 +37,16 @@ const unfollowFriend = async (user, friend) => {
     .catch((err) => console.warn(err));
 };
 
-// const removeFriend = (body) => {
-//   const { id } = body;
-//   return Friends.destroy({ where: { id } })
-//     .then((data) => console.info(data))
-//     .catch((err) => console.warn(err));
-// };
+const getUsersFriends = async (user) => {
+  const userId = await getIdByUsername(user);
+  return Friends.findAll({ where: { id_user: userId } })
+    .then((data) => console.info('getUsersFriends', data))
+    .catch((err) => console.warn(err));
+};
 
 module.exports = {
   followFriend,
   checkFriendStatus,
-  unfollowFriend
+  unfollowFriend,
+  getUsersFriends
 };
