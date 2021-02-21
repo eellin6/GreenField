@@ -1,47 +1,40 @@
-/* eslint-disable camelcase */
 const { Router } = require('express');
 const Friend = Router();
 
-const { Friends, Users } = require('../db/database');
-const { getIdByUsername } = require('../helpers/user');
+const { followFriend, checkFriendStatus, unfollowFriend } = require('../helpers/friends');
 
-const followFriend = async(user, friend) => {
-  const userId = getIdByUsername(user);
-  const friendId = getIdByUsername(friend);
-  const newFriend = await Friends.findOrCreate({
-    id_user: userId,
-    is_friend: friendId,
-    where: { id_user: userId }
-  });
-  return newFriend;
-};
-
-const unfollowFriend = (body) => {
-  const { id } = body;
-  return Users.destroy({ where: { id } });
-};
-
+// get all friends
 Friend.get('/', (req, res) => {
   return Friends.findAll({})
     .then((data) => res.send(data))
     .catch((err) => console.warn(err));
 });
 
-// get friend info from frontend
-Friend.get('/follow', (req, res) => {
-  return followFriend(req.cookies.NOLABOUND, friend)
-    .then((data) => res.send(data))
+// find one
+Friend.get('/status', (req, res) => {
+  const user = req.cookies.NOLABOUND;
+  const { friend } = req.query;
+  return checkFriendStatus(user, friend)
+    .then((data) => {
+      // console.info('BOOL', data);
+      return data ? res.json(true) : res.json(false);
+    })
     .catch((err) => console.warn(err));
 });
 
-Friend.put('/:id', (req, res) => {
-  return deleteUser(req.params)
+Friend.post('/', (req, res) => {
+  const user = req.cookies.NOLABOUND;
+  const { friend } = req.body;
+  return followFriend(user, friend)
     .then((data) => res.json(data))
     .catch((err) => console.warn(err));
 });
 
-Friend.delete('/:id', (req, res) => {
-  return deleteUser(req.params)
+Friend.delete('/', (req, res) => {
+  const user = req.cookies.NOLABOUND;
+  const { friend } = req.query;
+  console.info('LOOKING FOR FRIEND ---------', friend);
+  return unfollowFriend(user, friend)
     .then((data) => res.json(data))
     .catch((err) => console.warn(err));
 });
