@@ -16,22 +16,22 @@ router.route('/').get((req, res) => {
 
 });
 
-router.route('/').post((req, res) => {
+router.route('/save').post((req, res) => {
 
   // const { comments, description, idUser, idMarker } = req.body;
-  console.log(req.body);
-  const { comments, description } = req.body;
+  console.log('THIS RT HERE YALL', req.body);
+  const { destinationCity, landingTime, takeoffTime, flightNumber } = req.body;
 
-  const newFlights = new Flight({
-    comments,
-    description,
-    // id_user: idUser,
-    // id_marker: idMarker
+  const newFlights = new Flights({
+    destinationCity: destinationCity,
+    landingTime: landingTime,
+    takeoffTime: takeoffTime,
+    flightNumber: flightNumber
   });
 
-  newComment.save()
+  newFlights.save()
     .then((data) => {
-      console.log('COMMENTS ADDED');
+      console.log('Flight ADDED');
       res.redirect('/');
 
     }).catch((err) => console.log(err));

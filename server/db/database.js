@@ -86,8 +86,9 @@ const Flights = db.define('Flights', {
     allowNull: false,
     primaryKey: true
   },
-  destination: Sequelize.STRING,
+  destinationCity: Sequelize.STRING,
   landingTime: Sequelize.STRING,
+  takeoffTime: Sequelize.STRING,
   flightNumber: Sequelize.STRING,
   isSaved: {
     type: Sequelize.BOOLEAN,
