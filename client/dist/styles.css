@@ -145,11 +145,16 @@ label {
 	font-weight: bold;
 }
 
-.instructions-drag {
+.instructions-above-map {
 	color: #fff;
 	text-align: center;
 	font-size: 1.5em;
 	margin: 10px 0;
+}
+
+.above-map-pins:hover {
+	color: rgb(31, 90, 201);
+	cursor: pointer;
 }
 
 .restaurant {

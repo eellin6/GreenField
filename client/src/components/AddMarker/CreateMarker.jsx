@@ -124,7 +124,7 @@ class CreateMarker extends Component {
 
     return (
       <div>
-        <div className="instructions-drag">Drag Pin to a Location</div>
+        <div className="instructions-above-map">Drag Pin to a Location</div>
         <Map
           onClick={(e) => console.log(e)}
           google={this.props.google}

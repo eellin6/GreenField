@@ -253,9 +253,11 @@ class MapContainer extends Component {
 
     return (
       <div>
-        <div className="instructions-drag">
-          <span onClick={() => this.fetchUserMarkers()} >Your Pins</span>
-          <span onClick={() => this.markerFetcher()}>| Friends Pins</span>
+        <div className="instructions-above-map">
+          <span className="above-map-pins"
+            onClick={() => this.fetchUserMarkers()} >Your Pins </span> •
+          <span className="above-map-pins"
+            onClick={() => this.markerFetcher()}> Friends Pins</span>
         </div>
         <div className='main'>
           <Map
