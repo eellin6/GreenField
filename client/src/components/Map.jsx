@@ -11,6 +11,7 @@ class MapContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: 0,
       showingInfoWindow: false,
       activeMarker: {},
       selectedPlace: {},
@@ -36,6 +37,7 @@ class MapContainer extends Component {
     this.onHeartClick = this.onHeartClick.bind(this);
     this.markerFetcher = this.markerFetcher.bind(this);
     this.fetchUserMarkers = this.fetchUserMarkers.bind(this);
+    this.fetchFriendMarkers = this.fetchFriendMarkers.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.commentFetcher = this.commentFetcher.bind(this);
@@ -43,36 +45,36 @@ class MapContainer extends Component {
 
   markerFetcher() {
     axios.get('/markers')
-      .then((marker) =>{
-        console.log(marker.data);
-        this.setState({
-          markers: marker.data,
-        });
-      } )
+      .then((marker) => this.setState({ markers: marker.data }))
       .catch((err) => console.warn(err));
   }
 
-  fetchUserMarkers(username) {
+  fetchFriendMarkers(username) {
     axios.get('/markers/user', { user: username })
-      .then(({ data }) => {
-        // console.log(data);
-        this.setState({ markersByUser: data });
+      .then(({ data }) => this.setState({ markers: data }))
+      .catch((err) => console.warn(err));
+  }
+
+  fetchUserMarkers() {
+    axios.get('/users/find')
+      .then(({ data }) => this.setState({ id: data }))
+      .then(() => {
+        const { id } = this.state;
+        axios.get(`/markers/${id}`, { id })
+          .then(({ data }) => this.setState({ markers: data }))
+          .catch((err) => console.warn(err));
       })
       .catch((err) => console.warn(err));
   }
 
   commentFetcher() {
     axios.get('/comments')
-      .then((comment) =>{
-        this.setState({
-          comments: comment.data
-        });
-      } )
+      .then(({ data }) => this.setState({ comments: data }))
       .catch((err) => console.warn(err));
   }
 
   componentDidMount() {
-    this.markerFetcher();
+    this.fetchUserMarkers();
     this.commentFetcher();
   }
 

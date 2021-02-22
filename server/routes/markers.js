@@ -5,14 +5,21 @@ const cloudinary = require('cloudinary');
 const { getIdByUsername } = require('../helpers/user');
 
 router.route('/').get((req, res) => {
-
   Markers.findAll({})
+    .then((data) => res.send(data))
+    .catch((err) => console.error('Can\'t get markers', err));
+});
+
+router.route('/:id').get((req, res) => {
+  const { id } = req.params;
+  console.log('markers routes id', id);
+  // eslint-disable-next-line camelcase
+  Markers.findAll({ where: { id_user: id } })
     .then((data) => {
+      console.info(data);
       res.send(data);
     })
-    .catch((err) =>{
-      console.log(err);
-    });
+    .catch((err) => console.error('Can\'t get markers', err));
 });
 
 // router.route('/find').get((req, res) => {
@@ -29,8 +36,8 @@ router.route('/create').post((req, res) => {
   const promises = values.map(image => cloudinary.uploader.upload(image.path));
 
   const { latitude, longitude, description, id, rating} = req.body;
-  console.log('BODYYYYY SYSTEM', req.body);
-  console.log('BODYYYYY SYSTEM: id', id);
+  // console.log('BODYYYYY SYSTEM', req.body);
+  // console.log('BODYYYYY SYSTEM: id', id);
   // const id = getIdByUsername(username);
 
   Promise
@@ -46,10 +53,9 @@ router.route('/create').post((req, res) => {
         // eslint-disable-next-line camelcase
         id_user: id
       });
-      //console.log('markerrr line 47', rating);
       newMarker.save()
         .then((data) => console.log('MARKERS ADDED'))
-        .catch((err) => console.log('this is the err we are looking for', err));
+        .catch((err) => console.error('Marker Not Added', err));
     })
     .catch(err => console.error('Error creating marker', err));
 });
