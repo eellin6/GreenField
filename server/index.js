@@ -14,7 +14,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const axios = require('axios');
 const Documenu = require('documenu');
-const { Flights } = require('./api/flights');
+// const { Flights } = require('./api/flights');
 const { Search } = require('./api/search');
 const { addUser } = require('./helpers/user');
 
@@ -56,15 +56,15 @@ const markers = require('./routes/markers');
 const photos = require('./routes/photos');
 const user = require('./routes/user');
 const friends = require('./routes/friends');
-const flights = require('./routes/flights');
+// const flights = require('./routes/flights');
 
 app.use('/comments', comments);
 app.use('/users', user);
 app.use('/friends', friends);
-app.use('/flights', flights);
+// app.use('/flights', flights);
 app.use('/markers', markers);
 app.use('/photos', photos);
-app.use('/api/flights', Flights);
+// app.use('/api/flights', Flights);
 app.use('/api/search', Search);
 
 
@@ -108,25 +108,15 @@ app.get('/restaurant', async (req, res) => {
 });
 
 //Flights
-//1970
-const time = new Date(+0);
-//adding seconds to 1970
-time.setSeconds(time.getSeconds() + 1613429220);
-//logging the updated time
-console.info(String(time));
 
-app.get('/flights', (req, res) => {
-  axios.get('http://flightxml.flightaware.com/json/FlightXML2/Scheduled?airport=KMSY&howMany=4&offset=0', {
-    headers: {
-      'Authorization': 'Basic ZWVsbGluNjoyNmQ3YWM4NzhlY2E4ZDc0OWEzOWZmYzkzNTg0MzMyNTc3NmY1MWI5'
-    },
-    data: ''
-  }).then(function ({ data }) {
-    res.json(data.ScheduledResult.scheduled);
-  }).catch(function (error) {
-    res.json(error);
-  });
-});
 
+// app.get('/flights', (req, res) => {
+
+//   axios.get('http://api.aviationstack.com/v1/flights?access_key=9fc225919793eaac770cb4bde93384e5&dep_iata=MSY').then(function (response) {
+//     res.json(response.data.data);
+//   }).catch(function (error) {
+//     res.json(error);
+//   });
+// });
 
 app.listen(8080, () => console.log('Server is on http://localhost:8080'));
