@@ -26,7 +26,6 @@ class Modal extends Component {
     this.setState({picture: event.target.files[0]});
   }
 
-
   handleChange(event) {
     const name = event.target.name;
     this.setState({
@@ -48,11 +47,10 @@ class Modal extends Component {
 
 
   submitForm(data) {
-    //console.log('line 37, ', data);
     axios.post('http://localhost:8080/markers/create', data)
       .then(this.props.handleCloseModal())
       .then(this.props.changeView('map'))
-      .catch(err => console.log('Error', err));
+      .catch(err => console.error('Modal Form Error', err));
   }
 
 
@@ -71,21 +69,12 @@ class Modal extends Component {
 
   async getUserID() {
     axios.get('/users/find')
-      .then(({ data }) => {
-        console.info('WTF', data);
-        this.setState({ id: data });
-      })
+      .then(({ data }) => this.setState({ id: data }))
       .catch((err) => console.warn(err));
   }
 
   componentDidMount() {
     this.getUserID();
-    // axios.get('/users/find')
-    //   .then(({ data: { id } }) => {
-    //     console.log('WTF', id);
-    //     this.setState({ id: id, });
-    //   })
-    //   .catch((err) => console.warn(err));
   }
 
   render() {

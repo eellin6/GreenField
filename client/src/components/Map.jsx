@@ -11,6 +11,7 @@ class MapContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: 0,
       showingInfoWindow: false,
       activeMarker: {},
       selectedPlace: {},
@@ -43,36 +44,30 @@ class MapContainer extends Component {
 
   markerFetcher() {
     axios.get('/markers')
-      .then((marker) =>{
-        console.log(marker.data);
-        this.setState({
-          markers: marker.data,
-        });
-      } )
+      .then(({ data }) => this.setState({ markers: data }))
       .catch((err) => console.warn(err));
   }
 
-  fetchUserMarkers(username) {
-    axios.get('/markers/user', { user: username })
-      .then(({ data }) => {
-        // console.log(data);
-        this.setState({ markersByUser: data });
+  fetchUserMarkers() {
+    axios.get('/users/find')
+      .then(({ data }) => this.setState({ id: data }))
+      .then(() => {
+        const { id } = this.state;
+        return axios.get(`/markers/${id}`, { id })
+          .then(({ data }) => this.setState({ markers: data }))
+          .catch((err) => console.warn(err));
       })
       .catch((err) => console.warn(err));
   }
 
   commentFetcher() {
     axios.get('/comments')
-      .then((comment) =>{
-        this.setState({
-          comments: comment.data
-        });
-      } )
+      .then(({ data }) => this.setState({ comments: data }))
       .catch((err) => console.warn(err));
   }
 
   componentDidMount() {
-    this.markerFetcher();
+    this.fetchUserMarkers();
     this.commentFetcher();
   }
 
@@ -96,8 +91,6 @@ class MapContainer extends Component {
   }
 
   onHeartClick() {
-    console.log(this.state.selectedPlace);
-    // console.log('this.state.comments', this.state.comments);
     const { position, name, picture, rating } = this.state.selectedPlace;
     const { lat, lng } = position;
     const data = {latitude: lat, longitude: lng, description: name, imageUrl: picture, rating: rating};
@@ -131,9 +124,7 @@ class MapContainer extends Component {
   }
 
   changeView(option) {
-    this.setState({
-      view: option
-    });
+    this.setState({ view: option });
   }
 
   onInfoWindowOpen(props, e) {
@@ -262,6 +253,12 @@ class MapContainer extends Component {
 
     return (
       <div>
+        <div className="instructions-above-map">
+          <span className="above-map-pins"
+            onClick={() => this.fetchUserMarkers()} >Your Pins </span> •
+          <span className="above-map-pins"
+            onClick={() => this.markerFetcher()}> Friends Pins</span>
+        </div>
         <div className='main'>
           <Map
             onClick={(e) => console.log(e)}

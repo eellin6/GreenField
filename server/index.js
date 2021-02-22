@@ -87,7 +87,6 @@ app.get('/auth/google/callback',
 
 app.get('/isLoggedin', (req, res) => {
   req.cookies.NOLABOUND ? res.send(true) : res.send(false);
-  console.log('ISLOGGEDIN', req.cookies.NOLABOUND);
 });
 
 //logout route
