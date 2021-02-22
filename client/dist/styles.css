@@ -181,6 +181,61 @@ label {
 	margin: 20px 0;
 }
 
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 5px;
+}
+
+/* Clearfix (clear floats) */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.gif {
+	display: block;
+  margin-left: 55%;
+  margin-right: auto;
+	width: 40%;
+	border-radius: 15px;
+	object-fit: cover;
+}
+
+.flightLogos {
+	display: block;
+  margin-left: auto;
+  margin-right: auto;
+	width: 20%;
+	border-radius: 15px;
+	object-fit: cover;
+}
+
+.flights {
+	width: 25%;
+	margin: 5px;
+	background-color: #fffff7;
+	border-radius: 5px;
+	border: 1px solid rgb(31, 90, 201);
+	cursor: pointer;
+	color: black;
+	font-family: 'Varela Round', sans-serif;
+	font-size: .95em;
+	padding: 2px 1px;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px #459cc4;
+}
+
+.flights:hover {
+	background-color: rgb(31, 90, 201);
+	color: white;
+	border-radius: 5px;
+	border: 1px solid #dd8d61;
+	font-size: 1.75em;
+	margin: 20px 0;
+}
+
 .business {
 	background-color: 'blue';
 	border: 1px solid #dd8d61;
