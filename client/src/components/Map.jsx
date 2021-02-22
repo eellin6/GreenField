@@ -37,7 +37,6 @@ class MapContainer extends Component {
     this.onHeartClick = this.onHeartClick.bind(this);
     this.markerFetcher = this.markerFetcher.bind(this);
     this.fetchUserMarkers = this.fetchUserMarkers.bind(this);
-    this.fetchFriendMarkers = this.fetchFriendMarkers.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.commentFetcher = this.commentFetcher.bind(this);
@@ -45,12 +44,6 @@ class MapContainer extends Component {
 
   markerFetcher() {
     axios.get('/markers')
-      .then((marker) => this.setState({ markers: marker.data }))
-      .catch((err) => console.warn(err));
-  }
-
-  fetchFriendMarkers(username) {
-    axios.get('/markers/user', { user: username })
       .then(({ data }) => this.setState({ markers: data }))
       .catch((err) => console.warn(err));
   }
@@ -60,7 +53,7 @@ class MapContainer extends Component {
       .then(({ data }) => this.setState({ id: data }))
       .then(() => {
         const { id } = this.state;
-        axios.get(`/markers/${id}`, { id })
+        return axios.get(`/markers/${id}`, { id })
           .then(({ data }) => this.setState({ markers: data }))
           .catch((err) => console.warn(err));
       })
@@ -98,8 +91,6 @@ class MapContainer extends Component {
   }
 
   onHeartClick() {
-    console.log(this.state.selectedPlace);
-    // console.log('this.state.comments', this.state.comments);
     const { position, name, picture, rating } = this.state.selectedPlace;
     const { lat, lng } = position;
     const data = {latitude: lat, longitude: lng, description: name, imageUrl: picture, rating: rating};
@@ -133,9 +124,7 @@ class MapContainer extends Component {
   }
 
   changeView(option) {
-    this.setState({
-      view: option
-    });
+    this.setState({ view: option });
   }
 
   onInfoWindowOpen(props, e) {
@@ -264,6 +253,10 @@ class MapContainer extends Component {
 
     return (
       <div>
+        <div className="instructions-drag">
+          <span onClick={() => this.fetchUserMarkers()} >Your Pins</span>
+          <span onClick={() => this.markerFetcher()}>| Friends Pins</span>
+        </div>
         <div className='main'>
           <Map
             onClick={(e) => console.log(e)}

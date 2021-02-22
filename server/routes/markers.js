@@ -22,13 +22,6 @@ router.route('/:id').get((req, res) => {
     .catch((err) => console.error('Can\'t get markers', err));
 });
 
-// router.route('/find').get((req, res) => {
-//   const { id } = req.body;
-//   Markers.findOne({ where: { id } })
-//     .then((data) => res.send(data))
-//     .catch((err) => console.warn(err));
-// });
-
 router.route('/create').post((req, res) => {
 
   const values = Object.values(req.files);
@@ -36,14 +29,10 @@ router.route('/create').post((req, res) => {
   const promises = values.map(image => cloudinary.uploader.upload(image.path));
 
   const { latitude, longitude, description, id, rating} = req.body;
-  // console.log('BODYYYYY SYSTEM', req.body);
-  // console.log('BODYYYYY SYSTEM: id', id);
-  // const id = getIdByUsername(username);
 
   Promise
     .all(promises)
     .then(res => {
-
       const newMarker = new Markers({
         latitude,
         imageUrl: res[0].url,
